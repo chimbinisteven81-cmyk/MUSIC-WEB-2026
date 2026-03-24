@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel – SoundWave</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .chart-bar-wrap { display:flex;flex-direction:column;gap:0.75rem; }
+    .chart-bar-row { display:flex;align-items:center;gap:1rem; }
+    .chart-bar-label { width:80px;font-size:0.8rem;color:var(--text-secondary);text-align:right; }
+    .chart-bar-track { flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden; }
+    .chart-bar-fill { height:100%;background:var(--gradient);border-radius:4px;transition:width 1s ease; }
+    .chart-bar-val { width:50px;font-size:0.8rem;color:var(--text-secondary); }
+    .revenue-card { background:var(--gradient);border-radius:var(--radius);padding:1.5rem;color:#fff; }
+    .mini-chart { height:60px;display:flex;align-items:flex-end;gap:4px; }
+    .mini-bar { flex:1;background:rgba(255,255,255,0.3);border-radius:2px 2px 0 0;transition:var(--transition); }
+    .mini-bar:hover { background:rgba(255,255,255,0.6); }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="index.html" class="nav-logo">
+    <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="15" stroke="url(#g1)" stroke-width="2"/><path d="M10 20V12l12 4-12 4z" fill="url(#g1)"/><defs><linearGradient id="g1" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse"><stop stop-color="#6c63ff"/><stop offset="1" stop-color="#ff6584"/></linearGradient></defs></svg>
+    SoundWave Admin
+  </a>
+  <div class="nav-links">
+    <a href="index.html">← Back to Site</a>
+  </div>
+  <div class="nav-actions">
+    <span style="color:var(--text-secondary);font-size:0.85rem">Admin: superuser</span>
+    <button class="btn btn-outline btn-sm">Logout</button>
+  </div>
+  <div class="hamburger"><span></span><span></span><span></span></div>
+</nav>
+
+<div class="admin-layout">
+  <!-- Sidebar -->
+  <aside class="admin-sidebar">
+    <div style="margin-bottom:1.5rem;padding:0 0.5rem">
+      <p style="font-size:0.7rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-secondary);margin-bottom:0.75rem">Main</p>
+      <div class="admin-nav-item active" data-section="dashboard">📊 Dashboard</div>
+      <div class="admin-nav-item" data-section="users">👥 Users</div>
+      <div class="admin-nav-item" data-section="music">🎵 Music</div>
+      <div class="admin-nav-item" data-section="payments">💳 Payments</div>
+      <div class="admin-nav-item" data-section="analytics">📈 Analytics</div>
+    </div>
+    <div style="padding:0 0.5rem">
+      <p style="font-size:0.7rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-secondary);margin-bottom:0.75rem">Settings</p>
+      <div class="admin-nav-item" data-section="settings">⚙️ Site Settings</div>
+      <div class="admin-nav-item" data-section="reports">🚩 Reports</div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="admin-content">
+
+    <!-- Dashboard Section -->
+    <div id="section-dashboard">
+      <h2 style="margin-bottom:0.5rem">Dashboard</h2>
+      <p class="text-muted" style="margin-bottom:2rem">Welcome back. Here's what's happening today.</p>
+
+      <div class="stats-grid" style="margin-bottom:2rem">
+        <div class="stat-card"><div class="stat-icon">👥</div><div class="stat-value">24,891</div><div class="stat-label">Total Users</div></div>
+        <div class="stat-card"><div class="stat-icon">🎵</div><div class="stat-value">142,304</div><div class="stat-label">Total Tracks</div></div>
+        <div class="stat-card"><div class="stat-icon">▶️</div><div class="stat-value">8.2M</div><div class="stat-label">Plays Today</div></div>
+        <div class="stat-card"><div class="stat-icon">💰</div><div class="stat-value">$12,480</div><div class="stat-label">Revenue (Month)</div></div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h4 style="margin-bottom:1.5rem">Top Genres This Week</h4>
+          <!-- TODO: Connect to analytics backend -->
+          <div class="chart-bar-wrap" id="genre-chart"></div>
+        </div>
+        <div class="revenue-card">
+          <p style="opacity:0.8;font-size:0.85rem;margin-bottom:0.25rem">Monthly Revenue</p>
+          <h2 style="font-size:2.5rem;margin-bottom:0.25rem">$12,480</h2>
+          <p style="opacity:0.8;font-size:0.85rem;margin-bottom:1.5rem">↑ 18% from last month</p>
+          <div class="mini-chart" id="revenue-chart"></div>
+        </div>
+      </div>
+
+      <div class="card mt-3">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
+          <h4>Recent Activity</h4>
+          <button class="btn btn-outline btn-sm">View All</button>
+        </div>
+        <table class="admin-table">
+          <thead><tr><th>Event</th><th>User</th><th>Details</th><th>Time</th></tr></thead>
+          <tbody>
+            <tr><td>🎵 New Upload</td><td>Luna Waves</td><td>Neon Dreams (Electronic)</td><td>2 min ago</td></tr>
+            <tr><td>👤 New User</td><td>@beatmaker99</td><td>Registered via email</td><td>15 min ago</td></tr>
+            <tr><td>💳 Payment</td><td>DJ Phantom</td><td>Monthly Pro – $14.99</td><td>1 hr ago</td></tr>
+            <tr><td>🚩 Report</td><td>@user4821</td><td>Copyright claim on track #4821</td><td>3 hr ago</td></tr>
+            <tr><td>🎵 New Upload</td><td>Solaris</td><td>Golden Hour (Pop)</td><td>5 hr ago</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Users Section -->
+    <div id="section-users" style="display:none">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem">
+        <div><h2>Users</h2><p class="text-muted">Manage all registered users</p></div>
+        <div style="display:flex;gap:0.75rem">
+          <input type="text" class="form-input" placeholder="Search users..." style="width:220px">
+          <button class="btn btn-primary btn-sm">Export CSV</button>
+        </div>
+      </div>
+      <!-- TODO: Load from backend /api/admin/users with pagination -->
+      <div class="card">
+        <table class="admin-table">
+          <thead><tr><th>User</th><th>Email</th><th>Role</th><th>Joined</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody>
+            <tr><td>Luna Waves</td><td>luna@example.com</td><td>Artist</td><td>Jan 2025</td><td><span class="status-badge status-active">Active</span></td><td><button class="btn btn-outline btn-sm">Edit</button></td></tr>
+            <tr><td>DJ Phantom</td><td>phantom@example.com</td><td>Artist</td><td>Mar 2025</td><td><span class="status-badge status-active">Active</span></td><td><button class="btn btn-outline btn-sm">Edit</button></td></tr>
+            <tr><td>beatmaker99</td><td>beat@example.com</td><td>Listener</td><td>Jun 2025</td><td><span class="status-badge status-pending">Pending</span></td><td><button class="btn btn-outline btn-sm">Edit</button></td></tr>
+            <tr><td>spammer123</td><td>spam@example.com</td><td>Listener</td><td>Aug 2025</td><td><span class="status-badge status-banned">Banned</span></td><td><button class="btn btn-outline btn-sm">Edit</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Music Section -->
+    <div id="section-music" style="display:none">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem">
+        <div><h2>Music Library</h2><p class="text-muted">Review and manage all uploaded tracks</p></div>
+        <div style="display:flex;gap:0.75rem">
+          <select class="filter-select"><option>All Genres</option><option>Electronic</option><option>Hip-Hop</option></select>
+          <select class="filter-select"><option>All Status</option><option>Published</option><option>Pending Review</option></select>
+        </div>
+      </div>
+      <!-- TODO: Load from backend /api/admin/tracks -->
+      <div class="card">
+        <table class="admin-table">
+          <thead><tr><th>Track</th><th>Artist</th><th>Genre</th><th>Plays</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="admin-tracks-table"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Payments Section -->
+    <div id="section-payments" style="display:none">
+      <div style="margin-bottom:2rem"><h2>Payments</h2><p class="text-muted">Track all upload payments and subscriptions</p></div>
+      <div class="stats-grid" style="margin-bottom:2rem">
+        <div class="stat-card"><div class="stat-icon">💰</div><div class="stat-value">$12,480</div><div class="stat-label">This Month</div></div>
+        <div class="stat-card"><div class="stat-icon">📈</div><div class="stat-value">$89,240</div><div class="stat-label">Total Revenue</div></div>
+        <div class="stat-card"><div class="stat-icon">🔄</div><div class="stat-value">1,204</div><div class="stat-label">Active Subs</div></div>
+        <div class="stat-card"><div class="stat-icon">🎵</div><div class="stat-value">3,891</div><div class="stat-label">Single Uploads</div></div>
+      </div>
+      <!-- TODO: Connect to Stripe/payment gateway API -->
+      <div class="card">
+        <table class="admin-table">
+          <thead><tr><th>Transaction ID</th><th>User</th><th>Plan</th><th>Amount</th><th>Date</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>#TXN-8821</td><td>DJ Phantom</td><td>Monthly Pro</td><td>$14.99</td><td>Mar 24, 2026</td><td><span class="status-badge status-active">Paid</span></td></tr>
+            <tr><td>#TXN-8820</td><td>Luna Waves</td><td>Annual Pro</td><td>$119.88</td><td>Mar 24, 2026</td><td><span class="status-badge status-active">Paid</span></td></tr>
+            <tr><td>#TXN-8819</td><td>beatmaker99</td><td>Single Track</td><td>$4.99</td><td>Mar 23, 2026</td><td><span class="status-badge status-pending">Processing</span></td></tr>
+            <tr><td>#TXN-8818</td><td>Solaris</td><td>Monthly Pro</td><td>$14.99</td><td>Mar 23, 2026</td><td><span class="status-badge status-active">Paid</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Analytics Section -->
+    <div id="section-analytics" style="display:none">
+      <div style="margin-bottom:2rem"><h2>Analytics</h2><p class="text-muted">Platform-wide performance metrics</p></div>
+      <div class="grid-2">
+        <div class="card">
+          <h4 style="margin-bottom:1.5rem">Plays by Genre</h4>
+          <div class="chart-bar-wrap" id="analytics-chart"></div>
+        </div>
+        <div class="card">
+          <h4 style="margin-bottom:1.5rem">Top Tracks This Week</h4>
+          <div id="top-tracks-admin"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Settings Section -->
+    <div id="section-settings" style="display:none">
+      <div style="margin-bottom:2rem"><h2>Site Settings</h2><p class="text-muted">Configure platform-wide settings</p></div>
+      <!-- TODO: Connect to backend settings API -->
+      <div class="card" style="max-width:600px">
+        <div class="form-group"><label class="form-label">Site Name</label><input type="text" class="form-input" value="SoundWave"></div>
+        <div class="form-group"><label class="form-label">Upload Price (Single Track)</label><input type="number" class="form-input" value="4.99"></div>
+        <div class="form-group"><label class="form-label">Monthly Pro Price</label><input type="number" class="form-input" value="14.99"></div>
+        <div class="form-group">
+          <label style="display:flex;align-items:center;gap:0.75rem;cursor:pointer">
+            <input type="checkbox" checked style="accent-color:var(--primary)"> Allow free downloads for listeners
+          </label>
+        </div>
+        <div class="form-group">
+          <label style="display:flex;align-items:center;gap:0.75rem;cursor:pointer">
+            <input type="checkbox" checked style="accent-color:var(--primary)"> Require email verification for uploads
+          </label>
+        </div>
+        <button class="btn btn-primary" onclick="showToast('Settings saved!')">Save Settings</button>
+      </div>
+    </div>
+
+    <!-- Reports Section -->
+    <div id="section-reports" style="display:none">
+      <div style="margin-bottom:2rem"><h2>Reports</h2><p class="text-muted">User-submitted content reports</p></div>
+      <div class="card">
+        <table class="admin-table">
+          <thead><tr><th>Report ID</th><th>Reported By</th><th>Content</th><th>Reason</th><th>Date</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr><td>#RPT-441</td><td>@user4821</td><td>Track #4821</td><td>Copyright</td><td>Mar 24, 2026</td><td><button class="btn btn-outline btn-sm">Review</button></td></tr>
+            <tr><td>#RPT-440</td><td>@listener99</td><td>Track #3302</td><td>Inappropriate</td><td>Mar 22, 2026</td><td><button class="btn btn-outline btn-sm">Review</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<div class="toast" id="toast" role="alert"><span class="toast-icon">✓</span><span class="toast-msg"></span></div>
+
+<script src="js/app.js"></script>
+<script>
+  // Admin sidebar navigation
+  document.querySelectorAll('.admin-nav-item').forEach(item => {
+    item.addEventListener('click', () => {
+      document.querySelectorAll('.admin-nav-item').forEach(i => i.classList.remove('active'));
+      item.classList.add('active');
+      const section = item.dataset.section;
+      document.querySelectorAll('[id^="section-"]').forEach(s => s.style.display = 'none');
+      document.getElementById('section-' + section).style.display = 'block';
+    });
+  });
+
+  // Genre chart
+  const genres = [
+    { label: 'Electronic', val: 92, pct: 92 },
+    { label: 'Hip-Hop', val: 78, pct: 78 },
+    { label: 'Pop', val: 65, pct: 65 },
+    { label: 'R&B', val: 54, pct: 54 },
+    { label: 'Lo-Fi', val: 41, pct: 41 },
+  ];
+  ['genre-chart', 'analytics-chart'].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    genres.forEach(g => {
+      el.innerHTML += `<div class="chart-bar-row"><span class="chart-bar-label">${g.label}</span><div class="chart-bar-track"><div class="chart-bar-fill" style="width:${g.pct}%"></div></div><span class="chart-bar-val">${g.val}K</span></div>`;
+    });
+  });
+
+  // Revenue mini chart
+  const revChart = document.getElementById('revenue-chart');
+  [40,55,35,70,60,80,65,90,75,85,70,95].forEach(h => {
+    const bar = document.createElement('div');
+    bar.className = 'mini-bar';
+    bar.style.height = h + '%';
+    revChart?.appendChild(bar);
+  });
+
+  // Admin tracks table
+  const tbody = document.getElementById('admin-tracks-table');
+  MOCK_TRACKS.forEach(t => {
+    tbody.innerHTML += `<tr><td>${t.title}</td><td>${t.artist}</td><td>${t.genre}</td><td>${t.plays}</td><td><span class="status-badge status-active">Published</span></td><td><button class="btn btn-outline btn-sm">Edit</button> <button class="btn btn-sm" style="background:rgba(255,101,132,0.15);color:var(--secondary);border:none;cursor:pointer;border-radius:8px;padding:0.3rem 0.75rem">Remove</button></td></tr>`;
+  });
+
+  // Top tracks in analytics
+  const topTracks = document.getElementById('top-tracks-admin');
+  MOCK_TRACKS.slice(0, 5).forEach((t, i) => {
+    topTracks.innerHTML += `<div style="display:flex;align-items:center;gap:1rem;padding:0.5rem 0;border-bottom:1px solid var(--border)"><span style="color:var(--text-secondary);width:20px">${i+1}</span><img src="${t.cover}" style="width:36px;height:36px;border-radius:6px;object-fit:cover"><div style="flex:1"><div style="font-size:0.85rem;font-weight:600">${t.title}</div><div style="font-size:0.75rem;color:var(--text-secondary)">${t.artist}</div></div><span style="font-size:0.8rem;color:var(--text-secondary)">${t.plays}</span></div>`;
+  });
+</script>
+</body>
+</html>

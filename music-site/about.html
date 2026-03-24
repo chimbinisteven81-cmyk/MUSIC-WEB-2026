@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About – SoundWave</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .team-card { background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;text-align:center;transition:var(--transition); }
+    .team-card:hover { border-color:var(--primary);transform:translateY(-4px); }
+    .team-avatar { width:80px;height:80px;border-radius:50%;object-fit:cover;margin:0 auto 1rem;border:3px solid var(--primary); }
+    .team-name { font-weight:700;margin-bottom:0.25rem; }
+    .team-role { font-size:0.8rem;color:var(--primary);margin-bottom:0.5rem; }
+    .team-bio { font-size:0.82rem;color:var(--text-secondary); }
+    .value-card { background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:2rem;text-align:center; }
+    .value-icon { font-size:2.5rem;margin-bottom:1rem; }
+    .timeline { display:flex;flex-direction:column;gap:0; }
+    .timeline-item { display:flex;gap:2rem;padding-bottom:2rem;position:relative; }
+    .timeline-item::before { content:'';position:absolute;left:19px;top:40px;bottom:0;width:2px;background:var(--border); }
+    .timeline-item:last-child::before { display:none; }
+    .timeline-dot { width:40px;height:40px;border-radius:50%;background:var(--gradient);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1rem; }
+    .timeline-content { padding-top:0.5rem; }
+    .timeline-year { font-size:0.75rem;color:var(--primary);font-weight:700;margin-bottom:0.25rem; }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="index.html" class="nav-logo">
+    <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="15" stroke="url(#g1)" stroke-width="2"/><path d="M10 20V12l12 4-12 4z" fill="url(#g1)"/><defs><linearGradient id="g1" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse"><stop stop-color="#6c63ff"/><stop offset="1" stop-color="#ff6584"/></linearGradient></defs></svg>
+    SoundWave
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Home</a><a href="browse.html">Browse</a>
+    <a href="player.html">Player</a><a href="upload.html">Upload</a>
+    <a href="about.html" class="active">About</a><a href="contact.html">Contact</a>
+  </div>
+  <div class="nav-actions">
+    <a href="profile.html" class="btn btn-outline btn-sm">Sign In</a>
+    <a href="upload.html" class="btn btn-primary btn-sm">Upload Music</a>
+  </div>
+  <div class="hamburger"><span></span><span></span><span></span></div>
+</nav>
+<div class="mobile-menu">
+  <a href="index.html">Home</a><a href="browse.html">Browse</a><a href="player.html">Player</a>
+  <a href="upload.html">Upload</a><a href="profile.html">Profile</a><a href="about.html">About</a>
+  <a href="contact.html">Contact</a><a href="faq.html">FAQ</a>
+</div>
+
+<!-- Hero -->
+<section style="padding:8rem 2rem 5rem;background:radial-gradient(ellipse at 50% 0%, rgba(108,99,255,0.15) 0%, transparent 60%), var(--bg-dark);text-align:center">
+  <div class="container">
+    <span class="section-label">Our Story</span>
+    <h1 style="font-size:clamp(2rem,4vw,3.5rem);margin:0.75rem 0">Music Should Be <span class="text-gradient">Free to Hear</span></h1>
+    <p class="text-muted" style="max-width:600px;margin:0 auto 2rem;font-size:1.1rem">We built SoundWave on a simple belief: every person deserves access to great music, and every artist deserves a platform to be heard.</p>
+    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+      <a href="browse.html" class="btn btn-primary">Explore Music</a>
+      <a href="upload.html" class="btn btn-outline">Join as Artist</a>
+    </div>
+  </div>
+</section>
+
+<!-- Mission -->
+<section class="section section-alt">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center">
+      <div>
+        <span class="section-label">Mission</span>
+        <h2 style="margin:0.5rem 0 1rem">Democratizing Music Discovery</h2>
+        <p class="text-muted" style="margin-bottom:1rem">SoundWave was founded in 2024 with a mission to break down the barriers between artists and listeners. We believe the best music often comes from independent creators who just need a platform.</p>
+        <p class="text-muted" style="margin-bottom:1.5rem">Listeners stream and download everything for free. Artists and labels pay a small fee to upload — this keeps our platform sustainable while ensuring quality content.</p>
+        <div style="display:flex;gap:2rem">
+          <div><div class="stat-num" style="font-size:1.8rem">10M+</div><div style="font-size:0.8rem;color:var(--text-secondary)">Free Tracks</div></div>
+          <div><div class="stat-num" style="font-size:1.8rem">500K+</div><div style="font-size:0.8rem;color:var(--text-secondary)">Artists</div></div>
+          <div><div class="stat-num" style="font-size:1.8rem">190+</div><div style="font-size:0.8rem;color:var(--text-secondary)">Countries</div></div>
+        </div>
+      </div>
+      <div>
+        <img src="https://picsum.photos/seed/about/600/400" alt="About SoundWave" style="width:100%;border-radius:20px;box-shadow:0 20px 60px rgba(108,99,255,0.2)">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Values -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">What We Stand For</span>
+      <h2>Our Values</h2>
+    </div>
+    <div class="grid-3">
+      <div class="value-card"><div class="value-icon">🎵</div><h3 style="margin-bottom:0.75rem">Music First</h3><p class="text-muted" style="font-size:0.9rem">Every decision we make starts with what's best for the music and the people who make it.</p></div>
+      <div class="value-card"><div class="value-icon">🌍</div><h3 style="margin-bottom:0.75rem">Open Access</h3><p class="text-muted" style="font-size:0.9rem">Great music should be accessible to everyone, regardless of where they are or what they can afford.</p></div>
+      <div class="value-card"><div class="value-icon">🤝</div><h3 style="margin-bottom:0.75rem">Artist Support</h3><p class="text-muted" style="font-size:0.9rem">We give artists the tools, analytics, and audience they need to build a sustainable career.</p></div>
+      <div class="value-card"><div class="value-icon">🔒</div><h3 style="margin-bottom:0.75rem">Creator Rights</h3><p class="text-muted" style="font-size:0.9rem">Artists retain 100% ownership of their music. We're a platform, not a label.</p></div>
+      <div class="value-card"><div class="value-icon">📊</div><h3 style="margin-bottom:0.75rem">Transparency</h3><p class="text-muted" style="font-size:0.9rem">Clear pricing, honest analytics, and no hidden fees. What you see is what you get.</p></div>
+      <div class="value-card"><div class="value-icon">🚀</div><h3 style="margin-bottom:0.75rem">Innovation</h3><p class="text-muted" style="font-size:0.9rem">We're constantly building better tools for discovery, sharing, and music creation.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- Team -->
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">The People</span>
+      <h2>Meet the Team</h2>
+      <p>A small team of music lovers and engineers building the future of music sharing</p>
+    </div>
+    <div class="music-grid">
+      <div class="team-card"><img src="https://picsum.photos/seed/team1/200/200" alt="CEO" class="team-avatar"><div class="team-name">Jordan Lee</div><div class="team-role">CEO & Co-Founder</div><div class="team-bio">Former Spotify engineer. Musician for 15 years. Believes music is the universal language.</div></div>
+      <div class="team-card"><img src="https://picsum.photos/seed/team2/200/200" alt="CTO" class="team-avatar"><div class="team-name">Priya Sharma</div><div class="team-role">CTO & Co-Founder</div><div class="team-bio">Full-stack engineer and DJ. Built the entire platform from scratch in a garage.</div></div>
+      <div class="team-card"><img src="https://picsum.photos/seed/team3/200/200" alt="Design" class="team-avatar"><div class="team-name">Marcus Chen</div><div class="team-role">Head of Design</div><div class="team-bio">Ex-Apple designer. Obsessed with creating interfaces that feel as good as music sounds.</div></div>
+      <div class="team-card"><img src="https://picsum.photos/seed/team4/200/200" alt="Growth" class="team-avatar"><div class="team-name">Aisha Williams</div><div class="team-role">Head of Artist Relations</div><div class="team-bio">Former A&R at a major label. Now helping independent artists get the recognition they deserve.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Timeline -->
+<section class="section">
+  <div class="container" style="max-width:700px">
+    <div class="section-header">
+      <span class="section-label">Journey</span>
+      <h2>Our Story So Far</h2>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item"><div class="timeline-dot">💡</div><div class="timeline-content"><div class="timeline-year">2024 – Q1</div><h4>The Idea</h4><p class="text-muted" style="font-size:0.9rem">Jordan and Priya meet at a hackathon and decide to build a music platform that's truly free for listeners.</p></div></div>
+      <div class="timeline-item"><div class="timeline-dot">🚀</div><div class="timeline-content"><div class="timeline-year">2024 – Q3</div><h4>Beta Launch</h4><p class="text-muted" style="font-size:0.9rem">SoundWave launches in private beta with 500 artists and 10,000 tracks. The response is overwhelming.</p></div></div>
+      <div class="timeline-item"><div class="timeline-dot">🌍</div><div class="timeline-content"><div class="timeline-year">2025 – Q1</div><h4>Public Launch</h4><p class="text-muted" style="font-size:0.9rem">Open to the world. 1 million users in the first month. Featured in TechCrunch and Rolling Stone.</p></div></div>
+      <div class="timeline-item"><div class="timeline-dot">📈</div><div class="timeline-content"><div class="timeline-year">2026 – Now</div><h4>10M+ Tracks</h4><p class="text-muted" style="font-size:0.9rem">Over 10 million tracks, 500K artists, and 2 million monthly listeners. Just getting started.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section section-alt">
+  <div class="container" style="text-align:center">
+    <h2 style="font-size:2rem;margin-bottom:1rem">Ready to Join the Movement?</h2>
+    <p class="text-muted" style="margin-bottom:2rem">Whether you're here to listen or to share your sound, SoundWave is your home.</p>
+    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+      <a href="browse.html" class="btn btn-primary">Start Listening Free</a>
+      <a href="upload.html" class="btn btn-outline">Upload Your Music</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="nav-logo" style="font-size:1.3rem">SoundWave</div><p>The world's most open music platform.</p><div class="footer-social"><a href="#" class="social-btn">𝕏</a><a href="#" class="social-btn">📷</a><a href="#" class="social-btn">▶</a><a href="#" class="social-btn">💬</a></div></div>
+    <div class="footer-col"><h4>Discover</h4><ul><li><a href="browse.html">Browse Music</a></li><li><a href="browse.html">Trending</a></li><li><a href="browse.html">New Releases</a></li></ul></div>
+    <div class="footer-col"><h4>Artists</h4><ul><li><a href="upload.html">Upload Music</a></li><li><a href="payment.html">Pricing</a></li><li><a href="profile.html">Dashboard</a></li></ul></div>
+    <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li><li><a href="faq.html">FAQ</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><p>© 2026 SoundWave. All rights reserved.</p></div>
+</footer>
+
+<div class="toast" id="toast" role="alert"><span class="toast-icon">✓</span><span class="toast-msg"></span></div>
+<script src="js/app.js"></script>
+</body>
+</html>

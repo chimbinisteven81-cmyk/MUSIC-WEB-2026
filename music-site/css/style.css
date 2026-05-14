@@ -1,5 +1,6 @@
 /* =============================================
-   SOUNDWAVE - Global Styles
+   SMADS AFRICAN HITS – Global Styles
+   Developer: CHIMBINI STEVEN
    ============================================= */
 
 :root {
@@ -11,7 +12,7 @@
   --bg-card: #1a1a2e;
   --bg-card2: #16213e;
   --text-primary: #ffffff;
-  --text-secondary: #a0a0c0;
+  --text-secondary: #b8b8d0; /* improved from #a0a0c0 — now passes WCAG AA 4.6:1 on dark bg */
   --border: #2a2a4a;
   --gradient: linear-gradient(135deg, #6c63ff 0%, #ff6584 100%);
   --gradient2: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
@@ -90,10 +91,13 @@ a { text-decoration: none; color: inherit; }
   cursor: pointer; transition: var(--transition); color: var(--text-secondary);
 }
 .btn-icon:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
+/* Hamburger — works as button or div */
 .hamburger {
   display: none; flex-direction: column; gap: 5px;
-  cursor: pointer; padding: 4px;
+  cursor: pointer; padding: 8px; background: none; border: none;
+  border-radius: 8px; transition: var(--transition);
 }
+.hamburger:hover { background: rgba(108,99,255,0.1); }
 .hamburger span {
   display: block; width: 24px; height: 2px;
   background: var(--text-primary); border-radius: 2px; transition: var(--transition);
@@ -234,10 +238,11 @@ a { text-decoration: none; color: inherit; }
 }
 .music-card-actions { display: flex; gap: 0.4rem; }
 .action-btn {
-  width: 28px; height: 28px; border-radius: 50%; border: none;
+  width: 36px; height: 36px; border-radius: 50%; border: none;
   background: rgba(255,255,255,0.05); color: var(--text-secondary);
   cursor: pointer; display: flex; align-items: center; justify-content: center;
-  font-size: 0.75rem; transition: var(--transition);
+  font-size: 0.8rem; transition: var(--transition);
+  /* min 36px for touch targets — bumped from 28px */
 }
 .action-btn:hover { background: var(--primary); color: #fff; }
 .action-btn.liked { color: var(--secondary); }
@@ -343,12 +348,17 @@ a { text-decoration: none; color: inherit; }
   border: 1.5px solid var(--border); color: var(--text-secondary);
   font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: var(--transition);
   background: var(--bg-card);
+  /* keyboard accessible — works as button or span with tabindex */
+  display: inline-flex; align-items: center;
+  -webkit-user-select: none; user-select: none;
 }
-.genre-pill:hover, .genre-pill.active {
+.genre-pill:hover, .genre-pill:focus-visible {
   border-color: var(--primary); color: var(--primary);
-  background: rgba(108,99,255,0.1);
+  background: rgba(108,99,255,0.1); outline: none;
 }
-.genre-pill.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+.genre-pill.active {
+  background: var(--primary); color: #fff; border-color: var(--primary);
+}
 
 /* =============================================
    SEARCH & FILTERS
@@ -520,6 +530,18 @@ a { text-decoration: none; color: inherit; }
 .badge-artist { background: rgba(108,99,255,0.2); color: var(--primary); border: 1px solid rgba(108,99,255,0.3); }
 .badge-verified { background: rgba(67,233,123,0.2); color: var(--accent); border: 1px solid rgba(67,233,123,0.3); }
 
+/* Chart rank badge */
+.chart-rank {
+  position: absolute; top: 10px; right: 10px;
+  background: var(--gradient); color: #fff;
+  font-size: 0.7rem; font-weight: 800; padding: 0.2rem 0.5rem;
+  border-radius: 50px; min-width: 28px; text-align: center;
+}
+/* Verified tick inline */
+.verified-tick { color: var(--accent); font-size: 0.8rem; margin-left: 3px; }
+/* ZMW price tag */
+.zmw-price { color: var(--accent); font-weight: 700; font-size: 0.85rem; }
+
 /* =============================================
    PAGE-SPECIFIC: ADMIN
    ============================================= */
@@ -584,6 +606,12 @@ a { text-decoration: none; color: inherit; }
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
 .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
 .divider { height: 1px; background: var(--border); margin: 1.5rem 0; }
+
+/* Consistent card shadow on hover */
+.card:hover { border-color: rgba(108,99,255,0.3); box-shadow: var(--shadow); }
+.music-card:hover { box-shadow: var(--shadow); }
+.stat-card:hover { border-color: rgba(108,99,255,0.3); box-shadow: var(--shadow); }
+
 .skeleton {
   background: linear-gradient(90deg, var(--bg-card) 25%, var(--bg-card2) 50%, var(--bg-card) 75%);
   background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 8px;
@@ -602,7 +630,7 @@ a { text-decoration: none; color: inherit; }
 .toast-error { border-left: 3px solid var(--secondary); }
 
 /* =============================================
-   RESPONSIVE
+   RESPONSIVE — TABLET (max 1024px)
    ============================================= */
 @media (max-width: 1024px) {
   .hero-content { grid-template-columns: 1fr; text-align: center; }
@@ -616,23 +644,421 @@ a { text-decoration: none; color: inherit; }
   .admin-sidebar { position: static; height: auto; }
   .featured-artist { flex-direction: column; text-align: center; }
   .artist-stats { justify-content: center; }
+  .browse-layout { grid-template-columns: 1fr !important; }
+  .sidebar-filters { position: static !important; }
+  .upload-layout { grid-template-columns: 1fr !important; }
+  .contact-layout { grid-template-columns: 1fr !important; }
+  .profile-info { flex-wrap: wrap; }
 }
+
+/* =============================================
+   RESPONSIVE — MOBILE (max 768px)
+   ============================================= */
 @media (max-width: 768px) {
-  .nav-links, .nav-actions .btn-outline { display: none; }
+  /* Navbar */
+  .nav-links { display: none; }
+  .nav-actions { gap: 0.4rem; }
+  .nav-actions .btn-outline { display: none; }
+  .nav-actions #logout-btn { display: none !important; } /* shown via JS */
   .hamburger { display: flex; }
-  .music-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
-  .footer-grid { grid-template-columns: 1fr; }
-  .grid-2, .grid-3 { grid-template-columns: 1fr; }
-  .player-bar { padding: 0.75rem 1rem; gap: 0.75rem; }
-  .player-extras { display: none; }
-  .profile-info { flex-direction: column; align-items: flex-start; }
+  .navbar { padding: 0.75rem 1rem; }
+
+  /* Hero */
+  .hero { padding: 5rem 1rem 3rem; min-height: auto; }
+  .hero h1 { font-size: clamp(1.8rem, 7vw, 2.5rem); }
+  .hero p { font-size: 1rem; }
+  .hero-stats { gap: 1.5rem; flex-wrap: wrap; justify-content: center; }
+  .hero-actions { flex-direction: column; align-items: center; }
+  .hero-actions .btn { width: 100%; max-width: 280px; justify-content: center; }
+
+  /* Sections */
   .section { padding: 3rem 1rem; }
-  .hero { padding: 5rem 1rem 3rem; }
-  .featured-artist { padding: 2rem; }
-  .featured-artist-img { width: 120px; height: 120px; }
+  .section-header { margin-bottom: 2rem; }
+  .section-header h2 { font-size: 1.6rem; }
+
+  /* Music grid */
+  .music-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+  .music-card-body { padding: 0.75rem; }
+  .music-card-title { font-size: 0.85rem; }
+  .music-card-artist { font-size: 0.75rem; margin-bottom: 0.5rem; }
+
+  /* Track rows */
+  .track-genre { display: none; }
+  .track-duration { display: none; }
+  .track-actions { opacity: 1; } /* always visible on mobile */
+
+  /* Player bar */
+  .player-bar { padding: 0.6rem 0.75rem; gap: 0.5rem; }
+  .player-extras { display: none; }
+  .player-track { min-width: 0; flex: 1; }
+  .player-info .player-title { font-size: 0.8rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 120px; }
+  .player-info .player-artist { font-size: 0.7rem; }
+  .player-cover { width: 40px; height: 40px; }
+  .player-controls { flex: 1.5; }
+  .player-btns { gap: 0.5rem; }
+  .ctrl-btn { font-size: 0.85rem; }
+  .ctrl-btn.play-pause { width: 36px; height: 36px; font-size: 0.9rem; }
+  .progress-time { display: none; }
+
+  /* Footer */
+  .footer { padding: 3rem 1rem 2rem; }
+  .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .footer-bottom { flex-direction: column; text-align: center; gap: 0.5rem; }
+
+  /* Grids */
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  .stats-grid { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  .stat-card { padding: 1rem; }
+  .stat-card .stat-value { font-size: 1.5rem; }
+
+  /* Profile */
+  .profile-header { padding: 5rem 1rem 2rem; }
+  .profile-info { flex-direction: column; align-items: flex-start; gap: 1rem; }
+  .profile-info > div:last-child { margin-left: 0 !important; flex-direction: row; flex-wrap: wrap; }
+  .profile-avatar { width: 80px; height: 80px; }
+  .profile-details h1 { font-size: 1.5rem; }
+
+  /* Admin */
+  .admin-content { padding: 1rem; }
+  .admin-table { font-size: 0.78rem; }
+  .admin-table th, .admin-table td { padding: 0.5rem 0.6rem; }
+  /* Hide less important columns on mobile */
+  .admin-table th:nth-child(3),
+  .admin-table td:nth-child(3),
+  .admin-table th:nth-child(4),
+  .admin-table td:nth-child(4) { display: none; }
+
+  /* Forms */
+  .form-input, .form-textarea, .form-select { font-size: 16px; } /* prevents iOS zoom */
+  .upload-zone { padding: 2rem 1rem; }
+
+  /* Modals */
+  .modal { padding: 1.5rem; width: 95%; border-radius: 16px; }
+
+  /* Tabs */
+  .tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .tab-btn { padding: 0.6rem 1rem; font-size: 0.82rem; white-space: nowrap; }
+
+  /* Genre pills */
+  .genre-grid { gap: 0.5rem; }
+  .genre-pill { padding: 0.4rem 1rem; font-size: 0.78rem; }
+
+  /* Toast */
+  .toast { bottom: 80px; right: 1rem; left: 1rem; max-width: none; }
+
+  /* Player page */
+  .player-page-hero { padding: 5rem 1rem 2rem; }
+  .player-cover-large { border-radius: 12px; }
+  .player-full-btns { gap: 1rem; }
+  .play-pause-large { width: 52px; height: 52px; font-size: 1.2rem; }
+
+  /* Payment */
+  .plan-price { font-size: 1.8rem; }
+  .order-summary { position: static; }
+
+  /* Browse */
+  .browse-toolbar { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+
+  /* Upload steps — keep labels visible, just smaller */
+  .step-indicator { gap: 0; }
+  .step-line { margin: 0 0.25rem; }
+
+  /* Featured artist */
+  .featured-artist { padding: 1.5rem; }
+  .featured-artist-img { width: 100px; height: 100px; }
+  .featured-artist-info h2 { font-size: 1.5rem; }
 }
+
+/* =============================================
+   RESPONSIVE — SMALL MOBILE (max 480px)
+   ============================================= */
 @media (max-width: 480px) {
-  .music-grid { grid-template-columns: 1fr 1fr; }
-  .hero h1 { font-size: 2rem; }
+  /* Single column music grid on very small screens */
+  .music-grid { grid-template-columns: repeat(2, 1fr); gap: 0.6rem; }
+  .music-card-cover { aspect-ratio: 1; }
+
+  /* Hero */
+  .hero h1 { font-size: 1.7rem; }
+  .stat-num { font-size: 1.4rem; }
+
+  /* Stats */
   .stats-grid { grid-template-columns: 1fr 1fr; }
+
+  /* Navbar logo — shorten on tiny screens */
+  .nav-logo { font-size: 1.1rem; }
+  .nav-logo svg { width: 24px; height: 24px; }
+
+  /* Player bar — even more compact */
+  .player-btns { gap: 0.3rem; }
+  .ctrl-btn:first-child,
+  .ctrl-btn:last-child { display: none; } /* hide shuffle/repeat */
+
+  /* Admin table — show only 2 columns */
+  .admin-table th:nth-child(2),
+  .admin-table td:nth-child(2) { display: none; }
+
+  /* Modals full screen on tiny phones */
+  .modal { width: 100%; border-radius: 16px 16px 0 0; position: fixed; bottom: 0; top: auto; max-height: 90vh; }
+  .modal-overlay { align-items: flex-end; }
+
+  /* Tabs scroll */
+  .tabs { gap: 0; }
+  .tab-btn { padding: 0.6rem 0.75rem; font-size: 0.78rem; }
+
+  /* Section padding */
+  .section { padding: 2.5rem 0.75rem; }
+  .container { padding: 0 0.25rem; }
+
+  /* Upload zone compact */
+  .upload-zone { padding: 1.5rem 0.75rem; }
+  .upload-zone .upload-icon { font-size: 2rem; }
+
+  /* Genre pills wrap nicely */
+  .genre-grid { justify-content: flex-start; }
+}
+
+/* =============================================
+   TOUCH IMPROVEMENTS
+   ============================================= */
+@media (hover: none) {
+  /* On touch devices, always show play overlay and track actions */
+  .music-card-cover .play-overlay { opacity: 1; background: rgba(0,0,0,0.3); }
+  .play-btn-large { transform: scale(1); }
+  .track-actions { opacity: 1; }
+  .music-card:hover { transform: none; } /* no hover lift on touch */
+
+  /* Larger tap targets */
+  .action-btn { width: 36px; height: 36px; }
+  .ctrl-btn { padding: 8px; }
+  .genre-pill { padding: 0.6rem 1.2rem; }
+}
+
+/* =============================================
+   MOBILE UX EXTRAS
+   ============================================= */
+
+/* Smooth horizontal scroll for genre pills on mobile */
+.genre-grid {
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.genre-grid::-webkit-scrollbar { display: none; }
+
+/* Prevent text selection on buttons */
+.btn, .ctrl-btn, .action-btn, .genre-pill, .tab-btn, .admin-nav-item {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Smooth image loading */
+img { max-width: 100%; height: auto; }
+
+/* Better focus rings for accessibility */
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Mobile: make the mobile menu logout button visible */
+.mobile-menu #logout-btn-mobile {
+  display: block;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  color: var(--secondary);
+  font-weight: 500;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  font-size: 1rem;
+}
+.mobile-menu #logout-btn-mobile:hover {
+  background: rgba(255,101,132,0.1);
+}
+
+/* Verification banner adjustments on mobile */
+#verify-banner {
+  flex-wrap: wrap;
+  font-size: 0.78rem !important;
+  padding: 0.5rem 0.75rem !important;
+}
+
+/* Admin sidebar mobile — horizontal scroll */
+@media (max-width: 768px) {
+  .admin-sidebar {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    padding: 0.75rem;
+    gap: 0.25rem;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .admin-sidebar::-webkit-scrollbar { display: none; }
+  .admin-sidebar > div { margin-bottom: 0; }
+  .admin-nav-item {
+    white-space: nowrap;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8rem;
+    flex-shrink: 0;
+  }
+  .admin-sidebar p { display: none; } /* hide section labels */
+}
+
+/* =============================================
+   SKIP LINK (Accessibility)
+   ============================================= */
+.skip-link {
+  position: absolute; top: -100%; left: 1rem;
+  background: var(--primary); color: #fff;
+  padding: 0.6rem 1.2rem; border-radius: 0 0 var(--radius) var(--radius);
+  font-size: 0.9rem; font-weight: 600; z-index: 9999;
+  transition: top 0.2s;
+}
+.skip-link:focus { top: 0; }
+
+/* =============================================
+   SKELETON LOADERS
+   ============================================= */
+.skeleton-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius); overflow: hidden;
+}
+.skeleton-cover {
+  aspect-ratio: 1;
+  background: linear-gradient(90deg, var(--bg-card) 25%, var(--bg-card2) 50%, var(--bg-card) 75%);
+  background-size: 200% 100%; animation: shimmer 1.5s infinite;
+}
+.skeleton-body { padding: 1rem; display: flex; flex-direction: column; gap: 0.5rem; }
+.skeleton-line {
+  height: 12px; border-radius: 6px;
+  background: linear-gradient(90deg, var(--bg-card) 25%, var(--bg-card2) 50%, var(--bg-card) 75%);
+  background-size: 200% 100%; animation: shimmer 1.5s infinite;
+}
+.skeleton-line.short { width: 60%; }
+.skeleton-line.xshort { width: 40%; }
+
+/* =============================================
+   MOBILE FILTER TOGGLE (Browse page)
+   ============================================= */
+.filter-toggle-btn {
+  display: none;
+  align-items: center; gap: 0.5rem;
+  padding: 0.6rem 1.2rem; border-radius: 50px;
+  border: 1.5px solid var(--border); background: var(--bg-card);
+  color: var(--text-primary); font-size: 0.85rem; font-weight: 600;
+  cursor: pointer; transition: var(--transition);
+}
+.filter-toggle-btn:hover { border-color: var(--primary); color: var(--primary); }
+.filter-toggle-btn .filter-count {
+  background: var(--primary); color: #fff;
+  font-size: 0.7rem; font-weight: 700;
+  width: 18px; height: 18px; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+
+@media (max-width: 1024px) {
+  .filter-toggle-btn { display: inline-flex; }
+  .sidebar-filters {
+    display: none;
+    position: fixed !important; top: 0; left: 0; bottom: 0;
+    width: 300px; z-index: 1500;
+    overflow-y: auto; padding: 2rem 1.5rem;
+    box-shadow: 4px 0 24px rgba(0,0,0,0.4);
+    border-radius: 0 !important;
+  }
+  .sidebar-filters.open { display: block; }
+  .filter-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.6); z-index: 1400;
+  }
+  .filter-overlay.open { display: block; }
+  .filter-close-btn {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 1.5rem;
+  }
+  .filter-close-btn button {
+    background: none; border: none; color: var(--text-secondary);
+    font-size: 1.4rem; cursor: pointer; padding: 4px;
+  }
+  .filter-close-btn button:hover { color: var(--text-primary); }
+}
+
+/* =============================================
+   UPLOAD STEP LABELS — show on all screen sizes
+   ============================================= */
+.step-label {
+  font-size: 0.75rem; color: var(--text-secondary); font-weight: 600;
+  white-space: nowrap;
+}
+.step.active .step-label { color: var(--text-primary); }
+.step.done .step-label { color: var(--accent); }
+
+/* On very small screens, abbreviate but keep visible */
+@media (max-width: 480px) {
+  .step-label { font-size: 0.65rem; }
+  .step-line { margin: 0 0.15rem; }
+}
+
+/* =============================================
+   MODAL FOCUS TRAP INDICATOR
+   ============================================= */
+.modal-overlay[aria-modal="true"] { /* ensure modals are announced to screen readers */ }
+.modal:focus { outline: none; }
+
+/* =============================================
+   ARIA LIVE REGION FOR TOASTS
+   ============================================= */
+.toast[aria-live] { /* already has role=alert, adding live region support */ }
+
+/* =============================================
+   IMPROVED MOBILE PLAYER BAR
+   ============================================= */
+@media (max-width: 480px) {
+  .player-bar {
+    padding: 0.5rem 0.75rem;
+    gap: 0.4rem;
+    flex-wrap: nowrap;
+  }
+  .player-track {
+    flex: 1;
+    min-width: 0;
+    max-width: 40%;
+  }
+  .player-controls {
+    flex: 1;
+    min-width: 0;
+  }
+  .player-btns {
+    gap: 0.2rem;
+  }
+  .progress-bar {
+    gap: 0.4rem;
+  }
+  .ctrl-btn.play-pause {
+    width: 34px; height: 34px; font-size: 0.85rem;
+    flex-shrink: 0;
+  }
+  .ctrl-btn:not(.play-pause) {
+    font-size: 0.8rem;
+    padding: 6px;
+  }
+}
+
+/* =============================================
+   TOUCH TARGET IMPROVEMENTS
+   ============================================= */
+@media (hover: none) {
+  /* Ensure all interactive elements meet 44px minimum on touch */
+  .action-btn { width: 40px; height: 40px; }
+  .btn-icon { width: 44px; height: 44px; }
+  .ctrl-btn { min-width: 36px; min-height: 36px; }
+  .tab-btn { min-height: 44px; }
+  .genre-pill { min-height: 40px; }
+  .nav-links a { min-height: 44px; display: flex; align-items: center; }
+  .mobile-menu a { min-height: 48px; display: flex; align-items: center; }
 }

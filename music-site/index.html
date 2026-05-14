@@ -3,23 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SoundWave – Free Music for Everyone</title>
-  <meta name="description" content="Browse, stream, and download music for free. The world's best music platform.">
+  <title>SMADS African Hits � Free African Music for Everyone</title>
+  <meta name="description" content="Browse, stream, and download African music for free. The home of African hits.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-<!-- ── NAVBAR ── -->
-<nav class="navbar">
+<!-- Skip to main content (accessibility) -->
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<!-- -- NAVBAR -- -->
+<nav class="navbar" role="navigation" aria-label="Main navigation">
   <a href="index.html" class="nav-logo">
     <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
       <circle cx="16" cy="16" r="15" stroke="url(#g1)" stroke-width="2"/>
       <path d="M10 20V12l12 4-12 4z" fill="url(#g1)"/>
       <defs><linearGradient id="g1" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse"><stop stop-color="#6c63ff"/><stop offset="1" stop-color="#ff6584"/></linearGradient></defs>
     </svg>
-    SoundWave
+    SMADS African Hits
   </a>
   <div class="nav-links">
     <a href="index.html" class="active">Home</a>
@@ -30,12 +33,14 @@
     <a href="contact.html">Contact</a>
   </div>
   <div class="nav-actions">
-    <a href="profile.html" class="btn btn-outline btn-sm">Sign In</a>
+    <button type="button" class="btn btn-outline btn-sm nav-signin" data-modal="auth-modal">Sign In</button>
+    <a href="profile.html" class="btn btn-outline btn-sm nav-profile" style="display:none">My Profile</a>
+    <button class="btn btn-outline btn-sm" id="logout-btn" style="display:none">Logout</button>
     <a href="upload.html" class="btn btn-primary btn-sm">Upload Music</a>
   </div>
-  <div class="hamburger" aria-label="Menu" role="button" tabindex="0">
+  <button class="hamburger" type="button" aria-label="Open menu" aria-expanded="false">
     <span></span><span></span><span></span>
-  </div>
+  </button>
 </nav>
 <div class="mobile-menu">
   <a href="index.html">Home</a>
@@ -46,15 +51,16 @@
   <a href="about.html">About</a>
   <a href="contact.html">Contact</a>
   <a href="faq.html">FAQ</a>
+  <button id="logout-btn-mobile" style="display:none">&#128682; Logout</button>
 </div>
 
-<!-- ── HERO ── -->
-<section class="hero">
+<!-- -- HERO -- -->
+<section class="hero" id="main-content">
   <div class="hero-content">
     <div class="hero-text">
-      <div class="hero-badge"><span></span> 10M+ Tracks Available Free</div>
-      <h1>Discover Your Next <span class="gradient-text">Favorite Sound</span></h1>
-      <p>Stream and download millions of tracks for free. From underground artists to chart-toppers — all in one place.</p>
+      <div class="hero-badge"><span></span> Africa's #1 Free Music Platform</div>
+      <h1>Discover Your Next <span class="gradient-text">African Hit</span></h1>
+      <p>Stream and download the best African music for free. Afrobeats, Amapiano, Highlife, Bongo Flava � all in one place.</p>
       <div class="hero-actions">
         <a href="browse.html" class="btn btn-primary">
           <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
@@ -62,88 +68,83 @@
         </a>
         <a href="upload.html" class="btn btn-outline">Upload Your Music</a>
       </div>
-      <div class="hero-stats">
-        <div class="stat"><div class="stat-num">10M+</div><div class="stat-label">Tracks</div></div>
-        <div class="stat"><div class="stat-num">500K+</div><div class="stat-label">Artists</div></div>
-        <div class="stat"><div class="stat-num">2M+</div><div class="stat-label">Listeners</div></div>
+      <div class="hero-stats" id="hero-stats">
+        <div class="stat"><div class="stat-num" id="stat-tracks">�</div><div class="stat-label">Tracks</div></div>
+        <div class="stat"><div class="stat-num" id="stat-artists">�</div><div class="stat-label">Artists</div></div>
+        <div class="stat"><div class="stat-num" id="stat-plays">�</div><div class="stat-label">Downloads</div></div>
       </div>
     </div>
     <div class="hero-visual">
       <div class="hero-disc"></div>
       <div class="floating-card">
-        <div class="fc-icon">🎵</div>
-        <div class="fc-text"><strong>Neon Dreams</strong>Luna Waves · 1.2M plays</div>
+        <div class="fc-icon">&#127925;</div>
+        <div class="fc-text"><strong>Now Trending</strong>Latest African Hits</div>
       </div>
       <div class="floating-card">
-        <div class="fc-icon">🔥</div>
-        <div class="fc-text"><strong>Trending Now</strong>+2,400 new tracks today</div>
+        <div class="fc-icon">&#127381;</div>
+        <div class="fc-text"><strong>Free Downloads</strong>No account needed</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── FEATURED ARTIST ── -->
-<section class="section">
-  <div class="container">
-    <div class="featured-artist">
-      <img src="https://picsum.photos/seed/feat/400/400" alt="Featured Artist" class="featured-artist-img">
-      <div class="featured-artist-info">
-        <div class="label">🌟 Artist of the Month</div>
-        <h2>Luna Waves</h2>
-        <p>Electronic producer blending ambient textures with driving beats. Her latest album "Neon Horizons" has taken the world by storm.</p>
-        <div class="artist-stats">
-          <div class="artist-stat"><div class="num">124K</div><div class="lbl">Followers</div></div>
-          <div class="artist-stat"><div class="num">48</div><div class="lbl">Tracks</div></div>
-          <div class="artist-stat"><div class="num">8.2M</div><div class="lbl">Total Plays</div></div>
-        </div>
-        <div style="display:flex;gap:1rem;flex-wrap:wrap">
-          <a href="player.html" class="btn btn-primary">Play Latest</a>
-          <button class="btn btn-outline">Follow Artist</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── TRENDING TRACKS ── -->
+<!-- -- TRENDING TRACKS -- -->
 <section class="section section-alt">
   <div class="container">
     <div class="section-header">
-      <span class="section-label">🔥 Hot Right Now</span>
+      <span class="section-label">&#128293; Hot Right Now</span>
       <h2>Trending Tracks</h2>
-      <p>The most-played songs on SoundWave this week</p>
+      <p>The most-played songs on SMADS African Hits this week</p>
     </div>
-    <div class="track-list" id="trending-list"></div>
+    <div class="track-list" id="trending-list">
+      <div style="text-align:center;padding:3rem;color:var(--text-secondary)">Loading trending tracks...</div>
+    </div>
     <div style="text-align:center;margin-top:2rem">
       <a href="browse.html" class="btn btn-outline">View All Tracks</a>
     </div>
   </div>
 </section>
 
-<!-- ── BROWSE BY GENRE ── -->
+<!-- -- BROWSE BY GENRE -- -->
 <section class="section">
   <div class="container">
     <div class="section-header">
       <span class="section-label">Explore</span>
       <h2>Browse by Genre</h2>
     </div>
-    <div class="genre-grid">
-      <span class="genre-pill active" data-genre="all">All</span>
-      <span class="genre-pill" data-genre="Electronic">Electronic</span>
-      <span class="genre-pill" data-genre="Hip-Hop">Hip-Hop</span>
-      <span class="genre-pill" data-genre="R&B">R&amp;B</span>
-      <span class="genre-pill" data-genre="Pop">Pop</span>
-      <span class="genre-pill" data-genre="Rock">Rock</span>
-      <span class="genre-pill" data-genre="Lo-Fi">Lo-Fi</span>
-      <span class="genre-pill" data-genre="Jazz">Jazz</span>
-      <span class="genre-pill" data-genre="Classical">Classical</span>
-      <span class="genre-pill" data-genre="Synthwave">Synthwave</span>
+    <div class="genre-grid" role="group" aria-label="Filter by genre">
+      <button class="genre-pill active" data-genre="all" type="button">All</button>
+      <button class="genre-pill" data-genre="Afrobeats" type="button">Afrobeats</button>
+      <button class="genre-pill" data-genre="Amapiano" type="button">Amapiano</button>
+      <button class="genre-pill" data-genre="Highlife" type="button">Highlife</button>
+      <button class="genre-pill" data-genre="Bongo Flava" type="button">Bongo Flava</button>
+      <button class="genre-pill" data-genre="Afro-Pop" type="button">Afro-Pop</button>
+      <button class="genre-pill" data-genre="Afro-Soul" type="button">Afro-Soul</button>
+      <button class="genre-pill" data-genre="Gqom" type="button">Gqom</button>
+      <button class="genre-pill" data-genre="Kwaito" type="button">Kwaito</button>
+      <button class="genre-pill" data-genre="Afro-Hip-Hop" type="button">Afro-Hip-Hop</button>
     </div>
-    <div class="music-grid mt-4" id="home-grid"></div>
+    <div class="music-grid mt-4" id="home-grid">
+      <div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--text-secondary)">Loading music...</div>
+    </div>
   </div>
 </section>
 
-<!-- ── TOP ARTISTS ── -->
+<!-- -- TOP ARTISTS -- -->
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">&#11088; New &amp; Rising</span>
+      <h2>Rising Stars</h2>
+      <p>Fresh African talent breaking through this week</p>
+    </div>
+    <div class="music-grid" id="rising-grid">
+      <div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--text-secondary)">Loading rising stars...</div>
+    </div>
+  </div>
+</section>
+
+<!-- -- TOP ARTISTS -- -->
 <section class="section section-alt">
   <div class="container">
     <div class="section-header">
@@ -151,35 +152,36 @@
       <h2>Top Artists</h2>
       <p>Follow your favorites and never miss a new release</p>
     </div>
-    <div class="music-grid" id="artists-grid"></div>
+    <div class="music-grid" id="artists-grid">
+      <div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--text-secondary)">Loading artists...</div>
+    </div>
   </div>
 </section>
 
-<!-- ── CTA BANNER ── -->
+<!-- -- CTA BANNER -- -->
 <section class="section">
   <div class="container">
     <div style="background:var(--gradient);border-radius:20px;padding:4rem 3rem;text-align:center;position:relative;overflow:hidden">
-      <div style="position:absolute;inset:0;background:url('data:image/svg+xml,%3Csvg width=\'40\' height=\'40\' viewBox=\'0 0 40 40\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23fff\' fill-opacity=\'0.05\'%3E%3Ccircle cx=\'20\' cy=\'20\' r=\'2\'/%3E%3C/g%3E%3C/svg%3E')"></div>
       <div style="position:relative">
-        <h2 style="font-size:2.2rem;margin-bottom:1rem">Are You an Artist or Producer?</h2>
-        <p style="opacity:0.85;max-width:500px;margin:0 auto 2rem;font-size:1.05rem">Upload your music and reach millions of listeners worldwide. Simple pricing, powerful tools.</p>
+        <h2 style="font-size:2.2rem;margin-bottom:1rem">Are You an African Artist or Producer?</h2>
+        <p style="opacity:0.85;max-width:500px;margin:0 auto 2rem;font-size:1.05rem">Upload your music and reach listeners across Africa and the world. Simple pricing, powerful reach.</p>
         <a href="upload.html" class="btn" style="background:#fff;color:#6c63ff;font-weight:700;padding:0.8rem 2rem">Start Uploading Today</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── FOOTER ── -->
+<!-- -- FOOTER -- -->
 <footer class="footer">
   <div class="footer-grid">
     <div class="footer-brand">
-      <div class="nav-logo" style="font-size:1.3rem">SoundWave</div>
-      <p>The world's most open music platform. Stream, download, and share music freely.</p>
+      <div class="nav-logo" style="font-size:1.3rem">SMADS African Hits</div>
+      <p>Africa's most open music platform. Stream, download, and share African music freely.</p>
       <div class="footer-social">
-        <a href="#" class="social-btn" aria-label="Twitter">𝕏</a>
-        <a href="#" class="social-btn" aria-label="Instagram">📷</a>
-        <a href="#" class="social-btn" aria-label="YouTube">▶</a>
-        <a href="#" class="social-btn" aria-label="Discord">💬</a>
+        <a href="#" class="social-btn" aria-label="Twitter">&#120143;</a>
+        <a href="#" class="social-btn" aria-label="Instagram">&#128247;</a>
+        <a href="#" class="social-btn" aria-label="YouTube">&#9654;</a>
+        <a href="#" class="social-btn" aria-label="Discord">&#128172;</a>
       </div>
     </div>
     <div class="footer-col">
@@ -211,105 +213,209 @@
     </div>
   </div>
   <div class="footer-bottom">
-    <p>© 2026 SoundWave. All rights reserved.</p>
-    <p>Free to listen · Paid to upload · Built for music lovers</p>
+    <p>� 2026 SMADS African Hits. All rights reserved.</p>
+    <p>Free to listen � Paid to upload � Built for African music lovers</p>
   </div>
 </footer>
 
-<!-- ── PLAYER BAR ── -->
-<div class="player-bar" id="player-bar">
+<!-- -- PLAYER BAR -- -->
+<div class="player-bar" id="player-bar" role="region" aria-label="Music player">
   <div class="player-track">
-    <img class="player-cover" src="https://picsum.photos/seed/t1/300/300" alt="Now Playing">
+    <img class="player-cover" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='8' fill='%231a1a2e'/%3E%3Cpath d='M16 32V16l20 8-20 8z' fill='%236c63ff' opacity='0.7'/%3E%3C/svg%3E" alt="Now Playing">
     <div class="player-info">
-      <div class="player-title">Neon Dreams</div>
-      <div class="player-artist">Luna Waves</div>
+      <div class="player-title">Select a track</div>
+      <div class="player-artist">�</div>
     </div>
-    <button class="action-btn liked" title="Liked">♥</button>
+    <button class="action-btn" title="Like" aria-label="Like this track">&#9825;</button>
   </div>
   <div class="player-controls">
     <div class="player-btns">
-      <button class="ctrl-btn" title="Shuffle">⇄</button>
-      <button class="ctrl-btn" title="Previous">⏮</button>
-      <button class="ctrl-btn play-pause" title="Play/Pause">
+      <button class="ctrl-btn" title="Shuffle" aria-label="Shuffle">&#8652;</button>
+      <button class="ctrl-btn" title="Previous" aria-label="Previous track">&#9664;</button>
+      <button class="ctrl-btn play-pause" title="Play/Pause" aria-label="Play or pause">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
       </button>
-      <button class="ctrl-btn" title="Next">⏭</button>
-      <button class="ctrl-btn" title="Repeat">↻</button>
+      <button class="ctrl-btn" title="Next" aria-label="Next track">&#9654;</button>
+      <button class="ctrl-btn" title="Repeat" aria-label="Repeat">&#8635;</button>
     </div>
     <div class="progress-bar">
-      <span class="progress-time">1:18</span>
-      <div class="progress-track"><div class="progress-fill"></div></div>
-      <span class="progress-time">3:42</span>
+      <span class="progress-time">0:00</span>
+      <div class="progress-track"><div class="progress-fill" style="width:0%"></div></div>
+      <span class="progress-time">0:00</span>
     </div>
   </div>
   <div class="player-extras">
-    <a href="player.html" class="btn-icon" title="Full Player">⤢</a>
-    <button class="action-btn" title="Download">↓</button>
+    <a href="player.html" class="btn-icon" title="Full Player">&#9654;</a>
     <div class="volume-control">
-      <span style="color:var(--text-secondary);font-size:0.9rem">🔊</span>
+      <span style="color:var(--text-secondary);font-size:0.9rem">&#128266;</span>
       <input type="range" class="volume-slider" min="0" max="100" value="75" aria-label="Volume">
     </div>
   </div>
 </div>
 
-<!-- ── TOAST ── -->
-<div class="toast" id="toast" role="alert">
-  <span class="toast-icon">✓</span>
+<!-- -- AUTH MODAL -- -->
+<div class="modal-overlay" id="auth-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="auth-modal-title">Sign In</h3>
+      <button class="modal-close" aria-label="Close">&times;</button>
+    </div>
+    <div class="tabs-wrapper">
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="login">Sign In</button>
+        <button class="tab-btn" data-tab="register">Create Account</button>
+      </div>
+      <div class="tab-content active" id="tab-login">
+        <form id="login-form">
+          <div class="form-group">
+            <label class="form-label">Email or Username</label>
+            <input type="text" name="login" class="form-input" placeholder="your@email.com" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <input type="password" name="password" class="form-input" placeholder="��������" required>
+          </div>
+                    <div style="text-align:right;margin-top:-0.5rem;margin-bottom:1rem">
+            <a href="reset-password.html" style="font-size:0.82rem;color:var(--primary);text-decoration:none">Forgot password?</a>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%">Sign In</button>
+        </form>
+      </div>
+      <div class="tab-content" id="tab-register">
+        <form id="register-form">
+          <div class="grid-2">
+            <div class="form-group">
+              <label class="form-label">Username</label>
+              <input type="text" name="username" class="form-input" placeholder="yourname" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Display Name</label>
+              <input type="text" name="display_name" class="form-input" placeholder="Your Name" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input type="email" name="email" class="form-input" placeholder="your@email.com" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <input type="password" name="password" class="form-input" placeholder="Min 6 characters" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">I am a...</label>
+            <select name="role" class="form-select">
+              <option value="listener">Listener (Free)</option>
+              <option value="artist">Artist / Producer</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%">Create Account</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- -- TOAST -- -->
+<div class="toast" id="toast" role="alert" aria-live="polite" aria-atomic="true">
+  <span class="toast-icon">&#10003;</span>
   <span class="toast-msg">Action completed</span>
 </div>
 
 <script src="js/app.js"></script>
 <script>
-  // Populate trending tracks
+(async () => {
+  // Load hero stats
+  try {
+    const data = await apiFetch('/api/admin/stats');
+    const s = data.stats;
+    document.getElementById('stat-tracks').textContent  = formatNumber(s.total_tracks);
+    document.getElementById('stat-artists').textContent = formatNumber(s.total_users);
+    document.getElementById('stat-plays').textContent   = formatNumber(s.total_downloads || s.total_plays);
+  } catch { /* stats not critical */ }
+
+  // Load trending tracks
   const trendingList = document.getElementById('trending-list');
-  MOCK_TRACKS.slice(0, 6).forEach((t, i) => trendingList.appendChild(createTrackRow(t, i)));
+  try {
+    const data = await apiFetch('/api/tracks/trending?limit=6');
+    trendingList.innerHTML = '';
+    if (!data.tracks?.length) {
+      trendingList.innerHTML = '<p style="text-align:center;padding:2rem;color:var(--text-secondary)">No tracks yet. Be the first to upload!</p>';
+    } else {
+      data.tracks.forEach((t, i) => trendingList.appendChild(createTrackRow(t, i)));
+    }
+  } catch { trendingList.innerHTML = '<p style="text-align:center;padding:2rem;color:var(--text-secondary)">Could not load tracks.</p>'; }
 
-  // Populate home grid
+  // Load home grid
   const homeGrid = document.getElementById('home-grid');
-  MOCK_TRACKS.forEach(t => homeGrid.appendChild(createMusicCard(t)));
+  try {
+    const data = await apiFetch('/api/tracks/list?limit=8&sort=trending');
+    homeGrid.innerHTML = '';
+    if (!data.tracks?.length) {
+      homeGrid.innerHTML = '<p style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--text-secondary)">No tracks uploaded yet. Be the first!</p>';
+    } else {
+      data.tracks.forEach(t => homeGrid.appendChild(createMusicCard(t)));
+    }
+  } catch { homeGrid.innerHTML = '<p style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--text-secondary)">Could not load tracks.</p>'; }
 
-  // Populate artists grid
+  // Load rising stars
+  const risingGrid = document.getElementById('rising-grid');
+  if (risingGrid) {
+    try {
+      const data = await apiFetch('/api/tracks/rising?limit=4');
+      risingGrid.innerHTML = '';
+      if (data.tracks?.length) data.tracks.forEach(t => risingGrid.appendChild(createMusicCard(t)));
+    } catch { /* non-critical */ }
+  }
+
+  // Load artists
   const artistsGrid = document.getElementById('artists-grid');
-  MOCK_ARTISTS.forEach(a => {
-    const card = document.createElement('div');
-    card.className = 'music-card';
-    card.innerHTML = `
-      <div class="music-card-cover">
-        <img src="${a.avatar}" alt="${a.name}" loading="lazy">
-        <div class="play-overlay">
-          <button class="play-btn-large" aria-label="Play ${a.name}">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
-          </button>
-        </div>
-      </div>
-      <div class="music-card-body">
-        <div class="music-card-title">${a.name}</div>
-        <div class="music-card-artist">${a.genre}</div>
-        <div class="music-card-meta">
-          <span class="music-card-genre">${a.followers} followers</span>
-          <button class="btn btn-primary btn-sm" style="border-radius:50px">Follow</button>
-        </div>
-      </div>`;
-    card.querySelector('.btn-primary').addEventListener('click', (e) => {
-      e.stopPropagation();
-      showToast(`Following ${a.name}`);
-    });
-    artistsGrid.appendChild(card);
-  });
+  try {
+    const data = await apiFetch('/api/tracks/artists?limit=8');
+    artistsGrid.innerHTML = '';
+    if (!data.artists?.length) {
+      artistsGrid.innerHTML = '<p style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--text-secondary)">No artists yet.</p>';
+    } else {
+      data.artists.forEach(a => {
+        const card = document.createElement('div');
+        card.className = 'music-card';
+        const avatarSrc = a.avatar_url || 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'300\' viewBox=\'0 0 300 300\'%3E%3Crect width=\'300\' height=\'300\' fill=\'%231a1a2e\'/%3E%3Ccircle cx=\'150\' cy=\'120\' r=\'55\' fill=\'%236c63ff\' opacity=\'0.5\'/%3E%3Cellipse cx=\'150\' cy=\'260\' rx=\'90\' ry=\'60\' fill=\'%236c63ff\' opacity=\'0.3\'/%3E%3C/svg%3E';
+        card.innerHTML = `
+          <div class="music-card-cover">
+            <img src="${avatarSrc}" alt="${escHtml(a.display_name)}" loading="lazy">
+            <div class="play-overlay">
+              <button class="play-btn-large" aria-label="View ${escHtml(a.display_name)}">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="music-card-body">
+            <div class="music-card-title">${escHtml(a.display_name)}${a.is_verified ? ' <span style="color:var(--accent);font-size:0.75rem">&#10003;</span>' : ''}</div>
+            <div class="music-card-artist">${formatNumber(a.track_count)} tracks</div>
+            <div class="music-card-meta">
+              <span class="music-card-genre">${formatNumber(a.total_plays)} plays</span>
+              <button class="btn btn-primary btn-sm follow-btn" style="border-radius:50px" data-id="${a.id}">Follow</button>
+            </div>
+          </div>`;
+        card.querySelector('.follow-btn').addEventListener('click', async (e) => {
+          e.stopPropagation();
+          if (!appState.currentUser) { showToast('Sign in to follow artists', 'error'); return; }
+          try {
+            const fd = new FormData(); fd.append('target_id', a.id);
+            const res = await apiFetch('/api/user/follow', { method: 'POST', body: fd });
+            e.currentTarget.textContent = res.following ? 'Following' : 'Follow';
+            showToast(res.following ? `Following ${a.display_name}` : `Unfollowed ${a.display_name}`);
+          } catch (err) { showToast(err.message, 'error'); }
+        });
+        artistsGrid.appendChild(card);
+      });
+    }
+  } catch { artistsGrid.innerHTML = '<p style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--text-secondary)">Could not load artists.</p>'; }
 
-  // Genre filter on home page
-  document.querySelectorAll('.genre-pill').forEach(pill => {
-    pill.addEventListener('click', () => {
-      document.querySelectorAll('.genre-pill').forEach(p => p.classList.remove('active'));
-      pill.classList.add('active');
-      const genre = pill.dataset.genre;
-      const filtered = genre === 'all' ? MOCK_TRACKS : MOCK_TRACKS.filter(t => t.genre === genre);
-      homeGrid.innerHTML = '';
-      filtered.forEach(t => homeGrid.appendChild(createMusicCard(t)));
-      if (!filtered.length) homeGrid.innerHTML = '<p class="text-muted" style="grid-column:1/-1;padding:2rem;text-align:center">No tracks in this genre yet.</p>';
-    });
-  });
+  // Genre filter
+  initGenreFilter('home-grid');
+})();
 </script>
 </body>
 </html>
- 
+
+

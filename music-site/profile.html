@@ -1,9 +1,11 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Profile – SoundWave</title>
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <title>Profile � SMADS African Hits</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <style>
@@ -20,10 +22,13 @@
 </head>
 <body>
 
-<nav class="navbar">
+<!-- Skip to main content (accessibility) -->
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<nav class="navbar" role="navigation" aria-label="Main navigation">
   <a href="index.html" class="nav-logo">
     <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="15" stroke="url(#g1)" stroke-width="2"/><path d="M10 20V12l12 4-12 4z" fill="url(#g1)"/><defs><linearGradient id="g1" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse"><stop stop-color="#6c63ff"/><stop offset="1" stop-color="#ff6584"/></linearGradient></defs></svg>
-    SoundWave
+    SMADS African Hits
   </a>
   <div class="nav-links">
     <a href="index.html">Home</a><a href="browse.html">Browse</a>
@@ -31,34 +36,35 @@
     <a href="about.html">About</a><a href="contact.html">Contact</a>
   </div>
   <div class="nav-actions">
-    <a href="profile.html" class="btn btn-primary btn-sm">My Profile</a>
+    <button type="button" class="btn btn-outline btn-sm nav-signin" data-modal="auth-modal">Sign In</button>
+    <a href="profile.html" class="btn btn-outline btn-sm nav-profile" style="display:none">My Profile</a>
+    <button class="btn btn-outline btn-sm" id="logout-btn" style="display:none">Logout</button>
+    <a href="upload.html" class="btn btn-primary btn-sm">Upload Music</a>
   </div>
-  <div class="hamburger"><span></span><span></span><span></span></div>
+  <button class="hamburger" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </nav>
 <div class="mobile-menu">
   <a href="index.html">Home</a><a href="browse.html">Browse</a><a href="player.html">Player</a>
   <a href="upload.html">Upload</a><a href="profile.html">Profile</a><a href="about.html">About</a>
   <a href="contact.html">Contact</a><a href="faq.html">FAQ</a>
+  <button id="logout-btn-mobile" style="display:none">🚪 Logout</button>
 </div>
 
 <!-- Profile Header -->
-<div class="profile-header">
+<div class="profile-header" id="main-content">
   <div class="profile-info">
     <div class="avatar-wrap">
-      <img src="https://picsum.photos/seed/profile/300/300" alt="Profile" class="profile-avatar">
-      <div class="edit-profile-btn" title="Edit photo">✏️</div>
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Crect width='120' height='120' rx='60' fill='%231a1a2e'/%3E%3Ccircle cx='60' cy='48' r='22' fill='%236c63ff' opacity='0.6'/%3E%3Cellipse cx='60' cy='100' rx='36' ry='24' fill='%236c63ff' opacity='0.4'/%3E%3C/svg%3E" alt="Your profile avatar" class="profile-avatar" id="profile-avatar-img">
+      <div class="edit-profile-btn" title="Edit photo">??</div>
     </div>
     <div class="profile-details">
-      <h1>Alex Martinez</h1>
-      <p class="text-muted">@alexmartinez · Joined January 2025</p>
-      <div class="profile-badges">
-        <span class="badge badge-artist">Artist</span>
-        <span class="badge badge-verified">✓ Verified</span>
-      </div>
-      <div style="display:flex;gap:2rem;margin-top:1rem">
-        <div><strong>48</strong> <span class="text-muted" style="font-size:0.85rem">Tracks</span></div>
-        <div><strong>12.4K</strong> <span class="text-muted" style="font-size:0.85rem">Followers</span></div>
-        <div><strong>2.1M</strong> <span class="text-muted" style="font-size:0.85rem">Total Plays</span></div>
+      <h1>Loading...</h1>
+      <p class="text-muted">Loading profile...</p>
+      <div class="profile-badges" id="profile-badges"></div>
+      <div style="display:flex;gap:2rem;margin-top:1rem" id="profile-counts">
+        <div><strong id="profile-track-count">�</strong> <span class="text-muted" style="font-size:0.85rem">Tracks</span></div>
+        <div><strong id="profile-followers">�</strong> <span class="text-muted" style="font-size:0.85rem">Followers</span></div>
+        <div><strong id="profile-plays">�</strong> <span class="text-muted" style="font-size:0.85rem">Total Plays</span></div>
       </div>
     </div>
     <div style="margin-left:auto;display:flex;gap:0.75rem;align-items:flex-start">
@@ -71,11 +77,11 @@
 <!-- Stats Row -->
 <section style="padding:2rem;background:var(--bg-card2);border-bottom:1px solid var(--border)">
   <div class="stats-grid container">
-    <div class="stat-card"><div class="stat-icon">🎵</div><div class="stat-value">48</div><div class="stat-label">Uploaded Tracks</div></div>
-    <div class="stat-card"><div class="stat-icon">▶️</div><div class="stat-value">2.1M</div><div class="stat-label">Total Plays</div></div>
-    <div class="stat-card"><div class="stat-icon">♥</div><div class="stat-value">89K</div><div class="stat-label">Total Likes</div></div>
-    <div class="stat-card"><div class="stat-icon">↓</div><div class="stat-value">34K</div><div class="stat-label">Downloads</div></div>
-    <div class="stat-card"><div class="stat-icon">👥</div><div class="stat-value">12.4K</div><div class="stat-label">Followers</div></div>
+    <div class="stat-card" id="stat-tracks"><div class="stat-icon">??</div><div class="stat-value">�</div><div class="stat-label">Uploaded Tracks</div></div>
+    <div class="stat-card" id="stat-plays"><div class="stat-icon">??</div><div class="stat-value">�</div><div class="stat-label">Total Plays</div></div>
+    <div class="stat-card" id="stat-likes"><div class="stat-icon">?</div><div class="stat-value">�</div><div class="stat-label">Total Likes</div></div>
+    <div class="stat-card" id="stat-downloads"><div class="stat-icon">?</div><div class="stat-value">�</div><div class="stat-label">Downloads</div></div>
+    <div class="stat-card" id="stat-followers"><div class="stat-icon">??</div><div class="stat-value">�</div><div class="stat-label">Followers</div></div>
   </div>
 </section>
 
@@ -95,14 +101,12 @@
         <h3>My Tracks</h3>
         <a href="upload.html" class="btn btn-primary btn-sm">+ Upload New</a>
       </div>
-      <!-- TODO: Load from backend API /api/user/tracks -->
       <div class="track-list" id="uploads-list"></div>
     </div>
 
     <!-- Favorites Tab -->
     <div class="tab-content" id="tab-favorites">
       <h3 style="margin-bottom:1.5rem">Liked Tracks</h3>
-      <!-- TODO: Load from backend API /api/user/favorites -->
       <div class="music-grid" id="favorites-grid"></div>
     </div>
 
@@ -112,7 +116,6 @@
         <h3>My Playlists</h3>
         <button class="btn btn-primary btn-sm" data-modal="create-playlist-modal">+ New Playlist</button>
       </div>
-      <!-- TODO: Load from backend API /api/user/playlists -->
       <div class="music-grid" id="playlists-grid"></div>
     </div>
 
@@ -120,16 +123,23 @@
     <div class="tab-content" id="tab-settings">
       <div style="max-width:600px">
         <h3 style="margin-bottom:1.5rem">Account Settings</h3>
-        <!-- TODO: Connect to backend user update API -->
         <div class="card">
           <h4 style="margin-bottom:1.5rem">Profile Information</h4>
           <div class="grid-2">
-            <div class="form-group"><label class="form-label">Display Name</label><input type="text" class="form-input" value="Alex Martinez"></div>
-            <div class="form-group"><label class="form-label">Username</label><input type="text" class="form-input" value="@alexmartinez"></div>
+            <div class="form-group"><label class="form-label">Display Name</label><input type="text" name="display_name" id="settings-display-name" class="form-input" placeholder="Your display name"></div>
+            <div class="form-group"><label class="form-label">Username</label><input type="text" class="form-input" id="settings-username" disabled style="opacity:0.6" placeholder="@username"></div>
           </div>
-          <div class="form-group"><label class="form-label">Bio</label><textarea class="form-textarea" style="min-height:80px">Electronic music producer from NYC. Creating sounds that move people.</textarea></div>
-          <div class="form-group"><label class="form-label">Website</label><input type="url" class="form-input" placeholder="https://yoursite.com"></div>
+          <div class="form-group"><label class="form-label">Bio</label><textarea name="bio" id="settings-bio" class="form-textarea" style="min-height:80px" placeholder="Tell listeners about yourself..."></textarea></div>
+          <div class="form-group"><label class="form-label">Website</label><input type="url" name="website" id="settings-website" class="form-input" placeholder="https://yoursite.com"></div>
           <button class="btn btn-primary" id="save-settings">Save Changes</button>
+        </div>
+        <!-- Upload Plan Status (artists only) -->
+        <div class="card mt-3" id="plan-status-card" style="display:none">
+          <h4 style="margin-bottom:1rem">Upload Plan</h4>
+          <div id="plan-status-body" style="color:var(--text-secondary);font-size:0.9rem">Loading...</div>
+          <a href="payment.html" class="btn btn-primary btn-sm" style="margin-top:1rem;display:inline-block">
+            Upgrade / Renew Plan
+          </a>
         </div>
         <div class="card mt-3">
           <h4 style="margin-bottom:1rem">Notification Preferences</h4>
@@ -150,20 +160,54 @@
   </div>
 </section>
 
-<!-- Edit Profile Modal -->
-<div class="modal-overlay" id="edit-profile-modal">
+<!-- Auth Modal -->
+<div class="modal-overlay" id="auth-modal">
   <div class="modal">
-    <div class="modal-header"><h3>Edit Profile</h3><button class="modal-close">✕</button></div>
-    <div class="form-group"><label class="form-label">Display Name</label><input type="text" class="form-input" value="Alex Martinez"></div>
-    <div class="form-group"><label class="form-label">Bio</label><textarea class="form-textarea" style="min-height:80px">Electronic music producer from NYC.</textarea></div>
-    <button class="btn btn-primary" style="width:100%" onclick="document.getElementById('edit-profile-modal').classList.remove('open');showToast('Profile updated!')">Save Changes</button>
+    <div class="modal-header"><h3>Sign In</h3><button class="modal-close" aria-label="Close">?</button></div>
+    <div class="tabs-wrapper">
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="login">Sign In</button>
+        <button class="tab-btn" data-tab="register">Create Account</button>
+      </div>
+      <div class="tab-content active" id="tab-login">
+        <form id="login-form">
+          <div class="form-group"><label class="form-label">Email or Username</label><input type="text" name="login" class="form-input" placeholder="your@email.com" required></div>
+          <div class="form-group"><label class="form-label">Password</label><input type="password" name="password" class="form-input" placeholder="��������" required></div>
+                    <div style="text-align:right;margin-top:-0.5rem;margin-bottom:1rem">
+            <a href="reset-password.html" style="font-size:0.82rem;color:var(--primary);text-decoration:none">Forgot password?</a>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%">Sign In</button>
+        </form>
+      </div>
+      <div class="tab-content" id="tab-register">
+        <form id="register-form">
+          <div class="grid-2">
+            <div class="form-group"><label class="form-label">Username</label><input type="text" name="username" class="form-input" placeholder="yourname" required></div>
+            <div class="form-group"><label class="form-label">Display Name</label><input type="text" name="display_name" class="form-input" placeholder="Your Name" required></div>
+          </div>
+          <div class="form-group"><label class="form-label">Email</label><input type="email" name="email" class="form-input" placeholder="your@email.com" required></div>
+          <div class="form-group"><label class="form-label">Password</label><input type="password" name="password" class="form-input" placeholder="Min 6 characters" required></div>
+          <div class="form-group"><label class="form-label">I am a...</label><select name="role" class="form-select"><option value="listener">Listener (Free)</option><option value="artist">Artist / Producer</option></select></div>
+          <button type="submit" class="btn btn-primary" style="width:100%">Create Account</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Profile Modal -->
+<div class="modal-overlay" id="edit-profile-modal">  <div class="modal">
+    <div class="modal-header"><h3>Edit Profile</h3><button class="modal-close">?</button></div>
+    <div class="form-group"><label class="form-label">Display Name</label><input type="text" id="edit-display-name" class="form-input" maxlength="100" placeholder="Your display name"></div>
+    <div class="form-group"><label class="form-label">Bio</label><textarea id="edit-bio" class="form-textarea" style="min-height:80px" maxlength="1000" placeholder="Tell listeners about yourself..."></textarea></div>
+    <button class="btn btn-primary" style="width:100%" id="edit-profile-save">Save Changes</button>
   </div>
 </div>
 
 <!-- Create Playlist Modal -->
 <div class="modal-overlay" id="create-playlist-modal">
   <div class="modal">
-    <div class="modal-header"><h3>Create Playlist</h3><button class="modal-close">✕</button></div>
+    <div class="modal-header"><h3>Create Playlist</h3><button class="modal-close">?</button></div>
     <div class="form-group"><label class="form-label">Playlist Name</label><input type="text" class="form-input" placeholder="e.g. Late Night Vibes"></div>
     <div class="form-group"><label class="form-label">Description (optional)</label><textarea class="form-textarea" style="min-height:80px" placeholder="What's this playlist about?"></textarea></div>
     <div class="form-group">
@@ -171,67 +215,250 @@
         <input type="checkbox" style="accent-color:var(--primary)"> Make playlist public
       </label>
     </div>
-    <!-- TODO: POST to backend /api/playlists -->
-    <button class="btn btn-primary" style="width:100%" onclick="document.getElementById('create-playlist-modal').classList.remove('open');showToast('Playlist created!')">Create Playlist</button>
+    <button class="btn btn-primary" style="width:100%" id="create-playlist-submit">Create Playlist</button>
   </div>
 </div>
 
-<div class="player-bar" id="player-bar">
+<div class="player-bar" id="player-bar" role="region" aria-label="Music player">
   <div class="player-track">
-    <img class="player-cover" src="https://picsum.photos/seed/t1/300/300" alt="Now Playing">
-    <div class="player-info"><div class="player-title">Select a track</div><div class="player-artist">–</div></div>
+    <img class="player-cover" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='8' fill='%231a1a2e'/%3E%3Cpath d='M16 32V16l20 8-20 8z' fill='%236c63ff' opacity='0.7'/%3E%3C/svg%3E" alt="Now Playing">
+    <div class="player-info"><div class="player-title">Select a track</div><div class="player-artist">�</div></div>
   </div>
   <div class="player-controls">
     <div class="player-btns">
-      <button class="ctrl-btn">⇄</button><button class="ctrl-btn">⏮</button>
-      <button class="ctrl-btn play-pause"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg></button>
-      <button class="ctrl-btn">⏭</button><button class="ctrl-btn">↻</button>
+      <button class="ctrl-btn" aria-label="Shuffle">?</button>
+      <button class="ctrl-btn" aria-label="Previous track">?</button>
+      <button class="ctrl-btn play-pause" aria-label="Play or pause"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg></button>
+      <button class="ctrl-btn" aria-label="Next track">?</button>
+      <button class="ctrl-btn" aria-label="Repeat">?</button>
     </div>
     <div class="progress-bar">
       <span class="progress-time">0:00</span>
-      <div class="progress-track"><div class="progress-fill" style="width:0%"></div></div>
+      <div class="progress-track" role="progressbar" aria-label="Track progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><div class="progress-fill" style="width:0%"></div></div>
       <span class="progress-time">0:00</span>
     </div>
   </div>
   <div class="player-extras">
-    <a href="player.html" class="btn-icon">⤢</a>
-    <div class="volume-control"><span style="color:var(--text-secondary)">🔊</span><input type="range" class="volume-slider" min="0" max="100" value="75" aria-label="Volume"></div>
+    <a href="player.html" class="btn-icon" aria-label="Open full player">?</a>
+    <div class="volume-control"><span style="color:var(--text-secondary)" aria-hidden="true">??</span><input type="range" class="volume-slider" min="0" max="100" value="75" aria-label="Volume"></div>
   </div>
 </div>
-<div class="toast" id="toast" role="alert"><span class="toast-icon">✓</span><span class="toast-msg"></span></div>
+<div class="toast" id="toast" role="alert" aria-live="polite" aria-atomic="true"><span class="toast-icon">?</span><span class="toast-msg"></span></div>
 
 <script src="js/app.js"></script>
 <script>
-  // Populate uploads
+(async () => {
+  // loadCurrentUser() was already called by app.js DOMContentLoaded.
+  // Wait for it to finish by checking appState, or re-fetch if needed.
+  if (!appState.currentUser) {
+    await loadCurrentUser();
+  }
+  if (!appState.currentUser) {
+    // Not logged in — redirect immediately, no delay
+    location.replace('index.html');
+    return;
+  }
+
+  const user = appState.currentUser;
+
+  // Load profile header from API
+  try {
+    const data = await apiFetch(`/api/user/profile`);
+    const p = data.profile;
+    document.querySelector('.profile-details h1').textContent = p.display_name;
+    document.querySelector('.profile-details p').textContent = `@${p.username} � Joined ${new Date(p.created_at).toLocaleDateString('en-US', {month:'long', year:'numeric'})}`;
+    if (p.avatar_url) document.querySelector('.profile-avatar').src = p.avatar_url;
+
+    // Badges
+    const badgesEl = document.getElementById('profile-badges');
+    if (badgesEl) {
+      badgesEl.innerHTML = '';
+      if (p.role === 'artist') badgesEl.innerHTML += '<span class="badge badge-artist">Artist</span>';
+      if (p.is_verified) badgesEl.innerHTML += '<span class="badge badge-verified">? Verified</span>';
+    }
+
+    // Counts
+    const tc = document.getElementById('profile-track-count');
+    const fl = document.getElementById('profile-followers');
+    const pl = document.getElementById('profile-plays');
+    if (tc) tc.textContent = formatNumber(p.track_count);
+    if (fl) fl.textContent = formatNumber(p.followers);
+    if (pl) pl.textContent = formatNumber(p.total_plays);
+
+    // Stats cards
+    document.querySelector('#stat-tracks .stat-value').textContent   = formatNumber(p.track_count);
+    document.querySelector('#stat-plays .stat-value').textContent    = formatNumber(p.total_plays);
+    document.querySelector('#stat-likes .stat-value').textContent    = formatNumber(p.total_likes);
+    document.querySelector('#stat-downloads .stat-value').textContent= formatNumber(p.total_downloads);
+    document.querySelector('#stat-followers .stat-value').textContent= formatNumber(p.followers);
+
+    // Pre-fill settings form with real data
+    const nameEl = document.getElementById('settings-display-name');
+    const bioEl  = document.getElementById('settings-bio');
+    const webEl  = document.getElementById('settings-website');
+    const userEl = document.getElementById('settings-username');
+    if (nameEl) nameEl.value = p.display_name || '';
+    if (bioEl)  bioEl.value  = p.bio || '';
+    if (webEl)  webEl.value  = p.website || '';
+    if (userEl) userEl.value = '@' + (p.username || '');
+  } catch { /* non-critical */ }
+
+  // Load uploads
   const uploadsList = document.getElementById('uploads-list');
-  MOCK_TRACKS.slice(0, 5).forEach((t, i) => uploadsList.appendChild(createTrackRow(t, i)));
+  try {
+    const data = await apiFetch('/api/user/tracks');
+    uploadsList.innerHTML = '';
+    if (!data.tracks?.length) {
+      uploadsList.innerHTML = '<p style="color:var(--text-secondary);padding:2rem;text-align:center">No tracks uploaded yet. <a href="upload.html" style="color:var(--primary)">Upload your first track!</a></p>';
+    } else {
+      data.tracks.forEach((t, i) => {
+        const row = createTrackRow(t, i);
+        // Add delete button
+        const del = document.createElement('button');
+        del.className = 'action-btn';
+        del.title = 'Delete';
+        del.textContent = '??';
+        del.style.color = 'var(--secondary)';
+        del.addEventListener('click', async (e) => {
+          e.stopPropagation();
+          if (!confirm(`Delete "${t.title}"? This cannot be undone.`)) return;
+          try {
+            await apiFetch(`/api/tracks/${t.id}`, { method: 'DELETE' });
+            row.remove();
+            showToast('Track deleted.');
+          } catch (err) { showToast(err.message, 'error'); }
+        });
+        row.querySelector('.track-actions')?.appendChild(del);
+        uploadsList.appendChild(row);
+      });
+    }
+  } catch { uploadsList.innerHTML = '<p style="color:var(--text-secondary);padding:2rem;text-align:center">Could not load tracks.</p>'; }
 
-  // Populate favorites
+  // Load favorites
   const favGrid = document.getElementById('favorites-grid');
-  MOCK_TRACKS.filter(t => t.liked).forEach(t => favGrid.appendChild(createMusicCard(t)));
+  try {
+    const data = await apiFetch('/api/user/favorites');
+    favGrid.innerHTML = '';
+    if (!data.tracks?.length) {
+      favGrid.innerHTML = '<p style="grid-column:1/-1;color:var(--text-secondary);padding:2rem;text-align:center">No liked tracks yet. <a href="browse.html" style="color:var(--primary)">Browse music</a> and like some!</p>';
+    } else {
+      data.tracks.forEach(t => favGrid.appendChild(createMusicCard(t)));
+    }
+  } catch { favGrid.innerHTML = '<p style="grid-column:1/-1;color:var(--text-secondary);padding:2rem;text-align:center">Could not load favorites.</p>'; }
 
-  // Populate playlists
-  const playlists = [
-    { name: 'My Favorites', count: 24, covers: [1,2,3,4] },
-    { name: 'Late Night Vibes', count: 12, covers: [5,6,7,8] },
-    { name: 'Workout Mix', count: 18, covers: [3,4,5,6] },
-  ];
+  // Load playlists
   const playlistsGrid = document.getElementById('playlists-grid');
-  playlists.forEach(pl => {
-    const card = document.createElement('div');
-    card.className = 'playlist-card';
-    card.innerHTML = `
-      <div class="playlist-cover">
-        ${pl.covers.map(n => `<img src="https://picsum.photos/seed/t${n}/150/150" alt="">`).join('')}
-      </div>
-      <div class="playlist-info">
-        <h4>${pl.name}</h4>
-        <p>${pl.count} tracks</p>
-      </div>`;
-    playlistsGrid.appendChild(card);
+  try {
+    const data = await apiFetch('/api/user/playlists');
+    playlistsGrid.innerHTML = '';
+    if (!data.playlists?.length) {
+      playlistsGrid.innerHTML = '<p style="grid-column:1/-1;color:var(--text-secondary);padding:2rem;text-align:center">No playlists yet. Create your first one!</p>';
+    } else {
+      data.playlists.forEach(pl => {
+        const card = document.createElement('div');
+        card.className = 'playlist-card';
+        const covers = pl.covers?.length
+          ? pl.covers.map(c => `<img src="${c}" alt="">`).join('')
+          : '<div style="background:var(--bg-card2);display:flex;align-items:center;justify-content:center;font-size:2rem;grid-column:1/-1">??</div>';
+        card.innerHTML = `
+          <div class="playlist-cover">${covers}</div>
+          <div class="playlist-info">
+            <h4>${escHtml(pl.name)}</h4>
+            <p>${pl.track_count} tracks</p>
+          </div>`;
+        playlistsGrid.appendChild(card);
+      });
+    }
+  } catch { playlistsGrid.innerHTML = '<p style="grid-column:1/-1;color:var(--text-secondary);padding:2rem;text-align:center">Could not load playlists.</p>'; }
+
+  // Load plan status for artists
+  if (user.role === 'artist' && !user.is_admin) {
+    const planCard = document.getElementById('plan-status-card');
+    const planBody = document.getElementById('plan-status-body');
+    if (planCard) planCard.style.display = '';
+    try {
+      const ps = await apiFetch('/api/user/plan_status');
+      if (planBody) {
+        if (ps.active) {
+          planBody.innerHTML = `
+            <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem">
+              <span style="color:var(--accent);font-size:1.1rem">✓</span>
+              <strong style="color:var(--accent)">${escHtml(ps.label || ps.plan)} — Active</strong>
+            </div>
+            ${ps.expires_at ? `<p style="margin:0;font-size:0.82rem">Expires: ${new Date(ps.expires_at).toLocaleDateString()}</p>` : ''}
+            ${ps.plan === 'single' ? `<p style="margin:0.25rem 0 0;font-size:0.82rem">Uploads used: ${ps.total_uploads}/1</p>` : ''}
+            ${ps.plan !== 'single' ? `<p style="margin:0.25rem 0 0;font-size:0.82rem">Uploads this month: ${ps.uploads_this_month}</p>` : ''}`;
+        } else {
+          planBody.innerHTML = `
+            <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem">
+              <span style="color:var(--secondary);font-size:1.1rem">⚠</span>
+              <strong style="color:var(--secondary)">${escHtml(ps.message || 'No active plan')}</strong>
+            </div>`;
+        }
+      }
+    } catch { if (planBody) planBody.textContent = 'Could not load plan status.'; }
+  }
+
+  // Save settings
+  document.getElementById('save-settings')?.addEventListener('click', async () => {
+    const fd = new FormData();
+    fd.append('display_name', document.querySelector('[name="display_name"]')?.value || '');
+    fd.append('bio', document.querySelector('[name="bio"]')?.value || '');
+    fd.append('website', document.querySelector('[name="website"]')?.value || '');
+    try {
+      await apiFetch('/api/user/update', { method: 'POST', body: fd });
+      showToast('Settings saved!');
+    } catch (err) { showToast(err.message, 'error'); }
   });
 
-  document.getElementById('save-settings').addEventListener('click', () => showToast('Settings saved!'));
+  // Edit profile modal � pre-fill and save
+  document.getElementById('edit-profile-modal')?.addEventListener('click', () => {});
+  document.querySelector('[data-modal="edit-profile-modal"]')?.addEventListener('click', () => {
+    const p = appState.currentUser;
+    if (p) {
+      const nameEl = document.getElementById('edit-display-name');
+      const bioEl  = document.getElementById('edit-bio');
+      if (nameEl) nameEl.value = p.display_name || '';
+      if (bioEl)  bioEl.value  = p.bio || '';
+    }
+  });
+  document.getElementById('edit-profile-save')?.addEventListener('click', async () => {
+    const name = document.getElementById('edit-display-name')?.value.trim();
+    const bio  = document.getElementById('edit-bio')?.value.trim();
+    try {
+      const fd = new FormData();
+      if (name) fd.append('display_name', name);
+      if (bio !== undefined) fd.append('bio', bio);
+      await apiFetch('/api/user/update', { method: 'POST', body: fd });
+      document.getElementById('edit-profile-modal').classList.remove('open');
+      showToast('Profile updated!');
+      setTimeout(() => location.reload(), 800);
+    } catch (err) { showToast(err.message, 'error'); }
+  });
+
+  // Create playlist
+  document.getElementById('create-playlist-submit')?.addEventListener('click', async () => {
+    const name = document.querySelector('#create-playlist-modal input[type="text"]')?.value.trim();
+    const desc = document.querySelector('#create-playlist-modal textarea')?.value.trim();
+    const pub  = document.querySelector('#create-playlist-modal input[type="checkbox"]')?.checked ? '1' : '0';
+    if (!name) { showToast('Please enter a playlist name.', 'error'); return; }
+    try {
+      const fd = new FormData();
+      fd.append('name', name); fd.append('description', desc || ''); fd.append('is_public', pub);
+      await apiFetch('/api/user/playlists', { method: 'POST', body: fd });
+      document.getElementById('create-playlist-modal').classList.remove('open');
+      showToast('Playlist created!');
+      // Reload playlists
+      location.reload();
+    } catch (err) { showToast(err.message, 'error'); }
+  });
+
+  // Logout — delegate to app.js doLogout via the shared button handler
+  // (app.js initAuthModal already binds #logout-btn; no duplicate needed here)
+})();
 </script>
 </body>
 </html>
+
+
+

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Music Player – SoundWave</title>
+  <title>Music Player � SMADS African Hits</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <style>
@@ -24,10 +24,12 @@
 </head>
 <body>
 
-<nav class="navbar">
+<!-- Skip to main content (accessibility) -->
+<a href="#main-content" class="skip-link">Skip to main content</a>
+<nav class="navbar" role="navigation" aria-label="Main navigation">
   <a href="index.html" class="nav-logo">
     <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="15" stroke="url(#g1)" stroke-width="2"/><path d="M10 20V12l12 4-12 4z" fill="url(#g1)"/><defs><linearGradient id="g1" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse"><stop stop-color="#6c63ff"/><stop offset="1" stop-color="#ff6584"/></linearGradient></defs></svg>
-    SoundWave
+    SMADS African Hits
   </a>
   <div class="nav-links">
     <a href="index.html">Home</a><a href="browse.html">Browse</a>
@@ -35,41 +37,43 @@
     <a href="about.html">About</a><a href="contact.html">Contact</a>
   </div>
   <div class="nav-actions">
-    <a href="profile.html" class="btn btn-outline btn-sm">Sign In</a>
+    <button type="button" class="btn btn-outline btn-sm nav-signin" data-modal="auth-modal">Sign In</button>
+    <a href="profile.html" class="btn btn-outline btn-sm nav-profile" style="display:none">My Profile</a>
+    <button class="btn btn-outline btn-sm" id="logout-btn" style="display:none">Logout</button>
     <a href="upload.html" class="btn btn-primary btn-sm">Upload Music</a>
   </div>
-  <div class="hamburger"><span></span><span></span><span></span></div>
+  <button class="hamburger" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </nav>
 <div class="mobile-menu">
   <a href="index.html">Home</a><a href="browse.html">Browse</a><a href="player.html">Player</a>
   <a href="upload.html">Upload</a><a href="profile.html">Profile</a><a href="about.html">About</a>
   <a href="contact.html">Contact</a><a href="faq.html">FAQ</a>
+  <button id="logout-btn-mobile" style="display:none">🚪 Logout</button>
 </div>
 
-<div class="player-page-hero">
+<div class="player-page-hero" id="main-content">
   <div class="container">
     <div class="player-main">
       <!-- Left: Player -->
       <div>
-        <img src="https://picsum.photos/seed/t1/600/600" alt="Neon Dreams" class="player-cover-large" id="main-cover">
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600' viewBox='0 0 600 600'%3E%3Crect width='600' height='600' fill='%231a1a2e'/%3E%3Ccircle cx='300' cy='300' r='120' fill='none' stroke='%236c63ff' stroke-width='3' opacity='0.4'/%3E%3Ccircle cx='300' cy='300' r='20' fill='%236c63ff' opacity='0.6'/%3E%3Cpath d='M260 280 L260 320 L340 300 Z' fill='%236c63ff' opacity='0.8'/%3E%3C/svg%3E" alt="Track cover art — no track selected" class="player-cover-large" id="main-cover">
         <div class="player-full-controls">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem">
             <div>
-              <h2 id="track-title" style="font-size:1.8rem">Neon Dreams</h2>
-              <p class="text-muted" id="track-artist">Luna Waves · Electronic</p>
+              <h2 id="track-title" style="font-size:1.8rem">Select a track</h2>
+              <p class="text-muted" id="track-artist">Browse music and tap play</p>
             </div>
             <div style="display:flex;align-items:center;gap:1rem">
               <div class="like-count">
-                <button class="big-like-btn" id="like-btn" aria-label="Like">♥</button>
-                <span id="like-count">24.8K</span>
+                <button class="big-like-btn" id="like-btn" aria-label="Like">&#9825;</button>
+                <span id="like-count">0</span>
               </div>
-              <!-- TODO: Connect download to backend file storage URL -->
-              <a href="#" class="btn btn-outline btn-sm" id="download-btn" download>↓ Download</a>
+              <a href="#" class="btn btn-outline btn-sm" id="download-btn" aria-label="Download track" style="display:none">&#11015; Download</a>
             </div>
           </div>
 
-          <!-- Waveform -->
-          <div class="waveform" id="waveform" role="slider" aria-label="Track progress"></div>
+          <!-- Waveform (decorative visualizer) -->
+          <div class="waveform" id="waveform" role="img" aria-label="Audio waveform visualizer"></div>
 
           <!-- Progress -->
           <div class="player-full-progress">
@@ -84,19 +88,19 @@
 
           <!-- Controls -->
           <div class="player-full-btns">
-            <button class="ctrl-btn" title="Shuffle" id="shuffle-btn">⇄</button>
-            <button class="ctrl-btn" title="Previous" id="prev-btn">⏮</button>
-            <button class="play-pause-large" id="main-play" aria-label="Play/Pause">
+            <button class="ctrl-btn" title="Shuffle" aria-label="Shuffle" id="shuffle-btn">&#8652;</button>
+            <button class="ctrl-btn" title="Previous" aria-label="Previous track" id="prev-btn">&#9664;</button>
+            <button class="play-pause-large" id="main-play" aria-label="Play or pause">
               <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
             </button>
-            <button class="ctrl-btn" title="Next" id="next-btn">⏭</button>
-            <button class="ctrl-btn" title="Repeat" id="repeat-btn">↻</button>
+            <button class="ctrl-btn" title="Next" aria-label="Next track" id="next-btn">&#9654;</button>
+            <button class="ctrl-btn" title="Repeat" aria-label="Repeat" id="repeat-btn">&#8635;</button>
           </div>
 
           <!-- Extra Controls -->
           <div style="display:flex;align-items:center;justify-content:center;gap:2rem;margin-top:1.5rem">
             <div class="volume-control">
-              <span style="color:var(--text-secondary)">🔊</span>
+              <span style="color:var(--text-secondary)">&#128266;</span>
               <input type="range" class="volume-slider" min="0" max="100" value="75" style="width:120px" aria-label="Volume">
             </div>
             <button class="btn btn-outline btn-sm" id="share-btn">Share</button>
@@ -115,39 +119,15 @@
         <!-- Comments Section -->
         <div style="margin-top:2.5rem">
           <h3 style="margin-bottom:1.5rem">Comments <span class="text-muted" style="font-size:0.9rem;font-weight:400">(142)</span></h3>
-          <!-- TODO: Load comments from backend API -->
           <div class="comment-input-row">
-            <img src="https://picsum.photos/seed/user/100/100" alt="You" class="comment-avatar-sm">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='20' fill='%231a1a2e'/%3E%3Ccircle cx='20' cy='16' r='7' fill='%236c63ff' opacity='0.6'/%3E%3Cellipse cx='20' cy='34' rx='12' ry='8' fill='%236c63ff' opacity='0.4'/%3E%3C/svg%3E" alt="Your avatar" class="comment-avatar-sm" id="user-comment-avatar">
             <div style="flex:1">
               <input type="text" class="form-input" placeholder="Add a comment..." id="comment-input" aria-label="Add comment">
             </div>
             <button class="btn btn-primary btn-sm" id="post-comment">Post</button>
           </div>
           <div id="comments-list">
-            <div class="comment">
-              <img src="https://picsum.photos/seed/c1/100/100" alt="User" class="comment-avatar">
-              <div class="comment-body">
-                <div class="comment-author">Alex M. <span style="color:var(--primary);font-size:0.75rem">♥ 48</span></div>
-                <div class="comment-text">This track is absolutely fire 🔥 Been on repeat all day!</div>
-                <div class="comment-time">2 hours ago</div>
-              </div>
-            </div>
-            <div class="comment">
-              <img src="https://picsum.photos/seed/c2/100/100" alt="User" class="comment-avatar">
-              <div class="comment-body">
-                <div class="comment-author">Sarah K. <span style="color:var(--primary);font-size:0.75rem">♥ 31</span></div>
-                <div class="comment-text">Luna Waves never disappoints. The production on this is insane.</div>
-                <div class="comment-time">5 hours ago</div>
-              </div>
-            </div>
-            <div class="comment">
-              <img src="https://picsum.photos/seed/c3/100/100" alt="User" class="comment-avatar">
-              <div class="comment-body">
-                <div class="comment-author">DJ Phantom <span style="color:var(--primary);font-size:0.75rem">♥ 22</span></div>
-                <div class="comment-text">Played this at my set last night and the crowd went crazy. Instant classic.</div>
-                <div class="comment-time">1 day ago</div>
-              </div>
-            </div>
+            <p style="color:var(--text-secondary);font-size:0.9rem;padding:1rem 0">Loading comments...</p>
           </div>
         </div>
       </div>
@@ -172,36 +152,75 @@
   <div class="modal">
     <div class="modal-header">
       <h3>Add to Playlist</h3>
-      <button class="modal-close" aria-label="Close">✕</button>
+      <button class="modal-close" aria-label="Close">&times;</button>
     </div>
-    <!-- TODO: Load user playlists from backend -->
-    <div style="display:flex;flex-direction:column;gap:0.75rem">
-      <div class="related-track" style="border:1px solid var(--border);border-radius:var(--radius)">
-        <span style="font-size:1.5rem">🎵</span>
-        <div><strong>My Favorites</strong><p class="text-muted" style="font-size:0.8rem">24 tracks</p></div>
+    <!-- List of user's playlists (populated by JS) -->
+    <div id="playlist-modal-list" style="display:flex;flex-direction:column;gap:0.75rem;min-height:60px">
+      <p style="color:var(--text-secondary);font-size:0.9rem">Loading playlists...</p>
+    </div>
+    <!-- Create new playlist inline -->
+    <div id="new-playlist-form" style="display:none;margin-top:1rem;border-top:1px solid var(--border);padding-top:1rem">
+      <div class="form-group">
+        <label class="form-label">Playlist Name</label>
+        <input type="text" id="new-playlist-name" class="form-input" placeholder="e.g. Late Night Vibes" maxlength="150">
       </div>
-      <div class="related-track" style="border:1px solid var(--border);border-radius:var(--radius)">
-        <span style="font-size:1.5rem">🌙</span>
-        <div><strong>Late Night Vibes</strong><p class="text-muted" style="font-size:0.8rem">12 tracks</p></div>
+      <div style="display:flex;gap:0.75rem;margin-top:0.75rem">
+        <button class="btn btn-outline" style="flex:1" id="cancel-new-playlist">Cancel</button>
+        <button class="btn btn-primary" style="flex:1" id="confirm-new-playlist">Create &amp; Add</button>
       </div>
-      <div class="related-track" style="border:1px solid var(--border);border-radius:var(--radius)">
-        <span style="font-size:1.5rem">🏋️</span>
-        <div><strong>Workout Mix</strong><p class="text-muted" style="font-size:0.8rem">18 tracks</p></div>
+    </div>
+    <!-- Footer buttons -->
+    <div style="display:flex;gap:0.75rem;margin-top:1rem" id="playlist-modal-footer">
+      <button class="btn btn-outline" style="flex:1" id="create-playlist-btn">+ New Playlist</button>
+      <button class="btn btn-primary" style="flex:2" id="add-to-playlist-btn" disabled>Add to Selected</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast" role="alert" aria-live="polite" aria-atomic="true"><span class="toast-icon">✓</span><span class="toast-msg"></span></div>
+
+<!-- AUTH MODAL -->
+<div class="modal-overlay" id="auth-modal">
+  <div class="modal">
+    <div class="modal-header"><h3>Sign In</h3><button class="modal-close" aria-label="Close">✕</button></div>
+    <div class="tabs-wrapper">
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="login">Sign In</button>
+        <button class="tab-btn" data-tab="register">Create Account</button>
       </div>
-      <button class="btn btn-outline" style="margin-top:0.5rem">+ Create New Playlist</button>
-      <button class="btn btn-primary">Add to Selected</button>
+      <div class="tab-content active" id="tab-login">
+        <form id="login-form">
+          <div class="form-group"><label class="form-label">Email or Username</label><input type="text" name="login" class="form-input" placeholder="your@email.com" required></div>
+          <div class="form-group"><label class="form-label">Password</label><input type="password" name="password" class="form-input" placeholder="••••••••" required></div>
+                    <div style="text-align:right;margin-top:-0.5rem;margin-bottom:1rem">
+            <a href="reset-password.html" style="font-size:0.82rem;color:var(--primary);text-decoration:none">Forgot password?</a>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%">Sign In</button>
+        </form>
+      </div>
+      <div class="tab-content" id="tab-register">
+        <form id="register-form">
+          <div class="grid-2">
+            <div class="form-group"><label class="form-label">Username</label><input type="text" name="username" class="form-input" placeholder="yourname" required></div>
+            <div class="form-group"><label class="form-label">Display Name</label><input type="text" name="display_name" class="form-input" placeholder="Your Name" required></div>
+          </div>
+          <div class="form-group"><label class="form-label">Email</label><input type="email" name="email" class="form-input" placeholder="your@email.com" required></div>
+          <div class="form-group"><label class="form-label">Password</label><input type="password" name="password" class="form-input" placeholder="Min 6 characters" required></div>
+          <div class="form-group"><label class="form-label">I am a...</label>
+            <select name="role" class="form-select"><option value="listener">Listener (Free)</option><option value="artist">Artist / Producer</option></select>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%">Create Account</button>
+        </form>
+      </div>
     </div>
   </div>
 </div>
 
-<div class="toast" id="toast" role="alert"><span class="toast-icon">✓</span><span class="toast-msg"></span></div>
-
 <script src="js/app.js"></script>
 <script>
+(async () => {
   // Build waveform bars
   const waveform = document.getElementById('waveform');
-  const heights = [20,35,55,40,70,85,60,45,80,65,50,75,90,55,40,65,80,45,60,75,50,85,70,40,55,65,80,45,70,60,50,75,85,40,65,55,80,70,45,60];
-  heights.forEach((h, i) => {
+  [20,35,55,40,70,85,60,45,80,65,50,75,90,55,40,65,80,45,60,75,50,85,70,40,55,65,80,45,70,60,50,75,85,40,65,55,80,70,45,60].forEach((h, i) => {
     const bar = document.createElement('div');
     bar.className = 'wave-bar' + (i < 14 ? ' played' : '');
     bar.style.height = h + '%';
@@ -209,88 +228,318 @@
     waveform.appendChild(bar);
   });
 
+  // Load track from URL param ?id=
+  const trackId = new URLSearchParams(location.search).get('id');
+  let currentTrackData = null;
+
+  if (trackId) {
+    try {
+      const data = await apiFetch(`/api/tracks/${trackId}`);
+      currentTrackData = data.track;
+      document.getElementById('main-cover').src = currentTrackData.cover_url || 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'600\' height=\'600\' viewBox=\'0 0 600 600\'%3E%3Crect width=\'600\' height=\'600\' fill=\'%231a1a2e\'/%3E%3Ccircle cx=\'300\' cy=\'300\' r=\'120\' fill=\'none\' stroke=\'%236c63ff\' stroke-width=\'3\' opacity=\'0.4\'/%3E%3Ccircle cx=\'300\' cy=\'300\' r=\'20\' fill=\'%236c63ff\' opacity=\'0.6\'/%3E%3Cpath d=\'M260 280 L260 320 L340 300 Z\' fill=\'%236c63ff\' opacity=\'0.8\'/%3E%3C/svg%3E';
+      document.getElementById('track-title').textContent = currentTrackData.title;
+      document.getElementById('track-artist').textContent = currentTrackData.artist_name + ' � ' + currentTrackData.genre;
+      document.getElementById('like-count').textContent = formatNumber(currentTrackData.likes);
+      document.title = currentTrackData.title + ' � SMADS African Hits';
+      if (currentTrackData.user_liked) document.getElementById('like-btn').classList.add('liked');
+      // Set download link — only show if track allows free download
+      const dlBtn = document.getElementById('download-btn');
+      if (dlBtn) {
+        if (currentTrackData.is_free_dl) {
+          dlBtn.href = `/api/tracks/download/${trackId}`;
+          dlBtn.setAttribute('download', '');
+          dlBtn.style.display = '';
+        } else {
+          dlBtn.style.display = 'none';
+        }
+      }
+      // Auto-load audio so user can tap play immediately
+      if (currentTrackData.audio_url) {
+        audio.src = currentTrackData.audio_url;
+        audio.load();
+      }
+    } catch (err) {
+      showToast('Track not found.', 'error');
+    }
+  }
+
+  // If no track is loaded, disable comment input with a helpful placeholder
+  if (!trackId) {
+    const commentInput = document.getElementById('comment-input');
+    const postBtn = document.getElementById('post-comment');
+    if (commentInput) { commentInput.disabled = true; commentInput.placeholder = 'Select a track to comment...'; }
+    if (postBtn) postBtn.disabled = true;
+    const commentsList = document.getElementById('comments-list');
+    if (commentsList) commentsList.innerHTML = '<p style="color:var(--text-secondary);font-size:0.9rem;padding:1rem 0">Select a track to see comments.</p>';
+  }
+
   // Play/pause toggle
   let playing = false;
   const mainPlay = document.getElementById('main-play');
   mainPlay.addEventListener('click', () => {
-    playing = !playing;
-    mainPlay.innerHTML = playing
-      ? '<svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>'
-      : '<svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>';
+    if (currentTrackData) {
+      if (audio.paused) {
+        audio.play().catch(() => {});
+        playing = true;
+      } else {
+        audio.pause();
+        playing = false;
+      }
+      updatePlayPauseIcon(playing);
+    }
   });
 
   // Like button
-  let liked = false;
-  let likeCount = 24800;
-  document.getElementById('like-btn').addEventListener('click', function() {
-    liked = !liked;
-    this.classList.toggle('liked', liked);
-    likeCount += liked ? 1 : -1;
-    document.getElementById('like-count').textContent = (likeCount / 1000).toFixed(1) + 'K';
-    showToast(liked ? 'Added to favorites' : 'Removed from favorites');
+  document.getElementById('like-btn').addEventListener('click', async function() {
+    if (!appState.currentUser) { showToast('Sign in to like tracks', 'error'); return; }
+    if (!trackId) return;
+    try {
+      const fd = new FormData(); fd.append('id', trackId);
+      const res = await apiFetch('/api/tracks/like/' + trackId, { method: 'POST' });
+      this.classList.toggle('liked', res.liked);
+      document.getElementById('like-count').textContent = formatNumber(res.likes);
+      showToast(res.liked ? 'Added to favorites' : 'Removed from favorites');
+    } catch (err) { showToast(err.message, 'error'); }
   });
 
-  // Progress bar click
+  // Progress bar
   document.getElementById('full-progress').addEventListener('click', (e) => {
+    if (!audio.duration) return;
     const rect = e.currentTarget.getBoundingClientRect();
-    const pct = ((e.clientX - rect.left) / rect.width) * 100;
-    document.getElementById('full-fill').style.width = pct + '%';
-    const totalSecs = 222;
-    const current = Math.floor((pct / 100) * totalSecs);
-    const m = Math.floor(current / 60), s = current % 60;
-    document.getElementById('current-time').textContent = `${m}:${s.toString().padStart(2,'0')}`;
+    const pct  = (e.clientX - rect.left) / rect.width;
+    audio.currentTime = pct * audio.duration;
   });
+
+  // Shuffle / Repeat / Prev / Next
+  document.getElementById('shuffle-btn')?.addEventListener('click', function() {
+    isShuffled = !isShuffled;
+    this.style.color = isShuffled ? 'var(--primary)' : '';
+    showToast(isShuffled ? 'Shuffle on' : 'Shuffle off');
+  });
+  document.getElementById('repeat-btn')?.addEventListener('click', function() {
+    isRepeating = !isRepeating;
+    audio.loop = isRepeating;
+    this.style.color = isRepeating ? 'var(--primary)' : '';
+    showToast(isRepeating ? 'Repeat on' : 'Repeat off');
+  });
+  document.getElementById('prev-btn')?.addEventListener('click', () => {
+    if (audio.currentTime > 3) { audio.currentTime = 0; }
+    else { playFromQueue(-1); }
+  });
+  document.getElementById('next-btn')?.addEventListener('click', () => playFromQueue(1));
 
   // Share button
-  document.getElementById('share-btn').addEventListener('click', () => {
-    navigator.clipboard?.writeText(window.location.href);
-    showToast('Link copied to clipboard!');
+  document.getElementById('share-btn')?.addEventListener('click', () => {
+    if (currentTrackData) shareTrack(currentTrackData);
+    else {
+      navigator.clipboard?.writeText(window.location.href);
+      showToast('Link copied to clipboard!');
+    }
   });
 
-  // Comment posting
-  document.getElementById('post-comment').addEventListener('click', () => {
+  // Load comments
+  async function loadComments() {
+    if (!trackId) return;
+    try {
+      const data = await apiFetch(`/api/tracks/comments?id=${trackId}`);
+      const list = document.getElementById('comments-list');
+      list.innerHTML = '';
+      if (!data.comments?.length) {
+        list.innerHTML = '<p style="color:var(--text-secondary);font-size:0.9rem">No comments yet. Be the first!</p>';
+        return;
+      }
+      data.comments.forEach(c => {
+        const div = document.createElement('div');
+        div.className = 'comment';
+        const avatar = c.avatar_url || 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'40\' height=\'40\' viewBox=\'0 0 40 40\'%3E%3Crect width=\'40\' height=\'40\' rx=\'20\' fill=\'%231a1a2e\'/%3E%3Ccircle cx=\'20\' cy=\'16\' r=\'7\' fill=\'%236c63ff\' opacity=\'0.6\'/%3E%3Cellipse cx=\'20\' cy=\'34\' rx=\'12\' ry=\'8\' fill=\'%236c63ff\' opacity=\'0.4\'/%3E%3C/svg%3E';
+        div.innerHTML = `
+          <img src="${escHtml(avatar)}" alt="${escHtml(c.display_name)}" class="comment-avatar">
+          <div class="comment-body">
+            <div class="comment-author">${escHtml(c.display_name)} <span style="color:var(--primary);font-size:0.75rem">&#9825; ${parseInt(c.likes)||0}</span></div>
+            <div class="comment-text">${escHtml(c.body)}</div>
+            <div class="comment-time">${timeAgo(c.created_at)}</div>
+          </div>`;
+        list.appendChild(div);
+      });
+    } catch { /* non-critical */ }
+  }
+  await loadComments();
+
+  // Post comment
+  document.getElementById('post-comment').addEventListener('click', async () => {
+    if (!appState.currentUser) { showToast('Sign in to comment', 'error'); return; }
+    if (!trackId) { showToast('Please select a track first.', 'error'); return; }
     const input = document.getElementById('comment-input');
-    const text = input.value.trim();
+    const text  = input.value.trim();
     if (!text) return;
-    // TODO: POST comment to backend API
-    const comment = document.createElement('div');
-    comment.className = 'comment';
-    comment.innerHTML = `
-      <img src="https://picsum.photos/seed/user/100/100" alt="You" class="comment-avatar">
-      <div class="comment-body">
-        <div class="comment-author">You <span style="color:var(--primary);font-size:0.75rem">♥ 0</span></div>
-        <div class="comment-text">${text}</div>
-        <div class="comment-time">Just now</div>
-      </div>`;
-    document.getElementById('comments-list').prepend(comment);
-    input.value = '';
-    showToast('Comment posted!');
+    if (text.length > 500) { showToast('Comment must be 500 characters or less.', 'error'); return; }
+    const btn = document.getElementById('post-comment');
+    btn.disabled = true; btn.textContent = 'Posting...';
+    try {
+      const fd = new FormData();
+      fd.append('track_id', trackId);
+      fd.append('body', text);
+      await apiFetch('/api/tracks/comment', { method: 'POST', body: fd });
+      input.value = '';
+      showToast('Comment posted!');
+      await loadComments();
+    } catch (err) { showToast(err.message, 'error'); }
+    finally { btn.disabled = false; btn.textContent = 'Post'; }
   });
 
-  // Queue
+  // Load queue (trending tracks)
   const queueList = document.getElementById('queue-list');
-  MOCK_TRACKS.slice(1, 4).forEach(t => {
-    const el = document.createElement('div');
-    el.className = 'related-track';
-    el.innerHTML = `<img src="${t.cover}" alt="${t.title}"><div><strong style="font-size:0.85rem">${t.title}</strong><p class="text-muted" style="font-size:0.75rem">${t.artist}</p></div><span class="text-muted" style="margin-left:auto;font-size:0.8rem">${t.duration}</span>`;
-    el.addEventListener('click', () => {
-      document.getElementById('main-cover').src = t.cover;
-      document.getElementById('track-title').textContent = t.title;
-      document.getElementById('track-artist').textContent = t.artist + ' · ' + t.genre;
-      showToast('Now playing: ' + t.title);
+  const relatedList = document.getElementById('related-list');
+  try {
+    const data = await apiFetch('/api/tracks/trending?limit=6');
+    const tracks = data.tracks || [];
+    queueList.innerHTML = '';
+    relatedList.innerHTML = '';
+    tracks.slice(0, 3).forEach(t => {
+      const el = document.createElement('div');
+      el.className = 'related-track';
+      const cover = t.cover_url || 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'52\' height=\'52\' viewBox=\'0 0 52 52\'%3E%3Crect width=\'52\' height=\'52\' rx=\'8\' fill=\'%231a1a2e\'/%3E%3Cpath d=\'M18 34V18l20 8-20 8z\' fill=\'%236c63ff\' opacity=\'0.6\'/%3E%3C/svg%3E';
+      el.innerHTML = `<img src="${cover}" alt="${escHtml(t.title)}" style="width:52px;height:52px;border-radius:8px;object-fit:cover"><div style="flex:1"><strong style="font-size:0.85rem">${escHtml(t.title)}</strong><p class="text-muted" style="font-size:0.75rem">${escHtml(t.artist_name)}</p></div><span class="text-muted" style="margin-left:auto;font-size:0.8rem">${formatDuration(t.duration)}</span>`;
+      el.addEventListener('click', () => { playTrack(t); location.href = `player.html?id=${t.id}`; });
+      queueList.appendChild(el);
     });
-    queueList.appendChild(el);
+    tracks.slice(3, 6).forEach(t => {
+      const el = document.createElement('div');
+      el.className = 'related-track';
+      const cover = t.cover_url || 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'52\' height=\'52\' viewBox=\'0 0 52 52\'%3E%3Crect width=\'52\' height=\'52\' rx=\'8\' fill=\'%231a1a2e\'/%3E%3Cpath d=\'M18 34V18l20 8-20 8z\' fill=\'%236c63ff\' opacity=\'0.6\'/%3E%3C/svg%3E';
+      el.innerHTML = `<img src="${cover}" alt="${escHtml(t.title)}" style="width:52px;height:52px;border-radius:8px;object-fit:cover"><div><strong style="font-size:0.85rem">${escHtml(t.title)}</strong><p class="text-muted" style="font-size:0.75rem">${formatDuration(t.duration)}</p></div>`;
+      el.addEventListener('click', () => location.href = `player.html?id=${t.id}`);
+      relatedList.appendChild(el);
+    });
+    if (!tracks.length) {
+      queueList.innerHTML = '<p style="color:var(--text-secondary);font-size:0.85rem;padding:1rem">No tracks yet.</p>';
+      relatedList.innerHTML = '';
+    }
+  } catch { queueList.innerHTML = '<p style="color:var(--text-secondary);font-size:0.85rem;padding:1rem">Could not load queue.</p>'; }
+
+  // ── Playlist Modal ──────────────────────────────────────────────────────────
+  let selectedPlaylistId = null;
+
+  // Load user's playlists into the modal whenever it opens
+  document.querySelector('[data-modal="playlist-modal"]')?.addEventListener('click', async () => {
+    if (!appState.currentUser) {
+      showToast('Sign in to add tracks to playlists', 'error');
+      return;
+    }
+    selectedPlaylistId = null;
+    document.getElementById('add-to-playlist-btn').disabled = true;
+    document.getElementById('new-playlist-form').style.display = 'none';
+    document.getElementById('playlist-modal-footer').style.display = '';
+
+    const listEl = document.getElementById('playlist-modal-list');
+    listEl.innerHTML = '<p style="color:var(--text-secondary);font-size:0.9rem">Loading playlists...</p>';
+
+    try {
+      const data = await apiFetch('/api/user/playlists');
+      listEl.innerHTML = '';
+      if (!data.playlists?.length) {
+        listEl.innerHTML = '<p style="color:var(--text-secondary);font-size:0.9rem">No playlists yet. Create one below.</p>';
+      } else {
+        data.playlists.forEach(pl => {
+          const row = document.createElement('div');
+          row.className = 'related-track';
+          row.style.cssText = 'border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;transition:var(--transition)';
+          row.dataset.id = pl.id;
+          row.innerHTML = `
+            <span style="font-size:1.4rem">&#127925;</span>
+            <div style="flex:1">
+              <strong style="font-size:0.9rem">${escHtml(pl.name)}</strong>
+              <p class="text-muted" style="font-size:0.78rem">${pl.track_count} track${pl.track_count !== 1 ? 's' : ''}</p>
+            </div>
+            <span id="pl-check-${pl.id}" style="color:var(--primary);font-size:1.1rem;display:none">&#10003;</span>`;
+          row.addEventListener('click', () => {
+            // Deselect all, select this one
+            listEl.querySelectorAll('.related-track').forEach(r => {
+              r.style.borderColor = 'var(--border)';
+              r.style.background = '';
+              const chk = document.getElementById('pl-check-' + r.dataset.id);
+              if (chk) chk.style.display = 'none';
+            });
+            row.style.borderColor = 'var(--primary)';
+            row.style.background = 'rgba(108,99,255,0.08)';
+            const chk = document.getElementById('pl-check-' + pl.id);
+            if (chk) chk.style.display = '';
+            selectedPlaylistId = pl.id;
+            document.getElementById('add-to-playlist-btn').disabled = false;
+          });
+          listEl.appendChild(row);
+        });
+      }
+    } catch (err) {
+      listEl.innerHTML = `<p style="color:var(--secondary);font-size:0.9rem">${escHtml(err.message)}</p>`;
+    }
   });
 
-  // Related
-  const relatedList = document.getElementById('related-list');
-  MOCK_TRACKS.slice(4, 7).forEach(t => {
-    const el = document.createElement('div');
-    el.className = 'related-track';
-    el.innerHTML = `<img src="${t.cover}" alt="${t.title}"><div><strong style="font-size:0.85rem">${t.title}</strong><p class="text-muted" style="font-size:0.75rem">${t.duration}</p></div>`;
-    el.addEventListener('click', () => showToast('Now playing: ' + t.title));
-    relatedList.appendChild(el);
+  // Add to selected playlist
+  document.getElementById('add-to-playlist-btn')?.addEventListener('click', async () => {
+    if (!selectedPlaylistId) { showToast('Please select a playlist first.', 'error'); return; }
+    if (!trackId) { showToast('No track selected.', 'error'); return; }
+    const btn = document.getElementById('add-to-playlist-btn');
+    btn.disabled = true; btn.textContent = 'Adding...';
+    try {
+      const fd = new FormData();
+      fd.append('track_id', trackId);
+      await apiFetch(`/api/user/playlists/${selectedPlaylistId}/tracks`, { method: 'POST', body: fd });
+      showToast('Track added to playlist!');
+      document.getElementById('playlist-modal').classList.remove('open');
+    } catch (err) {
+      showToast(err.message, 'error');
+      btn.disabled = false; btn.textContent = 'Add to Selected';
+    }
   });
+
+  // Show create new playlist form
+  document.getElementById('create-playlist-btn')?.addEventListener('click', () => {
+    document.getElementById('new-playlist-form').style.display = '';
+    document.getElementById('playlist-modal-footer').style.display = 'none';
+    document.getElementById('new-playlist-name').focus();
+  });
+
+  // Cancel new playlist
+  document.getElementById('cancel-new-playlist')?.addEventListener('click', () => {
+    document.getElementById('new-playlist-form').style.display = 'none';
+    document.getElementById('playlist-modal-footer').style.display = '';
+    document.getElementById('new-playlist-name').value = '';
+  });
+
+  // Create new playlist and immediately add the track to it
+  document.getElementById('confirm-new-playlist')?.addEventListener('click', async () => {
+    const name = document.getElementById('new-playlist-name').value.trim();
+    if (!name) { showToast('Please enter a playlist name.', 'error'); return; }
+    const btn = document.getElementById('confirm-new-playlist');
+    btn.disabled = true; btn.textContent = 'Creating...';
+    try {
+      const fd = new FormData();
+      fd.append('name', name);
+      fd.append('is_public', '1');
+      const res = await apiFetch('/api/user/playlists', { method: 'POST', body: fd });
+      // If a track is loaded, add it to the new playlist right away
+      if (trackId && res.id) {
+        const fd2 = new FormData();
+        fd2.append('track_id', trackId);
+        await apiFetch(`/api/user/playlists/${res.id}/tracks`, { method: 'POST', body: fd2 });
+        showToast(`Playlist "${name}" created and track added!`);
+      } else {
+        showToast(`Playlist "${name}" created!`);
+      }
+      document.getElementById('playlist-modal').classList.remove('open');
+      document.getElementById('new-playlist-name').value = '';
+    } catch (err) {
+      showToast(err.message, 'error');
+    } finally {
+      btn.disabled = false; btn.textContent = 'Create & Add';
+    }
+  });
+
+})();
 </script>
 </body>
 </html>
+
+
+

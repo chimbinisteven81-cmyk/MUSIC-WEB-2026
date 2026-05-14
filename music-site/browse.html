@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Browse Music – SoundWave</title>
+  <title>Browse Music � SMADS African Hits</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <style>
@@ -25,10 +25,13 @@
 </head>
 <body>
 
-<nav class="navbar">
+<!-- Skip to main content (accessibility) -->
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<nav class="navbar" role="navigation" aria-label="Main navigation">
   <a href="index.html" class="nav-logo">
     <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="15" stroke="url(#g1)" stroke-width="2"/><path d="M10 20V12l12 4-12 4z" fill="url(#g1)"/><defs><linearGradient id="g1" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse"><stop stop-color="#6c63ff"/><stop offset="1" stop-color="#ff6584"/></linearGradient></defs></svg>
-    SoundWave
+    SMADS African Hits
   </a>
   <div class="nav-links">
     <a href="index.html">Home</a>
@@ -39,60 +42,71 @@
     <a href="contact.html">Contact</a>
   </div>
   <div class="nav-actions">
-    <a href="profile.html" class="btn btn-outline btn-sm">Sign In</a>
+    <button type="button" class="btn btn-outline btn-sm nav-signin" data-modal="auth-modal">Sign In</button>
+    <a href="profile.html" class="btn btn-outline btn-sm nav-profile" style="display:none">My Profile</a>
+    <button class="btn btn-outline btn-sm" id="logout-btn" style="display:none">Logout</button>
     <a href="upload.html" class="btn btn-primary btn-sm">Upload Music</a>
   </div>
-  <div class="hamburger"><span></span><span></span><span></span></div>
+  <button class="hamburger" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </nav>
 <div class="mobile-menu">
   <a href="index.html">Home</a><a href="browse.html">Browse</a><a href="player.html">Player</a>
   <a href="upload.html">Upload</a><a href="profile.html">Profile</a><a href="about.html">About</a>
   <a href="contact.html">Contact</a><a href="faq.html">FAQ</a>
+  <button id="logout-btn-mobile" style="display:none">🚪 Logout</button>
 </div>
-
-<div class="browse-hero">
   <div class="container">
     <h1 style="font-size:2.5rem;margin-bottom:1rem">Browse <span class="text-gradient">All Music</span></h1>
     <p class="text-muted" style="margin-bottom:2rem">Discover millions of tracks across every genre</p>
     <div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:center">
       <div class="search-bar" style="max-width:500px">
-        <span class="search-icon">🔍</span>
+        <span class="search-icon">??</span>
         <input type="text" class="search-input" placeholder="Search tracks, artists, albums..." aria-label="Search music">
       </div>
       <select class="filter-select" id="sort-select" aria-label="Sort by">
-        <option value="trending">Trending</option>
-        <option value="newest">Newest</option>
-        <option value="popular">Most Popular</option>
-        <option value="az">A–Z</option>
+        <option value="trending">?? Trending</option>
+        <option value="newest">?? Newest</option>
+        <option value="popular">? Most Played</option>
+        <option value="downloads">? Most Downloaded</option>
+        <option value="az">A�Z</option>
       </select>
     </div>
   </div>
 </div>
 
-<section class="section" style="padding-top:2rem">
+<section class="section" style="padding-top:2rem" id="main-content">
   <div class="browse-layout">
+    <!-- Mobile filter overlay -->
+    <div class="filter-overlay" id="filter-overlay" aria-hidden="true"></div>
+
     <!-- Sidebar Filters -->
     <aside>
-      <div class="sidebar-filters">
-        <h3 style="margin-bottom:1.5rem;font-size:1rem">Filters</h3>
+      <div class="sidebar-filters" id="sidebar-filters" role="search" aria-label="Music filters">
+        <!-- Close button (mobile only) -->
+        <div class="filter-close-btn">
+          <h3 style="font-size:1rem">Filters</h3>
+          <button id="filter-close-btn" aria-label="Close filters">?</button>
+        </div>
         <div class="filter-section">
           <h4>Genre</h4>
           <label class="filter-check"><input type="checkbox" checked> All Genres</label>
-          <label class="filter-check"><input type="checkbox"> Electronic</label>
-          <label class="filter-check"><input type="checkbox"> Hip-Hop</label>
-          <label class="filter-check"><input type="checkbox"> R&amp;B / Soul</label>
-          <label class="filter-check"><input type="checkbox"> Pop</label>
-          <label class="filter-check"><input type="checkbox"> Rock</label>
-          <label class="filter-check"><input type="checkbox"> Lo-Fi</label>
-          <label class="filter-check"><input type="checkbox"> Jazz</label>
-          <label class="filter-check"><input type="checkbox"> Classical</label>
-          <label class="filter-check"><input type="checkbox"> Synthwave</label>
+          <label class="filter-check"><input type="checkbox"> Afrobeats</label>
+          <label class="filter-check"><input type="checkbox"> Amapiano</label>
+          <label class="filter-check"><input type="checkbox"> Highlife</label>
+          <label class="filter-check"><input type="checkbox"> Bongo Flava</label>
+          <label class="filter-check"><input type="checkbox"> Afro-Pop</label>
+          <label class="filter-check"><input type="checkbox"> Afro-Soul</label>
+          <label class="filter-check"><input type="checkbox"> Gqom</label>
+          <label class="filter-check"><input type="checkbox"> Kwaito</label>
+          <label class="filter-check"><input type="checkbox"> Afro-Hip-Hop</label>
+          <label class="filter-check"><input type="checkbox"> Gospel</label>
+          <label class="filter-check"><input type="checkbox"> Zambian Music</label>
         </div>
         <div class="filter-section">
           <h4>Duration</h4>
           <label class="filter-check"><input type="radio" name="dur" checked> Any</label>
           <label class="filter-check"><input type="radio" name="dur"> Under 3 min</label>
-          <label class="filter-check"><input type="radio" name="dur"> 3–5 min</label>
+          <label class="filter-check"><input type="radio" name="dur"> 3�5 min</label>
           <label class="filter-check"><input type="radio" name="dur"> Over 5 min</label>
         </div>
         <div class="filter-section">
@@ -100,7 +114,6 @@
           <label class="filter-check"><input type="checkbox" checked> Free Download</label>
           <label class="filter-check"><input type="checkbox"> Stream Only</label>
         </div>
-        <!-- TODO: Connect filters to backend query params -->
         <button class="btn btn-primary" style="width:100%">Apply Filters</button>
         <button class="btn btn-outline mt-2" style="width:100%">Clear All</button>
       </div>
@@ -109,36 +122,43 @@
     <!-- Main Content -->
     <div>
       <div class="browse-toolbar">
-        <span class="results-count" id="results-count">Showing 8 tracks</span>
+        <div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap">
+          <button class="filter-toggle-btn" id="filter-toggle-btn" aria-expanded="false" aria-controls="sidebar-filters">
+            ?? Filters <span class="filter-count" id="filter-count" style="display:none">0</span>
+          </button>
+          <span class="results-count" id="results-count">Showing 8 tracks</span>
+        </div>
         <div style="display:flex;gap:0.75rem;align-items:center">
           <div class="view-toggle">
-            <button class="view-btn active" id="grid-view" title="Grid view">⊞</button>
-            <button class="view-btn" id="list-view" title="List view">☰</button>
+            <button class="view-btn active" id="grid-view" title="Grid view">?</button>
+            <button class="view-btn" id="list-view" title="List view">?</button>
           </div>
         </div>
       </div>
 
       <!-- Genre Pills -->
-      <div class="genre-grid" style="justify-content:flex-start;margin-bottom:1.5rem">
-        <span class="genre-pill active" data-genre="all">All</span>
-        <span class="genre-pill" data-genre="Electronic">Electronic</span>
-        <span class="genre-pill" data-genre="Hip-Hop">Hip-Hop</span>
-        <span class="genre-pill" data-genre="R&B">R&amp;B</span>
-        <span class="genre-pill" data-genre="Pop">Pop</span>
-        <span class="genre-pill" data-genre="Rock">Rock</span>
-        <span class="genre-pill" data-genre="Lo-Fi">Lo-Fi</span>
-        <span class="genre-pill" data-genre="Synthwave">Synthwave</span>
+      <div class="genre-grid" style="justify-content:flex-start;margin-bottom:1.5rem" role="group" aria-label="Filter by genre">
+        <button class="genre-pill active" data-genre="all" type="button">All</button>
+        <button class="genre-pill" data-genre="Afrobeats" type="button">Afrobeats</button>
+        <button class="genre-pill" data-genre="Amapiano" type="button">Amapiano</button>
+        <button class="genre-pill" data-genre="Highlife" type="button">Highlife</button>
+        <button class="genre-pill" data-genre="Bongo Flava" type="button">Bongo Flava</button>
+        <button class="genre-pill" data-genre="Afro-Pop" type="button">Afro-Pop</button>
+        <button class="genre-pill" data-genre="Afro-Soul" type="button">Afro-Soul</button>
+        <button class="genre-pill" data-genre="Gqom" type="button">Gqom</button>
+        <button class="genre-pill" data-genre="Kwaito" type="button">Kwaito</button>
+        <button class="genre-pill" data-genre="Afro-Hip-Hop" type="button">Afro-Hip-Hop</button>
+        <button class="genre-pill" data-genre="Gospel" type="button">Gospel</button>
+        <button class="genre-pill" data-genre="Zambian Music" type="button">Zambian</button>
       </div>
 
       <div class="music-grid browse-grid" id="browse-grid"></div>
 
       <!-- Pagination -->
-      <div style="display:flex;justify-content:center;gap:0.5rem;margin-top:3rem">
-        <button class="btn btn-outline btn-sm">← Prev</button>
-        <button class="btn btn-primary btn-sm">1</button>
-        <button class="btn btn-outline btn-sm">2</button>
-        <button class="btn btn-outline btn-sm">3</button>
-        <button class="btn btn-outline btn-sm">Next →</button>
+      <div style="display:flex;justify-content:center;gap:0.5rem;margin-top:3rem" id="pagination-bar">
+        <button class="btn btn-outline btn-sm" id="prev-page">? Prev</button>
+        <span id="page-info" style="display:flex;align-items:center;color:var(--text-secondary);font-size:0.85rem;padding:0 0.5rem">Page 1</span>
+        <button class="btn btn-primary btn-sm" id="next-page">Next ?</button>
       </div>
     </div>
   </div>
@@ -148,78 +168,282 @@
 <footer class="footer">
   <div class="footer-grid">
     <div class="footer-brand">
-      <div class="nav-logo" style="font-size:1.3rem">SoundWave</div>
+      <div class="nav-logo" style="font-size:1.3rem">SMADS African Hits</div>
       <p>The world's most open music platform.</p>
       <div class="footer-social">
-        <a href="#" class="social-btn">𝕏</a><a href="#" class="social-btn">📷</a>
-        <a href="#" class="social-btn">▶</a><a href="#" class="social-btn">💬</a>
+        <a href="#" class="social-btn" aria-label="Twitter">??</a><a href="#" class="social-btn" aria-label="Instagram">??</a>
+        <a href="#" class="social-btn" aria-label="YouTube">?</a><a href="#" class="social-btn" aria-label="Discord">??</a>
       </div>
     </div>
     <div class="footer-col"><h4>Discover</h4><ul><li><a href="browse.html">Browse Music</a></li><li><a href="browse.html">Trending</a></li><li><a href="browse.html">New Releases</a></li></ul></div>
     <div class="footer-col"><h4>Artists</h4><ul><li><a href="upload.html">Upload Music</a></li><li><a href="payment.html">Pricing</a></li><li><a href="profile.html">Dashboard</a></li></ul></div>
     <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li><li><a href="faq.html">FAQ</a></li></ul></div>
   </div>
-  <div class="footer-bottom"><p>© 2026 SoundWave. All rights reserved.</p></div>
+  <div class="footer-bottom"><p>� 2026 SMADS African Hits. All rights reserved.</p></div>
 </footer>
 
-<div class="player-bar" id="player-bar">
+<div class="player-bar" id="player-bar" role="region" aria-label="Music player">
   <div class="player-track">
-    <img class="player-cover" src="https://picsum.photos/seed/t1/300/300" alt="Now Playing">
-    <div class="player-info"><div class="player-title">Select a track</div><div class="player-artist">–</div></div>
+    <img class="player-cover" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='8' fill='%231a1a2e'/%3E%3Cpath d='M16 32V16l20 8-20 8z' fill='%236c63ff' opacity='0.7'/%3E%3C/svg%3E" alt="Now Playing">
+    <div class="player-info"><div class="player-title">Select a track</div><div class="player-artist">�</div></div>
   </div>
   <div class="player-controls">
     <div class="player-btns">
-      <button class="ctrl-btn">⇄</button>
-      <button class="ctrl-btn">⏮</button>
-      <button class="ctrl-btn play-pause"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg></button>
-      <button class="ctrl-btn">⏭</button>
-      <button class="ctrl-btn">↻</button>
+      <button class="ctrl-btn" aria-label="Shuffle">?</button>
+      <button class="ctrl-btn" aria-label="Previous track">?</button>
+      <button class="ctrl-btn play-pause" aria-label="Play or pause"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg></button>
+      <button class="ctrl-btn" aria-label="Next track">?</button>
+      <button class="ctrl-btn" aria-label="Repeat">?</button>
     </div>
     <div class="progress-bar">
       <span class="progress-time">0:00</span>
-      <div class="progress-track"><div class="progress-fill" style="width:0%"></div></div>
+      <div class="progress-track" role="progressbar" aria-label="Track progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><div class="progress-fill" style="width:0%"></div></div>
       <span class="progress-time">0:00</span>
     </div>
   </div>
   <div class="player-extras">
-    <a href="player.html" class="btn-icon">⤢</a>
-    <div class="volume-control"><span style="color:var(--text-secondary)">🔊</span><input type="range" class="volume-slider" min="0" max="100" value="75" aria-label="Volume"></div>
+    <a href="player.html" class="btn-icon" aria-label="Open full player">?</a>
+    <div class="volume-control"><span style="color:var(--text-secondary)" aria-hidden="true">??</span><input type="range" class="volume-slider" min="0" max="100" value="75" aria-label="Volume"></div>
   </div>
 </div>
-<div class="toast" id="toast" role="alert"><span class="toast-icon">✓</span><span class="toast-msg"></span></div>
+<div class="toast" id="toast" role="alert" aria-live="polite" aria-atomic="true"><span class="toast-icon">✓</span><span class="toast-msg"></span></div>
+
+<!-- AUTH MODAL -->
+<div class="modal-overlay" id="auth-modal">
+  <div class="modal">
+    <div class="modal-header"><h3>Sign In</h3><button class="modal-close" aria-label="Close">✕</button></div>
+    <div class="tabs-wrapper">
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="login">Sign In</button>
+        <button class="tab-btn" data-tab="register">Create Account</button>
+      </div>
+      <div class="tab-content active" id="tab-login">
+        <form id="login-form">
+          <div class="form-group"><label class="form-label">Email or Username</label><input type="text" name="login" class="form-input" placeholder="your@email.com" required></div>
+          <div class="form-group"><label class="form-label">Password</label><input type="password" name="password" class="form-input" placeholder="••••••••" required></div>
+                    <div style="text-align:right;margin-top:-0.5rem;margin-bottom:1rem">
+            <a href="reset-password.html" style="font-size:0.82rem;color:var(--primary);text-decoration:none">Forgot password?</a>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%">Sign In</button>
+        </form>
+      </div>
+      <div class="tab-content" id="tab-register">
+        <form id="register-form">
+          <div class="grid-2">
+            <div class="form-group"><label class="form-label">Username</label><input type="text" name="username" class="form-input" placeholder="yourname" required></div>
+            <div class="form-group"><label class="form-label">Display Name</label><input type="text" name="display_name" class="form-input" placeholder="Your Name" required></div>
+          </div>
+          <div class="form-group"><label class="form-label">Email</label><input type="email" name="email" class="form-input" placeholder="your@email.com" required></div>
+          <div class="form-group"><label class="form-label">Password</label><input type="password" name="password" class="form-input" placeholder="Min 6 characters" required></div>
+          <div class="form-group"><label class="form-label">I am a...</label>
+            <select name="role" class="form-select"><option value="listener">Listener (Free)</option><option value="artist">Artist / Producer</option></select>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%">Create Account</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script src="js/app.js"></script>
 <script>
-  // Populate browse grid
+(async () => {
   const browseGrid = document.getElementById('browse-grid');
-  MOCK_TRACKS.forEach(t => browseGrid.appendChild(createMusicCard(t)));
+  let currentTracks = [];
+  let isGridView    = true;
+  let currentPage   = 1;
+  let totalTracks   = 0;
+  const PAGE_SIZE   = 20;
+
+  async function loadTracks(genre = 'all', sort = 'newest', page = 1) {
+    showLoading(browseGrid);
+    const offset = (page - 1) * PAGE_SIZE;
+    try {
+      const url = genre === 'all'
+        ? `/api/tracks/list?sort=${sort}&limit=${PAGE_SIZE}&offset=${offset}`
+        : `/api/tracks/list?genre=${encodeURIComponent(genre)}&sort=${sort}&limit=${PAGE_SIZE}&offset=${offset}`;
+      const data = await apiFetch(url);
+      currentTracks = data.tracks || [];
+      totalTracks   = data.total  || 0;
+      currentPage   = page;
+      renderTracks();
+      updatePagination();
+      const count = document.getElementById('results-count');
+      const from  = offset + 1;
+      const to    = Math.min(offset + currentTracks.length, totalTracks);
+      if (count) count.textContent = totalTracks
+        ? `Showing ${from}�${to} of ${totalTracks} tracks`
+        : '0 tracks found';
+    } catch (err) {
+      showEmpty(browseGrid, 'Failed to load tracks. Make sure the server is running.');
+    }
+  }
+
+  function renderTracks() {
+    browseGrid.innerHTML = '';
+    if (!currentTracks.length) { showEmpty(browseGrid, 'No tracks found for this filter.'); return; }
+    if (isGridView) {
+      browseGrid.className = 'music-grid browse-grid';
+      currentTracks.forEach(t => browseGrid.appendChild(createMusicCard(t)));
+    } else {
+      browseGrid.className = 'track-list browse-grid';
+      currentTracks.forEach((t, i) => browseGrid.appendChild(createTrackRow(t, i)));
+    }
+  }
+
+  function updatePagination() {
+    const totalPages = Math.ceil(totalTracks / PAGE_SIZE);
+    const info = document.getElementById('page-info');
+    const prev = document.getElementById('prev-page');
+    const next = document.getElementById('next-page');
+    if (info) info.textContent = `Page ${currentPage} of ${Math.max(1, totalPages)}`;
+    if (prev) prev.disabled = currentPage <= 1;
+    if (next) next.disabled = currentPage >= totalPages;
+  }
+
+  function getActiveGenre() {
+    return document.querySelector('.genre-pill.active')?.dataset.genre || 'all';
+  }
+  function getActiveSort() {
+    return document.getElementById('sort-select')?.value || 'newest';
+  }
+
+  // Initial load
+  await loadTracks();
 
   // View toggle
   document.getElementById('grid-view').addEventListener('click', () => {
-    browseGrid.className = 'music-grid browse-grid';
+    isGridView = true;
     document.getElementById('grid-view').classList.add('active');
     document.getElementById('list-view').classList.remove('active');
+    renderTracks();
   });
   document.getElementById('list-view').addEventListener('click', () => {
-    browseGrid.className = 'track-list browse-grid';
-    browseGrid.innerHTML = '';
-    MOCK_TRACKS.forEach((t, i) => browseGrid.appendChild(createTrackRow(t, i)));
+    isGridView = false;
     document.getElementById('list-view').classList.add('active');
     document.getElementById('grid-view').classList.remove('active');
+    renderTracks();
   });
 
-  // Genre filter
+  // Sort
+  document.getElementById('sort-select')?.addEventListener('change', () => {
+    loadTracks(getActiveGenre(), getActiveSort(), 1);
+  });
+
+  // Genre pills
   document.querySelectorAll('.genre-pill').forEach(pill => {
     pill.addEventListener('click', () => {
       document.querySelectorAll('.genre-pill').forEach(p => p.classList.remove('active'));
       pill.classList.add('active');
-      const genre = pill.dataset.genre;
-      const filtered = genre === 'all' ? MOCK_TRACKS : MOCK_TRACKS.filter(t => t.genre === genre);
-      browseGrid.innerHTML = '';
-      filtered.forEach(t => browseGrid.appendChild(createMusicCard(t)));
-      document.getElementById('results-count').textContent = `Showing ${filtered.length} tracks`;
+      loadTracks(pill.dataset.genre, getActiveSort(), 1);
     });
   });
-</script>
+
+  // Pagination
+  document.getElementById('prev-page')?.addEventListener('click', () => {
+    if (currentPage > 1) loadTracks(getActiveGenre(), getActiveSort(), currentPage - 1);
+  });
+  document.getElementById('next-page')?.addEventListener('click', () => {
+    const totalPages = Math.ceil(totalTracks / PAGE_SIZE);
+    if (currentPage < totalPages) loadTracks(getActiveGenre(), getActiveSort(), currentPage + 1);
+  });
+
+  // Sidebar filter checkboxes � Apply Filters button
+  document.querySelector('.sidebar-filters .btn-primary')?.addEventListener('click', () => {
+    const checked = [...document.querySelectorAll('.filter-section:first-child .filter-check input:checked')]
+      .map(cb => cb.closest('.filter-check').textContent.trim())
+      .filter(g => g !== 'All Genres');
+    if (checked.length === 0 || checked.length > 1) {
+      // Multiple or none � reset to all
+      document.querySelectorAll('.genre-pill').forEach(p => p.classList.remove('active'));
+      document.querySelector('.genre-pill[data-genre="all"]')?.classList.add('active');
+      loadTracks('all', getActiveSort(), 1);
+    } else {
+      const genre = checked[0];
+      document.querySelectorAll('.genre-pill').forEach(p => {
+        p.classList.toggle('active', p.dataset.genre === genre);
+      });
+      loadTracks(genre, getActiveSort(), 1);
+    }
+  });
+
+  // Clear All button
+  document.querySelector('.sidebar-filters .btn-outline')?.addEventListener('click', () => {
+    document.querySelectorAll('.filter-check input').forEach(cb => cb.checked = false);
+    document.querySelector('.filter-check input').checked = true; // re-check "All Genres"
+    document.querySelectorAll('.genre-pill').forEach(p => p.classList.remove('active'));
+    document.querySelector('.genre-pill[data-genre="all"]')?.classList.add('active');
+    document.getElementById('sort-select').value = 'newest';
+    loadTracks('all', 'newest', 1);
+    closeFilters();
+  });
+
+  // -- Mobile filter panel toggle --------------------------------------------
+  const filterToggleBtn  = document.getElementById('filter-toggle-btn');
+  const filterCloseBtn   = document.getElementById('filter-close-btn');
+  const sidebarFilters   = document.getElementById('sidebar-filters');
+  const filterOverlay    = document.getElementById('filter-overlay');
+
+  function openFilters() {
+    sidebarFilters.classList.add('open');
+    filterOverlay.classList.add('open');
+    filterOverlay.setAttribute('aria-hidden', 'false');
+    filterToggleBtn?.setAttribute('aria-expanded', 'true');
+    filterCloseBtn?.focus();
+    // Trap focus inside filter panel
+    document.addEventListener('keydown', trapFilterFocus);
+  }
+
+  function closeFilters() {
+    sidebarFilters.classList.remove('open');
+    filterOverlay.classList.remove('open');
+    filterOverlay.setAttribute('aria-hidden', 'true');
+    filterToggleBtn?.setAttribute('aria-expanded', 'false');
+    filterToggleBtn?.focus();
+    document.removeEventListener('keydown', trapFilterFocus);
+  }
+
+  function trapFilterFocus(e) {
+    if (e.key === 'Escape') { closeFilters(); return; }
+    if (e.key !== 'Tab') return;
+    const focusable = sidebarFilters.querySelectorAll(
+      'button, input, select, [tabindex]:not([tabindex="-1"])'
+    );
+    const first = focusable[0];
+    const last  = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault(); last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault(); first.focus();
+    }
+  }
+
+  filterToggleBtn?.addEventListener('click', () => {
+    sidebarFilters.classList.contains('open') ? closeFilters() : openFilters();
+  });
+  filterCloseBtn?.addEventListener('click', closeFilters);
+  filterOverlay?.addEventListener('click', closeFilters);
+
+  // Update active filter count badge
+  function updateFilterCount() {
+    const checked = document.querySelectorAll('.filter-section .filter-check input:checked').length;
+    const countEl = document.getElementById('filter-count');
+    if (countEl) {
+      countEl.textContent = checked;
+      countEl.style.display = checked > 0 ? 'inline-flex' : 'none';
+    }
+  }
+  document.querySelectorAll('.filter-check input').forEach(cb => {
+    cb.addEventListener('change', updateFilterCount);
+  });
+
+  // Apply filters also closes the panel on mobile
+  document.querySelector('.sidebar-filters .btn-primary')?.addEventListener('click', () => {
+    closeFilters();
+  });
+})();</script>
 </body>
 </html>
+
+
+

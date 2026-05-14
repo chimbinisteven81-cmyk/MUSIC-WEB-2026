@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Checkout – SoundWave</title>
+  <title>Checkout � SMADS African Hits</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <style>
@@ -18,28 +18,34 @@
 </head>
 <body>
 
-<nav class="navbar">
+<!-- Skip to main content (accessibility) -->
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<nav class="navbar" role="navigation" aria-label="Main navigation">
   <a href="index.html" class="nav-logo">
     <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="15" stroke="url(#g1)" stroke-width="2"/><path d="M10 20V12l12 4-12 4z" fill="url(#g1)"/><defs><linearGradient id="g1" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse"><stop stop-color="#6c63ff"/><stop offset="1" stop-color="#ff6584"/></linearGradient></defs></svg>
-    SoundWave
+    SMADS African Hits
   </a>
   <div class="nav-links">
     <a href="index.html">Home</a><a href="browse.html">Browse</a>
     <a href="upload.html">Upload</a>
   </div>
   <div class="nav-actions">
-    <a href="profile.html" class="btn btn-outline btn-sm">Sign In</a>
+    <button type="button" class="btn btn-outline btn-sm nav-signin" data-modal="auth-modal">Sign In</button>
+    <a href="profile.html" class="btn btn-outline btn-sm nav-profile" style="display:none">My Profile</a>
+    <button class="btn btn-outline btn-sm" id="logout-btn" style="display:none">Logout</button>
   </div>
-  <div class="hamburger"><span></span><span></span><span></span></div>
+  <button class="hamburger" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </nav>
 <div class="mobile-menu">
   <a href="index.html">Home</a><a href="browse.html">Browse</a><a href="upload.html">Upload</a>
+  <button id="logout-btn-mobile" style="display:none">🚪 Logout</button>
 </div>
 
-<div class="payment-hero">
+<div class="payment-hero" id="main-content">
   <span class="section-label">Secure Checkout</span>
   <h1 style="font-size:2.2rem;margin:0.5rem 0">Complete Your <span class="text-gradient">Upload Plan</span></h1>
-  <p class="text-muted">Your payment is secured with 256-bit SSL encryption</p>
+  <p class="text-muted">Payments in Zambian Kwacha (ZMW) � Secured with 256-bit SSL</p>
 </div>
 
 <section class="section" style="padding-top:2rem">
@@ -50,47 +56,47 @@
       <div class="card mb-3">
         <h3 style="margin-bottom:1.5rem">Select Plan</h3>
         <div style="display:flex;flex-direction:column;gap:1rem">
-          <div class="plan-card" data-plan="single">
+          <div class="plan-card" data-plan="single" data-zmw="75">
             <div style="display:flex;justify-content:space-between;align-items:center">
               <div>
                 <strong>Single Track Upload</strong>
                 <p class="text-muted" style="font-size:0.85rem">Upload one track, keep it live forever</p>
               </div>
-              <div class="plan-price">$4.99</div>
+              <div class="plan-price">K75</div>
             </div>
             <ul class="plan-features">
               <li>1 track upload</li>
-              <li>Unlimited streams & downloads</li>
+              <li>Unlimited streams &amp; downloads</li>
               <li>Basic analytics</li>
             </ul>
           </div>
-          <div class="plan-card popular selected" data-plan="monthly">
+          <div class="plan-card popular selected" data-plan="monthly" data-zmw="225">
             <div class="plan-popular-badge">Most Popular</div>
             <div style="display:flex;justify-content:space-between;align-items:center">
               <div>
                 <strong>Monthly Pro</strong>
                 <p class="text-muted" style="font-size:0.85rem">Unlimited uploads every month</p>
               </div>
-              <div class="plan-price">$14.99<span>/mo</span></div>
+              <div class="plan-price">K225<span>/mo</span></div>
             </div>
             <ul class="plan-features">
               <li>Unlimited track uploads</li>
               <li>Advanced analytics dashboard</li>
-              <li>Priority placement in search</li>
+              <li>Priority placement in charts</li>
               <li>Artist verification badge</li>
             </ul>
           </div>
-          <div class="plan-card" data-plan="annual">
+          <div class="plan-card" data-plan="annual" data-zmw="1800">
             <div style="display:flex;justify-content:space-between;align-items:center">
               <div>
                 <strong>Annual Pro</strong>
-                <p class="text-muted" style="font-size:0.85rem">Save 33% – 2 months free</p>
+                <p class="text-muted" style="font-size:0.85rem">Save 33% � 2 months free</p>
               </div>
-              <div class="plan-price">$9.99<span>/mo</span></div>
+              <div class="plan-price">K150<span>/mo</span></div>
             </div>
             <ul class="plan-features">
               <li>Everything in Monthly Pro</li>
-              <li>Label & team accounts</li>
+              <li>Label &amp; team accounts</li>
               <li>API access</li>
               <li>Dedicated support</li>
             </ul>
@@ -100,13 +106,15 @@
 
       <!-- Payment Details -->
       <div class="card" id="payment-form-card">
-        <h3 style="margin-bottom:1.5rem">Payment Details</h3>
-        <!-- TODO: Replace with Stripe Elements or PayPal SDK -->
+        <h3 style="margin-bottom:0.5rem">Payment Details</h3>
+        <div style="background:rgba(255,193,7,0.1);border:1px solid rgba(255,193,7,0.3);border-radius:var(--radius);padding:0.75rem 1rem;margin-bottom:1rem;font-size:0.82rem;color:#ffc107">
+          ?? <strong>Demo mode:</strong> Do not enter real card details. Connect a payment gateway (Stripe/PayPal) before going live.
+        </div>
         <div class="card-brand">
+          <span class="card-brand-icon">MTN Money</span>
+          <span class="card-brand-icon">Airtel Money</span>
+          <span class="card-brand-icon">Zamtel Kwacha</span>
           <span class="card-brand-icon">VISA</span>
-          <span class="card-brand-icon">MC</span>
-          <span class="card-brand-icon">AMEX</span>
-          <span class="card-brand-icon">PayPal</span>
         </div>
         <div class="form-group">
           <label class="form-label">Cardholder Name</label>
@@ -136,16 +144,16 @@
           </label>
         </div>
         <button class="btn btn-primary" style="width:100%;padding:1rem;font-size:1rem" id="pay-btn">
-          🔒 Complete Payment – $14.99/mo
+          ?? Complete Payment � K225/mo
         </button>
         <div class="secure-badge">
-          <span>🔒</span> Secured by SSL · Powered by Stripe · Cancel anytime
+          <span>??</span> Secured by SSL � MTN/Airtel/Zamtel Money � Visa accepted
         </div>
       </div>
 
       <!-- Success Screen (shown after payment) -->
       <div class="card success-screen" id="success-screen">
-        <div class="success-icon">🎉</div>
+        <div class="success-icon">??</div>
         <h2 style="margin-bottom:0.75rem">Payment Successful!</h2>
         <p class="text-muted" style="margin-bottom:2rem">Your Monthly Pro plan is now active. Start uploading your music!</p>
         <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
@@ -159,22 +167,22 @@
     <div>
       <div class="order-summary">
         <h3 style="margin-bottom:1.5rem">Order Summary</h3>
-        <div class="order-line"><span>Monthly Pro Plan</span><span>$14.99</span></div>
-        <div class="order-line"><span>Tax (0%)</span><span>$0.00</span></div>
-        <div class="order-line"><span>Discount</span><span style="color:var(--accent)">–$0.00</span></div>
-        <div class="order-total"><span>Total Today</span><span class="text-gradient" id="order-total">$14.99</span></div>
-        <div style="margin-top:1rem;padding:1rem;background:rgba(67,233,123,0.08);border:1px solid rgba(67,233,123,0.2);border-radius:var(--radius)">
-          <p style="font-size:0.8rem;color:var(--accent)">✓ 7-day free trial included</p>
+        <div class="order-line"><span>Monthly Pro Plan</span><span>K225.00</span></div>
+        <div class="order-line"><span>Tax (0%)</span><span>K0.00</span></div>
+        <div class="order-line"><span>Discount</span><span style="color:var(--accent)">�K0.00</span></div>
+        <div class="order-total"><span>Total Today</span><span class="text-gradient" id="order-total">K225.00</span></div>
+        <div style="background:rgba(67,233,123,0.08);border:1px solid rgba(67,233,123,0.2);border-radius:var(--radius)">
+          <p style="font-size:0.8rem;color:var(--accent)">? 7-day free trial included</p>
           <p style="font-size:0.8rem;color:var(--text-secondary);margin-top:0.25rem">Cancel anytime before trial ends</p>
         </div>
         <div class="divider"></div>
         <h4 style="margin-bottom:0.75rem;font-size:0.9rem">What's included:</h4>
         <ul style="list-style:none;display:flex;flex-direction:column;gap:0.5rem">
-          <li style="font-size:0.82rem;color:var(--text-secondary);display:flex;gap:0.5rem"><span style="color:var(--accent)">✓</span> Unlimited track uploads</li>
-          <li style="font-size:0.82rem;color:var(--text-secondary);display:flex;gap:0.5rem"><span style="color:var(--accent)">✓</span> Advanced analytics</li>
-          <li style="font-size:0.82rem;color:var(--text-secondary);display:flex;gap:0.5rem"><span style="color:var(--accent)">✓</span> Priority search placement</li>
-          <li style="font-size:0.82rem;color:var(--text-secondary);display:flex;gap:0.5rem"><span style="color:var(--accent)">✓</span> Artist verification badge</li>
-          <li style="font-size:0.82rem;color:var(--text-secondary);display:flex;gap:0.5rem"><span style="color:var(--accent)">✓</span> Cancel anytime</li>
+          <li style="font-size:0.82rem;color:var(--text-secondary);display:flex;gap:0.5rem"><span style="color:var(--accent)">?</span> Unlimited track uploads</li>
+          <li style="font-size:0.82rem;color:var(--text-secondary);display:flex;gap:0.5rem"><span style="color:var(--accent)">?</span> Advanced analytics</li>
+          <li style="font-size:0.82rem;color:var(--text-secondary);display:flex;gap:0.5rem"><span style="color:var(--accent)">?</span> Priority search placement</li>
+          <li style="font-size:0.82rem;color:var(--text-secondary);display:flex;gap:0.5rem"><span style="color:var(--accent)">?</span> Artist verification badge</li>
+          <li style="font-size:0.82rem;color:var(--text-secondary);display:flex;gap:0.5rem"><span style="color:var(--accent)">?</span> Cancel anytime</li>
         </ul>
       </div>
     </div>
@@ -183,58 +191,163 @@
 
 <footer class="footer">
   <div class="footer-grid">
-    <div class="footer-brand"><div class="nav-logo" style="font-size:1.3rem">SoundWave</div><p>The world's most open music platform.</p></div>
+    <div class="footer-brand"><div class="nav-logo" style="font-size:1.3rem">SMADS African Hits</div><p>The world's most open music platform.</p></div>
     <div class="footer-col"><h4>Discover</h4><ul><li><a href="browse.html">Browse Music</a></li></ul></div>
     <div class="footer-col"><h4>Artists</h4><ul><li><a href="upload.html">Upload Music</a></li></ul></div>
     <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li><li><a href="faq.html">FAQ</a></li></ul></div>
   </div>
-  <div class="footer-bottom"><p>© 2026 SoundWave. All rights reserved.</p></div>
+  <div class="footer-bottom"><p>� 2026 SMADS African Hits. All rights reserved.</p></div>
 </footer>
 
-<div class="toast" id="toast" role="alert"><span class="toast-icon">✓</span><span class="toast-msg"></span></div>
+<div class="toast" id="toast" role="alert" aria-live="polite" aria-atomic="true"><span class="toast-icon">?</span><span class="toast-msg"></span></div>
+
+<!-- AUTH MODAL -->
+<div class="modal-overlay" id="auth-modal">
+  <div class="modal">
+    <div class="modal-header"><h3>Sign In</h3><button class="modal-close" aria-label="Close">?</button></div>
+    <div class="tabs-wrapper">
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="login">Sign In</button>
+        <button class="tab-btn" data-tab="register">Create Account</button>
+      </div>
+      <div class="tab-content active" id="tab-login">
+        <form id="login-form">
+          <div class="form-group"><label class="form-label">Email or Username</label><input type="text" name="login" class="form-input" placeholder="your@email.com" required></div>
+          <div class="form-group"><label class="form-label">Password</label><input type="password" name="password" class="form-input" placeholder="��������" required></div>
+                    <div style="text-align:right;margin-top:-0.5rem;margin-bottom:1rem">
+            <a href="reset-password.html" style="font-size:0.82rem;color:var(--primary);text-decoration:none">Forgot password?</a>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%">Sign In</button>
+        </form>
+      </div>
+      <div class="tab-content" id="tab-register">
+        <form id="register-form">
+          <div class="grid-2">
+            <div class="form-group"><label class="form-label">Username</label><input type="text" name="username" class="form-input" placeholder="yourname" required></div>
+            <div class="form-group"><label class="form-label">Display Name</label><input type="text" name="display_name" class="form-input" placeholder="Your Name" required></div>
+          </div>
+          <div class="form-group"><label class="form-label">Email</label><input type="email" name="email" class="form-input" placeholder="your@email.com" required></div>
+          <div class="form-group"><label class="form-label">Password</label><input type="password" name="password" class="form-input" placeholder="Min 6 characters" required></div>
+          <div class="form-group"><label class="form-label">I am a...</label><select name="role" class="form-select"><option value="listener">Listener (Free)</option><option value="artist">Artist / Producer</option></select></div>
+          <button type="submit" class="btn btn-primary" style="width:100%">Create Account</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script src="js/app.js"></script>
 <script>
-  // Plan selection
-  const planPrices = { single: '$4.99', monthly: '$14.99/mo', annual: '$9.99/mo' };
+(async () => {
+  await loadCurrentUser();
+  // Plan selection with ZMW pricing
+  const planData = {
+    single:  { label: 'K75',      zmw: 75 },
+    monthly: { label: 'K225/mo',  zmw: 225 },
+    annual:  { label: 'K1,800/yr',zmw: 1800 },
+  };
+  let selectedPlan = 'monthly';
+
   document.querySelectorAll('.plan-card').forEach(card => {
     card.addEventListener('click', () => {
       document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
       card.classList.add('selected');
-      const plan = card.dataset.plan;
-      const price = planPrices[plan];
-      document.getElementById('pay-btn').textContent = `🔒 Complete Payment – ${price}`;
-      document.getElementById('order-total').textContent = price.split('/')[0];
+      selectedPlan = card.dataset.plan;
+      const p = planData[selectedPlan];
+      document.getElementById('pay-btn').textContent = `?? Complete Payment � ${p.label}`;
+      document.getElementById('order-total').textContent = 'K' + p.zmw.toLocaleString();
     });
   });
 
+  // Add payment method selector
+  const methodSelect = document.createElement('div');
+  methodSelect.innerHTML = `
+    <div class="form-group" style="margin-bottom:1rem">
+      <label class="form-label">Payment Method</label>
+      <select id="payment-method" class="form-select">
+        <option value="mtn">MTN Mobile Money</option>
+        <option value="airtel">Airtel Money</option>
+        <option value="zamtel">Zamtel Kwacha</option>
+        <option value="card">Visa / Mastercard</option>
+        <option value="bank">Bank Transfer</option>
+      </select>
+    </div>`;
+  document.querySelector('.card-brand').after(methodSelect);
+
   // Card number formatting
-  document.getElementById('card-number').addEventListener('input', function() {
+  document.getElementById('card-number')?.addEventListener('input', function() {
     this.value = this.value.replace(/\D/g, '').replace(/(.{4})/g, '$1 ').trim().slice(0, 19);
   });
-  document.getElementById('card-expiry').addEventListener('input', function() {
+  document.getElementById('card-expiry')?.addEventListener('input', function() {
     this.value = this.value.replace(/\D/g, '').replace(/^(\d{2})(\d)/, '$1 / $2').slice(0, 7);
   });
 
-  // Simulate payment
-  document.getElementById('pay-btn').addEventListener('click', () => {
-    const name = document.getElementById('card-name').value;
-    const num = document.getElementById('card-number').value;
-    const exp = document.getElementById('card-expiry').value;
-    const cvv = document.getElementById('card-cvv').value;
-    if (!name || num.length < 19 || exp.length < 7 || cvv.length < 3) {
-      showToast('Please fill in all payment details', 'error'); return;
+  // Payment submission
+  document.getElementById('pay-btn')?.addEventListener('click', async () => {
+    if (!appState.currentUser) {
+      document.getElementById('auth-modal')?.classList.add('open');
+      showToast('Please sign in before purchasing a plan.', 'error');
+      return;
     }
-    // TODO: Send payment token to backend Stripe integration
+
+    // Enforce terms acceptance
+    const termsBox = document.querySelector('#payment-form-card input[type="checkbox"]');
+    if (termsBox && !termsBox.checked) {
+      showToast('Please accept the Terms of Service to continue.', 'error');
+      return;
+    }
+
+    // Enforce explicit plan selection
+    if (!selectedPlan) {
+      showToast('Please select a plan.', 'error');
+      return;
+    }
+
+    const method = document.getElementById('payment-method')?.value || 'card';
+    if (method === 'card') {
+      const name = document.getElementById('card-name')?.value.trim();
+      const num  = document.getElementById('card-number')?.value.replace(/\s/g,'');
+      const exp  = document.getElementById('card-expiry')?.value;
+      const cvv  = document.getElementById('card-cvv')?.value;
+      if (!name || num.length < 16 || exp?.length < 7 || cvv?.length < 3) {
+        showToast('Please fill in all card details correctly.', 'error');
+        return;
+      }
+    }
+
     const btn = document.getElementById('pay-btn');
-    btn.textContent = 'Processing...';
     btn.disabled = true;
-    setTimeout(() => {
+    btn.textContent = 'Processing...';
+
+    try {
+      const fd1 = new FormData();
+      fd1.append('plan', selectedPlan);
+      fd1.append('method', method);
+      const init = await apiFetch('/api/payment/initiate', { method: 'POST', body: fd1 });
+
+      const fd2 = new FormData();
+      fd2.append('payment_id', init.payment_id);
+      fd2.append('reference',  init.reference);
+      const confirm = await apiFetch('/api/payment/confirm', { method: 'POST', body: fd2 });
+
+      // Update success screen with correct plan name
+      const successMsg = document.querySelector('#success-screen p.text-muted');
+      if (successMsg) {
+        successMsg.textContent = `Your ${planData[selectedPlan]?.label || selectedPlan} plan is now active. Start uploading your music!`;
+      }
       document.getElementById('payment-form-card').style.display = 'none';
-      document.getElementById('success-screen').style.display = 'block';
-      showToast('Payment successful!');
-    }, 2000);
+      document.getElementById('success-screen').style.display    = 'block';
+      showToast('Payment successful! Upload access unlocked.');
+    } catch (err) {
+      showToast(err.message || 'Payment failed. Please try again.', 'error');
+      btn.disabled = false;
+      btn.textContent = `🎵 Complete Payment · ${planData[selectedPlan]?.label || ''}`;
+    }
   });
+})();
 </script>
 </body>
 </html>
+
+
+

@@ -1,0 +1,22 @@
+# SMADS African Hits – Apache config for XAMPP
+Options -Indexes
+
+# PHP error handling (disable in production)
+php_flag display_errors Off
+php_flag log_errors On
+
+# Security headers
+Header always set X-Content-Type-Options nosniff
+Header always set X-Frame-Options SAMEORIGIN
+Header always set X-XSS-Protection "1; mode=block"
+
+# Cache static assets
+<FilesMatch "\.(css|js|png|jpg|jpeg|gif|webp|woff2)$">
+    Header set Cache-Control "max-age=86400, public"
+</FilesMatch>
+
+# Protect sensitive files
+<FilesMatch "^(config\.php|install\.php)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>

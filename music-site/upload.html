@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Upload Music – SoundWave</title>
+  <title>Upload Music � SMADS African Hits</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <style>
@@ -24,10 +24,13 @@
 </head>
 <body>
 
-<nav class="navbar">
+<!-- Skip to main content (accessibility) -->
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<nav class="navbar" role="navigation" aria-label="Main navigation">
   <a href="index.html" class="nav-logo">
     <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="15" stroke="url(#g1)" stroke-width="2"/><path d="M10 20V12l12 4-12 4z" fill="url(#g1)"/><defs><linearGradient id="g1" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse"><stop stop-color="#6c63ff"/><stop offset="1" stop-color="#ff6584"/></linearGradient></defs></svg>
-    SoundWave
+    SMADS African Hits
   </a>
   <div class="nav-links">
     <a href="index.html">Home</a><a href="browse.html">Browse</a>
@@ -35,15 +38,18 @@
     <a href="about.html">About</a><a href="contact.html">Contact</a>
   </div>
   <div class="nav-actions">
-    <a href="profile.html" class="btn btn-outline btn-sm">Sign In</a>
+    <button type="button" class="btn btn-outline btn-sm nav-signin" data-modal="auth-modal">Sign In</button>
+    <a href="profile.html" class="btn btn-outline btn-sm nav-profile" style="display:none">My Profile</a>
+    <button class="btn btn-outline btn-sm" id="logout-btn" style="display:none">Logout</button>
     <a href="upload.html" class="btn btn-primary btn-sm">Upload Music</a>
   </div>
-  <div class="hamburger"><span></span><span></span><span></span></div>
+  <button class="hamburger" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </nav>
 <div class="mobile-menu">
   <a href="index.html">Home</a><a href="browse.html">Browse</a><a href="player.html">Player</a>
   <a href="upload.html">Upload</a><a href="profile.html">Profile</a><a href="about.html">About</a>
   <a href="contact.html">Contact</a><a href="faq.html">FAQ</a>
+  <button id="logout-btn-mobile" style="display:none">🚪 Logout</button>
 </div>
 
 <div class="upload-hero">
@@ -52,7 +58,7 @@
   <p class="text-muted" style="max-width:500px;margin:0 auto">Share your sound with millions of listeners. Simple upload, powerful reach.</p>
 </div>
 
-<section class="section" style="padding-top:2rem">
+<section class="section" style="padding-top:2rem" id="main-content">
   <div class="upload-layout">
     <!-- Upload Form -->
     <div>
@@ -86,11 +92,11 @@
           <div class="grid-2">
             <div class="form-group">
               <label class="form-label" for="track-title-input">Track Title *</label>
-              <input type="text" id="track-title-input" class="form-input" placeholder="e.g. Neon Dreams" required>
+              <input type="text" id="track-title-input" class="form-input" placeholder="e.g. Neon Dreams" maxlength="200" required>
             </div>
             <div class="form-group">
               <label class="form-label" for="artist-name">Artist Name *</label>
-              <input type="text" id="artist-name" class="form-input" placeholder="Your artist name" required>
+              <input type="text" id="artist-name" class="form-input" placeholder="Your artist name" maxlength="150" required>
             </div>
           </div>
           <div class="grid-2">
@@ -98,85 +104,105 @@
               <label class="form-label" for="genre-select">Genre *</label>
               <select id="genre-select" class="form-select" required>
                 <option value="">Select genre...</option>
-                <option>Electronic</option><option>Hip-Hop</option><option>R&amp;B / Soul</option>
-                <option>Pop</option><option>Rock</option><option>Lo-Fi</option>
-                <option>Jazz</option><option>Classical</option><option>Synthwave</option>
-                <option>Afrobeats</option><option>Latin</option><option>Country</option><option>Other</option>
+                <option>Afrobeats</option>
+                <option>Amapiano</option>
+                <option>Highlife</option>
+                <option>Bongo Flava</option>
+                <option>Afro-Pop</option>
+                <option>Afro-Soul</option>
+                <option>Gqom</option>
+                <option>Kwaito</option>
+                <option>Afro-Hip-Hop</option>
+                <option>Gospel</option>
+                <option>Zambian Music</option>
+                <option>R&amp;B / Soul</option>
+                <option>Hip-Hop</option>
+                <option>Reggae</option>
+                <option>Other</option>
               </select>
             </div>
             <div class="form-group">
               <label class="form-label" for="album-name">Album / EP (optional)</label>
-              <input type="text" id="album-name" class="form-input" placeholder="Album name">
+              <input type="text" id="album-name" class="form-input" placeholder="Album name" maxlength="150">
             </div>
           </div>
           <div class="form-group">
             <label class="form-label" for="track-desc">Description</label>
-            <textarea id="track-desc" class="form-textarea" placeholder="Tell listeners about this track, its inspiration, production notes..."></textarea>
+            <textarea id="track-desc" class="form-textarea" placeholder="Tell listeners about this track, its inspiration, production notes..." maxlength="2000"></textarea>
           </div>
           <div class="form-group">
             <label class="form-label" for="tags-input">Tags (comma separated)</label>
-            <input type="text" id="tags-input" class="form-input" placeholder="e.g. chill, ambient, 2026, summer">
+            <input type="text" id="tags-input" class="form-input" placeholder="e.g. chill, ambient, 2026, summer" maxlength="255">
           </div>
-          <button type="button" class="btn btn-primary" id="next-step-1" style="width:100%">Continue to Upload →</button>
+          <button type="button" class="btn btn-primary" id="next-step-1" style="width:100%">Continue to Upload ?</button>
         </div>
 
         <!-- Step 2: File Upload (hidden initially) -->
         <div id="form-step-2" style="display:none">
           <h3 style="margin-bottom:1.5rem">Upload Files</h3>
           <div class="form-group">
-            <label class="form-label">Audio File * (MP3, WAV, FLAC – max 200MB)</label>
-            <!-- TODO: Connect to backend file upload endpoint (S3 or similar) -->
+            <label class="form-label">Audio File * (MP3, WAV, FLAC � max 200MB)</label>
             <div class="upload-zone" id="audio-dropzone">
-              <div class="upload-icon">🎵</div>
+              <div class="upload-icon">??</div>
               <p>Drag &amp; drop your audio file here, or <strong>click to browse</strong></p>
               <p style="margin-top:0.5rem;font-size:0.8rem;color:var(--text-secondary)">MP3, WAV, FLAC, AAC supported</p>
               <input type="file" accept="audio/*" style="display:none" id="audio-file">
             </div>
           </div>
           <div class="form-group">
-            <label class="form-label">Cover Art * (JPG, PNG – min 500×500px)</label>
+            <label class="form-label">Cover Art * (JPG, PNG � min 500�500px)</label>
             <div class="upload-zone" id="cover-dropzone">
-              <div class="upload-icon">🖼️</div>
+              <div class="upload-icon">???</div>
               <p>Drag &amp; drop cover image, or <strong>click to browse</strong></p>
               <input type="file" accept="image/*" style="display:none" id="cover-file">
             </div>
             <img id="cover-preview" class="cover-preview mt-2" alt="Cover preview">
           </div>
           <div style="display:flex;gap:1rem">
-            <button type="button" class="btn btn-outline" id="back-step-2" style="flex:1">← Back</button>
-            <button type="button" class="btn btn-primary" id="next-step-2" style="flex:2">Continue to Payment →</button>
+            <button type="button" class="btn btn-outline" id="back-step-2" style="flex:1">? Back</button>
+            <button type="button" class="btn btn-primary" id="next-step-2" style="flex:2">Continue to Payment ?</button>
           </div>
         </div>
 
         <!-- Step 3: Payment (hidden initially) -->
-        <div id="form-step-3" style="display:none">
-          <h3 style="margin-bottom:0.5rem">Choose Your Plan</h3>
+        <div id="form-step-3" style="display:none">          <h3 style="margin-bottom:0.5rem">Choose Your Plan</h3>
           <p class="text-muted" style="margin-bottom:1.5rem;font-size:0.9rem">Listeners always stream and download for free. Artists pay to upload.</p>
-          <!-- TODO: Integrate Stripe/payment gateway here -->
           <div style="display:flex;flex-direction:column;gap:1rem;margin-bottom:1.5rem">
             <div class="plan-card selected" data-plan="single">
               <div style="display:flex;justify-content:space-between;align-items:center">
                 <div><strong>Single Track</strong><p class="text-muted" style="font-size:0.85rem">Upload one track</p></div>
-                <div class="plan-price">$4.99</div>
+                <div class="plan-price">K75</div>
               </div>
             </div>
             <div class="plan-card popular" data-plan="monthly">
               <div class="plan-popular-badge">Most Popular</div>
               <div style="display:flex;justify-content:space-between;align-items:center">
                 <div><strong>Monthly Pro</strong><p class="text-muted" style="font-size:0.85rem">Unlimited uploads + analytics</p></div>
-                <div class="plan-price">$14.99<span>/mo</span></div>
+                <div class="plan-price">K225<span>/mo</span></div>
               </div>
             </div>
             <div class="plan-card" data-plan="annual">
               <div style="display:flex;justify-content:space-between;align-items:center">
-                <div><strong>Annual Pro</strong><p class="text-muted" style="font-size:0.85rem">Best value – 2 months free</p></div>
-                <div class="plan-price">$9.99<span>/mo</span></div>
+                <div><strong>Annual Pro</strong><p class="text-muted" style="font-size:0.85rem">Best value � 2 months free</p></div>
+                <div class="plan-price">K150<span>/mo</span></div>
               </div>
             </div>
           </div>
           <div style="display:flex;gap:1rem">
-            <button type="button" class="btn btn-outline" id="back-step-3" style="flex:1">← Back</button>
-            <a href="payment.html" class="btn btn-primary" style="flex:2;text-align:center">Proceed to Payment →</a>
+            <button type="button" class="btn btn-outline" id="back-step-3" style="flex:1">? Back</button>
+            <button type="button" class="btn btn-primary" id="submit-upload" style="flex:2">Upload &amp; Pay ?</button>
+          </div>
+        </div>
+        <!-- Step 4: Success (hidden initially) -->
+        <div id="form-step-4" style="display:none">
+          <div style="text-align:center;padding:2rem">
+            <div style="font-size:3rem;margin-bottom:1rem">??</div>
+            <h3 style="margin-bottom:0.75rem">Track Uploaded!</h3>
+            <p class="text-muted" style="margin-bottom:1.5rem">Your track is now live on SMADS African Hits.</p>
+            <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+              <a href="browse.html" class="btn btn-primary">Browse Music</a>
+              <a href="profile.html" class="btn btn-outline">My Dashboard</a>
+            </div>
           </div>
         </div>
       </form>
@@ -185,27 +211,27 @@
     <!-- Sidebar Info -->
     <div>
       <div class="card mb-3">
-        <h4 style="margin-bottom:1rem">📋 Upload Guidelines</h4>
+        <h4 style="margin-bottom:1rem">?? Upload Guidelines</h4>
         <ul style="list-style:none;display:flex;flex-direction:column;gap:0.75rem">
-          <li style="font-size:0.85rem;color:var(--text-secondary);display:flex;gap:0.5rem"><span style="color:var(--accent)">✓</span> Original content only</li>
-          <li style="font-size:0.85rem;color:var(--text-secondary);display:flex;gap:0.5rem"><span style="color:var(--accent)">✓</span> High quality audio (320kbps+)</li>
-          <li style="font-size:0.85rem;color:var(--text-secondary);display:flex;gap:0.5rem"><span style="color:var(--accent)">✓</span> Cover art minimum 500×500px</li>
-          <li style="font-size:0.85rem;color:var(--text-secondary);display:flex;gap:0.5rem"><span style="color:var(--accent)">✓</span> No copyrighted samples without clearance</li>
-          <li style="font-size:0.85rem;color:var(--text-secondary);display:flex;gap:0.5rem"><span style="color:var(--accent)">✓</span> Accurate genre and metadata</li>
+          <li style="font-size:0.85rem;color:var(--text-secondary);display:flex;gap:0.5rem"><span style="color:var(--accent)">?</span> Original content only</li>
+          <li style="font-size:0.85rem;color:var(--text-secondary);display:flex;gap:0.5rem"><span style="color:var(--accent)">?</span> High quality audio (320kbps+)</li>
+          <li style="font-size:0.85rem;color:var(--text-secondary);display:flex;gap:0.5rem"><span style="color:var(--accent)">?</span> Cover art minimum 500�500px</li>
+          <li style="font-size:0.85rem;color:var(--text-secondary);display:flex;gap:0.5rem"><span style="color:var(--accent)">?</span> No copyrighted samples without clearance</li>
+          <li style="font-size:0.85rem;color:var(--text-secondary);display:flex;gap:0.5rem"><span style="color:var(--accent)">?</span> Accurate genre and metadata</li>
         </ul>
       </div>
       <div class="pricing-note">
-        <h4 style="margin-bottom:0.75rem">💡 Why Paid Uploads?</h4>
+        <h4 style="margin-bottom:0.75rem">?? Why Paid Uploads?</h4>
         <p style="font-size:0.85rem;color:var(--text-secondary)">Keeping uploads paid ensures quality content and funds our free streaming infrastructure. Listeners always access music for free.</p>
       </div>
       <div class="card mt-3">
-        <h4 style="margin-bottom:0.75rem">🎯 What You Get</h4>
+        <h4 style="margin-bottom:0.75rem">?? What You Get</h4>
         <ul style="list-style:none;display:flex;flex-direction:column;gap:0.5rem">
-          <li style="font-size:0.85rem;color:var(--text-secondary)">📊 Real-time play analytics</li>
-          <li style="font-size:0.85rem;color:var(--text-secondary)">🌍 Global distribution</li>
-          <li style="font-size:0.85rem;color:var(--text-secondary)">💬 Fan comments & engagement</li>
-          <li style="font-size:0.85rem;color:var(--text-secondary)">📱 Mobile-optimized player</li>
-          <li style="font-size:0.85rem;color:var(--text-secondary)">🔗 Shareable track links</li>
+          <li style="font-size:0.85rem;color:var(--text-secondary)">?? Real-time play analytics</li>
+          <li style="font-size:0.85rem;color:var(--text-secondary)">?? Global distribution</li>
+          <li style="font-size:0.85rem;color:var(--text-secondary)">?? Fan comments & engagement</li>
+          <li style="font-size:0.85rem;color:var(--text-secondary)">?? Mobile-optimized player</li>
+          <li style="font-size:0.85rem;color:var(--text-secondary)">?? Shareable track links</li>
         </ul>
       </div>
     </div>
@@ -214,26 +240,89 @@
 
 <footer class="footer">
   <div class="footer-grid">
-    <div class="footer-brand"><div class="nav-logo" style="font-size:1.3rem">SoundWave</div><p>The world's most open music platform.</p></div>
+    <div class="footer-brand"><div class="nav-logo" style="font-size:1.3rem">SMADS African Hits</div><p>The world's most open music platform.</p></div>
     <div class="footer-col"><h4>Discover</h4><ul><li><a href="browse.html">Browse Music</a></li><li><a href="browse.html">Trending</a></li></ul></div>
     <div class="footer-col"><h4>Artists</h4><ul><li><a href="upload.html">Upload Music</a></li><li><a href="payment.html">Pricing</a></li></ul></div>
     <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li><li><a href="faq.html">FAQ</a></li></ul></div>
   </div>
-  <div class="footer-bottom"><p>© 2026 SoundWave. All rights reserved.</p></div>
+  <div class="footer-bottom"><p>� 2026 SMADS African Hits. All rights reserved.</p></div>
 </footer>
 
-<div class="toast" id="toast" role="alert"><span class="toast-icon">✓</span><span class="toast-msg"></span></div>
+<div class="toast" id="toast" role="alert" aria-live="polite" aria-atomic="true"><span class="toast-icon">?</span><span class="toast-msg"></span></div>
+
+<!-- AUTH MODAL -->
+<div class="modal-overlay" id="auth-modal">
+  <div class="modal">
+    <div class="modal-header"><h3>Sign In to Upload</h3><button class="modal-close" aria-label="Close">?</button></div>
+    <div class="tabs-wrapper">
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="login">Sign In</button>
+        <button class="tab-btn" data-tab="register">Create Account</button>
+      </div>
+      <div class="tab-content active" id="tab-login">
+        <form id="login-form">
+          <div class="form-group"><label class="form-label">Email or Username</label><input type="text" name="login" class="form-input" placeholder="your@email.com" required></div>
+          <div class="form-group"><label class="form-label">Password</label><input type="password" name="password" class="form-input" placeholder="��������" required></div>
+                    <div style="text-align:right;margin-top:-0.5rem;margin-bottom:1rem">
+            <a href="reset-password.html" style="font-size:0.82rem;color:var(--primary);text-decoration:none">Forgot password?</a>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%">Sign In</button>
+        </form>
+      </div>
+      <div class="tab-content" id="tab-register">
+        <form id="register-form">
+          <div class="grid-2">
+            <div class="form-group"><label class="form-label">Username</label><input type="text" name="username" class="form-input" placeholder="yourname" required></div>
+            <div class="form-group"><label class="form-label">Display Name</label><input type="text" name="display_name" class="form-input" placeholder="Your Name" required></div>
+          </div>
+          <div class="form-group"><label class="form-label">Email</label><input type="email" name="email" class="form-input" placeholder="your@email.com" required></div>
+          <div class="form-group"><label class="form-label">Password</label><input type="password" name="password" class="form-input" placeholder="Min 6 characters" required></div>
+          <div class="form-group"><label class="form-label">I am a...</label>
+            <select name="role" class="form-select">
+              <option value="artist">Artist / Producer</option>
+              <option value="listener">Listener</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%">Create Account</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script src="js/app.js"></script>
 <script>
-  // Multi-step form logic
+(async () => {
+  // Load current user first so we know if they are admin
+  await loadCurrentUser();
+  const isAdmin = appState.currentUser?.is_admin === true;
+
+  // -- Step indicator --------------------------------------------------------
+  // Admins only see 3 steps (no Payment step)
+  const totalSteps = isAdmin ? 3 : 4;
+
+  if (isAdmin) {
+    // Hide the Payment step indicator and relabel step 3 ? Publish
+    document.getElementById('step3').querySelector('.step-label').textContent = 'Publish';
+    // Hide the payment step-line + step bubble (4th)
+    const stepLines = document.querySelectorAll('.step-line');
+    const step4     = document.getElementById('step4');
+    if (stepLines[2]) stepLines[2].style.display = 'none';
+    if (step4)        step4.style.display = 'none';
+    // Change "Continue to Payment" button label
+    const nextStep2Btn = document.getElementById('next-step-2');
+    if (nextStep2Btn) nextStep2Btn.textContent = 'Upload Now ?';
+  }
+
+  // -- Multi-step navigation -------------------------------------------------
   let currentStep = 1;
+
   function goToStep(n) {
     document.getElementById('form-step-' + currentStep).style.display = 'none';
     document.getElementById('form-step-' + n).style.display = 'block';
-    // Update step indicators
     for (let i = 1; i <= 4; i++) {
       const el = document.getElementById('step' + i);
+      if (!el) continue;
       el.classList.remove('active', 'done');
       if (i < n) el.classList.add('done');
       if (i === n) el.classList.add('active');
@@ -242,19 +331,164 @@
   }
 
   document.getElementById('next-step-1').addEventListener('click', () => {
-    const title = document.getElementById('track-title-input').value;
-    const artist = document.getElementById('artist-name').value;
-    const genre = document.getElementById('genre-select').value;
-    if (!title || !artist || !genre) { showToast('Please fill in all required fields', 'error'); return; }
+    const title  = document.getElementById('track-title-input').value.trim();
+    const artist = document.getElementById('artist-name').value.trim();
+    const genre  = document.getElementById('genre-select').value;
+    if (!title)  { showToast('Track title is required.', 'error'); return; }
+    if (title.length > 200) { showToast('Title must be 200 characters or less.', 'error'); return; }
+    if (!artist) { showToast('Artist name is required.', 'error'); return; }
+    if (artist.length > 150) { showToast('Artist name must be 150 characters or less.', 'error'); return; }
+    if (!genre)  { showToast('Please select a genre.', 'error'); return; }
+    // Check login before proceeding to file upload step
+    if (!appState.currentUser) {
+      document.getElementById('auth-modal')?.classList.add('open');
+      showToast('Please sign in to upload music.', 'error');
+      return;
+    }
     goToStep(2);
   });
-  document.getElementById('back-step-2').addEventListener('click', () => goToStep(1));
-  document.getElementById('next-step-2').addEventListener('click', () => goToStep(3));
-  document.getElementById('back-step-3').addEventListener('click', () => goToStep(2));
 
-  // File dropzones
+  document.getElementById('back-step-2').addEventListener('click', () => goToStep(1));
+
+  // "Continue" from step 2:
+  // - Admin ? skip payment, go straight to upload
+  // - Artist ? go to payment step (step 3)
+  document.getElementById('next-step-2').addEventListener('click', () => {
+    if (isAdmin) {
+      doUpload();   // upload immediately, no payment
+    } else {
+      goToStep(3);  // show payment step
+    }
+  });
+
+  document.getElementById('back-step-3').addEventListener('click', () => goToStep(2));
+  document.getElementById('submit-upload').addEventListener('click', () => doUpload());
+
+  // -- Upload function -------------------------------------------------------
+  async function doUpload() {
+    if (!appState.currentUser) {
+      document.getElementById('auth-modal')?.classList.add('open');
+      showToast('Please sign in to upload music.', 'error');
+      return;
+    }
+    const audioInput = document.getElementById('audio-file');
+    if (!audioInput.files[0]) { showToast('Please select an audio file.', 'error'); return; }
+
+    // Client-side file size validation
+    const MAX_AUDIO_MB = 200;
+    const MAX_IMG_MB   = 10;
+    const audioFile    = audioInput.files[0];
+    const coverInput   = document.getElementById('cover-file');
+    const coverFile    = coverInput?.files[0];
+
+    if (audioFile.size > MAX_AUDIO_MB * 1024 * 1024) {
+      showToast(`Audio file is too large. Maximum size is ${MAX_AUDIO_MB}MB.`, 'error');
+      return;
+    }
+    if (coverFile && coverFile.size > MAX_IMG_MB * 1024 * 1024) {
+      showToast(`Cover image is too large. Maximum size is ${MAX_IMG_MB}MB.`, 'error');
+      return;
+    }
+
+    // Validate audio file type client-side
+    const allowedAudio = ['audio/mpeg','audio/mp3','audio/wav','audio/flac','audio/aac','audio/ogg','audio/x-m4a','audio/mp4'];
+    if (audioFile.type && !allowedAudio.includes(audioFile.type) && !audioFile.name.match(/\.(mp3|wav|flac|aac|ogg|m4a)$/i)) {
+      showToast('Unsupported audio format. Use MP3, WAV, FLAC, AAC, OGG, or M4A.', 'error');
+      return;
+    }
+
+    // Determine which button to disable
+    const btn = isAdmin
+      ? document.getElementById('next-step-2')
+      : document.getElementById('submit-upload');
+    const originalText = btn.textContent;
+    btn.disabled = true; btn.textContent = 'Uploading...';
+
+    try {
+      // Step A: For non-admins, process payment first
+      if (!isAdmin) {
+        const selectedPlan = document.querySelector('.plan-card.selected')?.dataset.plan || 'single';
+
+        // Initiate payment
+        btn.textContent = 'Processing payment...';
+        const payFd = new FormData();
+        payFd.append('plan', selectedPlan);
+        payFd.append('method', 'card');
+        const payData = await apiFetch('/api/payment/initiate', { method: 'POST', body: payFd });
+
+        // Confirm payment (in production this would go through a real gateway)
+        const confirmFd = new FormData();
+        confirmFd.append('payment_id', payData.payment_id);
+        confirmFd.append('reference', payData.reference);
+        await apiFetch('/api/payment/confirm', { method: 'POST', body: confirmFd });
+
+        btn.textContent = 'Uploading track...';
+      }
+
+      // Step B: Upload the track
+      const fd = new FormData();
+      fd.append('title',       document.getElementById('track-title-input').value);
+      fd.append('artist_name', document.getElementById('artist-name').value);
+      fd.append('genre',       document.getElementById('genre-select').value);
+      fd.append('album',       document.getElementById('album-name').value || '');
+      fd.append('description', document.getElementById('track-desc').value || '');
+      fd.append('tags',        document.getElementById('tags-input').value || '');
+      fd.append('audio',       audioFile);
+      if (coverFile) fd.append('cover', coverFile);
+
+      const data = await apiFetch('/api/tracks/upload', { method: 'POST', body: fd });
+
+      // Show success — step 4 for artists, inline for admins
+      const successStep = isAdmin ? 3 : 4;
+      goToStep(successStep);
+      const successEl = document.getElementById('form-step-' + successStep);
+      if (successEl) successEl.innerHTML = `
+        <div style="text-align:center;padding:2rem">
+          <div style="font-size:3rem;margin-bottom:1rem">&#127881;</div>
+          <h3 style="margin-bottom:0.75rem">Track Uploaded!</h3>
+          <p class="text-muted" style="margin-bottom:1.5rem">
+            "${escHtml(data.track?.title || 'Your track')}" is now live on SMADS African Hits.
+          </p>
+          <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+            <a href="upload.html" class="btn btn-primary">Upload Another</a>
+            <a href="browse.html" class="btn btn-outline">Browse Music</a>
+            ${isAdmin ? '<a href="admin.html" class="btn btn-outline">Admin Panel</a>' : '<a href="profile.html" class="btn btn-outline">My Dashboard</a>'}
+          </div>
+        </div>`;
+      showToast('Track uploaded successfully!');
+    } catch (err) {
+      // Give artists clear next-step guidance instead of a plain error toast
+      if (err.message?.includes('verify your email')) {
+        showToast('Please verify your email before uploading. Check your inbox.', 'error');
+        // Show a persistent banner with a resend button
+        const zone = document.getElementById('audio-dropzone');
+        if (zone && !document.getElementById('verify-upload-notice')) {
+          const notice = document.createElement('div');
+          notice.id = 'verify-upload-notice';
+          notice.style.cssText = 'background:rgba(255,101,132,0.12);border:1px solid #ff6584;border-radius:var(--radius);padding:1rem;margin-top:1rem;font-size:0.9rem;color:#ff6584;text-align:center';
+          notice.innerHTML = `&#9888;&#65039; Email not verified. <button id="resend-from-upload" style="background:none;border:none;color:var(--primary);cursor:pointer;font-weight:600;text-decoration:underline">Resend verification email</button>`;
+          zone.parentNode.insertBefore(notice, zone.nextSibling);
+          document.getElementById('resend-from-upload')?.addEventListener('click', async function() {
+            this.textContent = 'Sending...'; this.disabled = true;
+            try {
+              const r = await apiFetch('/api/auth/resend_verification', { method: 'POST' });
+              showToast(r.message || 'Verification email sent!');
+              notice.innerHTML = '&#10003; Verification email sent — check your inbox.';
+            } catch (e) { showToast(e.message, 'error'); this.disabled = false; this.textContent = 'Resend'; }
+          });
+        }
+      } else if (err.message?.includes('payment') || err.message?.includes('plan')) {
+        showToast('Payment issue: ' + err.message, 'error');
+      } else {
+        showToast(err.message || 'Upload failed. Please try again.', 'error');
+      }
+      btn.disabled = false; btn.textContent = originalText;
+    }
+  }
+
+  // -- File dropzones --------------------------------------------------------
   ['audio-dropzone', 'cover-dropzone'].forEach(id => {
-    const zone = document.getElementById(id);
+    const zone  = document.getElementById(id);
     const input = zone.querySelector('input[type="file"]');
     zone.addEventListener('click', () => input.click());
     zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('dragover'); });
@@ -269,7 +503,7 @@
 
   function handleFile(zoneId, file) {
     const zone = document.getElementById(zoneId);
-    zone.querySelector('p').innerHTML = `<strong>${file.name}</strong> (${(file.size/1024/1024).toFixed(1)}MB)`;
+    zone.querySelector('p').innerHTML = `<strong>${escHtml(file.name)}</strong> (${(file.size/1024/1024).toFixed(1)}MB)`;
     if (zoneId === 'cover-dropzone' && file.type.startsWith('image/')) {
       const preview = document.getElementById('cover-preview');
       preview.src = URL.createObjectURL(file);
@@ -277,13 +511,17 @@
     }
   }
 
-  // Plan selection
+  // -- Plan selection (artists only) -----------------------------------------
   document.querySelectorAll('.plan-card').forEach(card => {
     card.addEventListener('click', () => {
       document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
       card.classList.add('selected');
     });
   });
+})();
 </script>
 </body>
 </html>
+
+
+

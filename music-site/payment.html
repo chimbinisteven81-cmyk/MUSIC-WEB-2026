@@ -140,11 +140,12 @@
         </div>
         <div class="form-group">
           <label style="display:flex;align-items:flex-start;gap:0.75rem;cursor:pointer;font-size:0.85rem;color:var(--text-secondary)">
-            <input type="checkbox" style="accent-color:var(--primary);margin-top:2px"> I agree to the <a href="#" style="color:var(--primary)">Terms of Service</a> and <a href="#" style="color:var(--primary)">Privacy Policy</a>
+            <input type="checkbox" id="terms-checkbox" style="accent-color:var(--primary);margin-top:2px" required>
+            <span>I agree to the <a href="#" style="color:var(--primary)">Terms of Service</a> and <a href="#" style="color:var(--primary)">Privacy Policy</a> <span style="color:var(--secondary)">*</span></span>
           </label>
         </div>
         <button class="btn btn-primary" style="width:100%;padding:1rem;font-size:1rem" id="pay-btn">
-          ?? Complete Payment � K225/mo
+          &#127925; Complete Payment &mdash; K225/mo
         </button>
         <div class="secure-badge">
           <span>??</span> Secured by SSL � MTN/Airtel/Zamtel Money � Visa accepted
@@ -254,8 +255,16 @@
       card.classList.add('selected');
       selectedPlan = card.dataset.plan;
       const p = planData[selectedPlan];
-      document.getElementById('pay-btn').textContent = `?? Complete Payment � ${p.label}`;
+      document.getElementById('pay-btn').textContent = `&#127925; Complete Payment \u2014 ${p.label}`;
       document.getElementById('order-total').textContent = 'K' + p.zmw.toLocaleString();
+      // Fix 7: Update order summary lines to match selected plan
+      const summaryLine = document.querySelector('.order-line span:first-child');
+      if (summaryLine) {
+        const labels = { single: 'Single Track Plan', monthly: 'Monthly Pro Plan', annual: 'Annual Pro Plan' };
+        summaryLine.textContent = labels[selectedPlan] || selectedPlan;
+      }
+      const summaryAmount = document.querySelector('.order-line span:last-child');
+      if (summaryAmount) summaryAmount.textContent = 'K' + p.zmw.toLocaleString() + '.00';
     });
   });
 
@@ -291,9 +300,10 @@
     }
 
     // Enforce terms acceptance
-    const termsBox = document.querySelector('#payment-form-card input[type="checkbox"]');
+    const termsBox = document.getElementById('terms-checkbox');
     if (termsBox && !termsBox.checked) {
       showToast('Please accept the Terms of Service to continue.', 'error');
+      termsBox.focus();
       return;
     }
 
@@ -341,7 +351,7 @@
     } catch (err) {
       showToast(err.message || 'Payment failed. Please try again.', 'error');
       btn.disabled = false;
-      btn.textContent = `🎵 Complete Payment · ${planData[selectedPlan]?.label || ''}`;
+      btn.textContent = `&#127925; Complete Payment \u2014 ${planData[selectedPlan]?.label || ''}`;
     }
   });
 })();

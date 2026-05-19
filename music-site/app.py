@@ -19,6 +19,17 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import pymysql
 import pymysql.cursors
 
+# Fix 10: Load .env file in development if python-dotenv is available
+try:
+    from dotenv import load_dotenv
+    _env_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'api', '.env')
+    if os.path.exists(_env_path):
+        load_dotenv(_env_path)
+        print(f'[SMADS] Loaded environment from {_env_path}')
+except ImportError:
+    pass  # python-dotenv not installed — env vars must be set manually
+
+
 # ── Config ────────────────────────────────────────────────────────────────────
 BASE_DIR      = os.path.dirname(os.path.abspath(__file__))
 UPLOAD_AUDIO  = os.path.join(BASE_DIR, 'uploads', 'audio')
@@ -52,8 +63,18 @@ for d in (UPLOAD_AUDIO, UPLOAD_COVER, UPLOAD_AVATAR):
     os.makedirs(d, exist_ok=True)
 
 app = Flask(__name__, static_folder='.', static_url_path='')
-app.secret_key = os.environ.get('SECRET_KEY', 'smads-zmw-secret-change-in-prod')
-app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=30)
+# Fix 2: Warn loudly if the insecure default SECRET_KEY is in use
+_secret_key = os.environ.get('SECRET_KEY', '')
+if not _secret_key:
+    _secret_key = 'smads-zmw-secret-change-in-prod'
+    import warnings
+    warnings.warn(
+        '\n\n⚠️  SECRET_KEY is not set! Using insecure default. '
+        'Set the SECRET_KEY environment variable before deploying.\n',
+        stacklevel=2
+    )
+app.secret_key = _secret_key
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=7)  # Fix 9: Reduced from 30 to 7 days
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 app.config['SESSION_COOKIE_HTTPONLY'] = True    # JS cannot read session cookie
 app.config['MAX_CONTENT_LENGTH'] = (MAX_AUDIO_MB + 20) * 1024 * 1024
@@ -342,6 +363,8 @@ def send_email(to: str, subject: str, body_text: str, body_html: str = ''):
 SITE_URL = os.environ.get('SITE_URL', 'http://localhost:5000')
 
 # ── Login rate limiter (in-memory, per IP) ────────────────────────────────────
+# Fix 5: Note — these are in-memory and reset on server restart.
+# For production, replace with Redis-backed storage (e.g. flask-limiter with Redis).
 # Tracks: { ip: {'attempts': int, 'locked_until': float} }
 _login_attempts: dict = defaultdict(lambda: {'attempts': 0, 'locked_until': 0.0})
 _login_lock = threading.Lock()
@@ -351,10 +374,14 @@ LOGIN_LOCKOUT_SECS  = 15 * 60   # 15-minute lockout
 LOGIN_WINDOW_SECS   = 10 * 60   # reset attempt counter after 10 min of no attempts
 
 def _get_client_ip() -> str:
-    """Return the real client IP, respecting X-Forwarded-For if behind a proxy."""
-    forwarded = request.headers.get('X-Forwarded-For', '')
-    if forwarded:
-        return forwarded.split(',')[0].strip()
+    """Return the real client IP.
+    Fix 4: Only trust X-Forwarded-For when TRUST_PROXY env var is set,
+    preventing clients from spoofing their IP to bypass rate limiting.
+    """
+    if os.environ.get('TRUST_PROXY'):
+        forwarded = request.headers.get('X-Forwarded-For', '')
+        if forwarded:
+            return forwarded.split(',')[0].strip()
     return request.remote_addr or '0.0.0.0'
 
 def _check_rate_limit(ip: str):
@@ -691,14 +718,20 @@ def init_db():
                 except Exception:
                     pass  # Column already exists — safe to ignore
 
-            # Seed admin
+            # Seed admin — Fix 3: Use a random password that must be changed on first login
             cur.execute("SELECT id FROM users WHERE email='admin@smadsafricanhits.com'")
             if not cur.fetchone():
+                _admin_pass = os.environ.get('ADMIN_INITIAL_PASSWORD', '')
+                if not _admin_pass:
+                    # Generate a random password and print it once — admin must change it
+                    _admin_pass = secrets.token_urlsafe(16)
+                    print(f'\n🔑 Admin account created. Initial password: {_admin_pass}')
+                    print('   Change this immediately after first login!\n')
                 cur.execute(
                     "INSERT INTO users (username,email,display_name,password_hash,role,is_admin,is_verified,country) "
                     "VALUES (%s,%s,%s,%s,%s,%s,%s,%s)",
                     ('admin', 'admin@smadsafricanhits.com', 'SMADS Admin',
-                     generate_password_hash('admin123'), 'artist', 1, 1, 'Zambia'))
+                     generate_password_hash(_admin_pass), 'artist', 1, 1, 'Zambia'))
         conn.commit()
     finally:
         conn.close()
@@ -835,6 +868,19 @@ def auth_register():
     if not all([username, email, display_name, password]):
         return jsonify(error='All fields are required'), 400
 
+    # Fix 1: Validate email format
+    if '@' not in email or '.' not in email.split('@')[-1]:
+        return jsonify(error='Please enter a valid email address'), 400
+
+    # Fix 2: Reject whitespace-only display_name
+    if not display_name.strip():
+        return jsonify(error='Display name cannot be blank'), 400
+
+    # Username must be alphanumeric + underscores/hyphens only
+    import re as _re
+    if not _re.match(r'^[a-z0-9_\-]{3,60}$', username):
+        return jsonify(error='Username must be 3–60 characters: letters, numbers, _ or - only'), 400
+
     # Password strength validation (Security 4)
     pw_error = validate_password_strength(password)
     if pw_error:
@@ -952,7 +998,7 @@ def auth_verify_email():
 @app.route('/api/auth/resend_verification', methods=['POST'])
 @login_required
 def auth_resend_verification():
-    """Resend the verification email."""
+    """Resend the verification email. Rate-limited to 3 attempts per hour per user."""
     uid = session['user_id']
     conn = get_db()
     try:
@@ -963,10 +1009,29 @@ def auth_resend_verification():
                 return jsonify(error='User not found'), 404
             if u['email_verified']:
                 return jsonify(error='Your email is already verified.'), 400
+
+            # ── Rate limit: max 3 resends per hour ────────────────────────────
+            cur.execute(
+                "SELECT COUNT(*) AS c FROM login_history "
+                "WHERE user_id=%s AND status='resend_verify' "
+                "AND created_at >= DATE_SUB(NOW(), INTERVAL 1 HOUR)",
+                (uid,))
+            resend_count = cur.fetchone()['c']
+            if resend_count >= 3:
+                return jsonify(
+                    error='Too many verification emails sent. Please wait an hour before trying again.'
+                ), 429
+
             token = secrets.token_urlsafe(32)
             cur.execute(
                 'UPDATE users SET email_verify_token=%s WHERE id=%s',
                 (token, uid))
+            # Record this resend attempt in login_history for rate limiting
+            cur.execute(
+                'INSERT INTO login_history (user_id, ip_address, user_agent, status) '
+                'VALUES (%s, %s, %s, %s)',
+                (uid, _get_client_ip(),
+                 request.headers.get('User-Agent', '')[:255], 'resend_verify'))
         conn.commit()
     finally:
         conn.close()
@@ -1217,6 +1282,11 @@ def auth_login():
     check_hash = user['password_hash'] if user else dummy_hash
     password_ok = check_password_hash(check_hash, password)
 
+    # ── Fix 3: Check suspended BEFORE recording failed attempts ─────────────
+    # A suspended user should not pollute rate-limit counters
+    if user and not user['is_active']:
+        return jsonify(error='Your account has been suspended. Contact support.'), 403
+
     if not user or not password_ok:
         _record_failed_login(ip)
         # Also record per-account failed attempt if user exists
@@ -1236,10 +1306,6 @@ def auth_login():
             except Exception:
                 pass
         return jsonify(error='Invalid credentials. Check your email/username and password.'), 401
-
-    # ── Account status checks ─────────────────────────────────────────────────
-    if not user['is_active']:
-        return jsonify(error='Your account has been suspended. Contact support.'), 403
 
     # ── Per-account lockout check ─────────────────────────────────────────────
     try:
@@ -1513,6 +1579,24 @@ def track_get(track_id):
 @app.route('/api/tracks/play/<int:track_id>', methods=['POST'])
 def track_play(track_id):
     uid     = session.get('user_id')
+    ip      = _get_client_ip()
+
+    # Fix 8: Rate limit play counts — max 1 play per track per IP per 10 minutes
+    # Uses a simple in-memory cache keyed by (ip, track_id)
+    import time as _time
+    _play_cache_key = f'play:{ip}:{track_id}'
+    _now = _time.time()
+    if not hasattr(track_play, '_cache'):
+        track_play._cache = {}
+    last_play = track_play._cache.get(_play_cache_key, 0)
+    if _now - last_play < 600:  # 10 minutes
+        return jsonify(ok=True)  # silently ignore duplicate plays
+    track_play._cache[_play_cache_key] = _now
+    # Prune old entries every ~1000 calls to prevent memory growth
+    if len(track_play._cache) > 10000:
+        cutoff = _now - 600
+        track_play._cache = {k: v for k, v in track_play._cache.items() if v > cutoff}
+
     # Validate country — whitelist to prevent junk data in analytics
     country = (request.form.get('country') or 'Unknown').strip()
     country = country[:60]  # enforce max length
@@ -1566,8 +1650,8 @@ def track_like(track_id):
 
 
 @app.route('/api/tracks/share/<int:track_id>', methods=['POST'])
-@login_required
 def track_share(track_id):
+    # Fix 9: Sharing is public — no login required
     conn = get_db()
     try:
         with conn.cursor() as cur:
@@ -1697,18 +1781,25 @@ def track_upload():
     # MIME type validation — check actual file bytes, not just extension
     if not validate_audio_mime(audio_file):
         return jsonify(error='Invalid audio file. File content does not match a supported audio format.'), 400
+
+    # Validate cover if provided
+    if cover_file and cover_file.filename:
+        if not allowed_file(cover_file.filename, ALLOWED_IMG):
+            cover_file = None  # ignore invalid cover, don't block upload
+        elif not validate_image_mime(cover_file):
+            return jsonify(error='Invalid image file. Only JPG, PNG, GIF, and WebP are allowed.'), 400
+
     ts         = int(time.time())
     audio_name = str(ts) + '_' + secure_filename(audio_file.filename)
-    audio_file.save(os.path.join(UPLOAD_AUDIO, audio_name))
-    audio_url  = '/uploads/audio/' + audio_name
-    cover_url  = None
-    if cover_file and allowed_file(cover_file.filename, ALLOWED_IMG):
-        # MIME validation for cover image
-        if not validate_image_mime(cover_file):
-            return jsonify(error='Invalid image file. Only JPG, PNG, GIF, and WebP are allowed.'), 400
+    cover_name = None
+    if cover_file and cover_file.filename:
         cover_name = str(ts) + '_' + secure_filename(cover_file.filename)
-        cover_file.save(os.path.join(UPLOAD_COVER, cover_name))
-        cover_url = '/uploads/covers/' + cover_name
+
+    # Fix 9: Insert DB record FIRST — only save files if DB succeeds.
+    # This prevents orphaned files on disk when the DB insert fails.
+    audio_url = '/uploads/audio/' + audio_name
+    cover_url = ('/uploads/covers/' + cover_name) if cover_name else None
+
     conn = get_db()
     try:
         with conn.cursor() as cur:
@@ -1719,10 +1810,33 @@ def track_upload():
                 (u['id'], title, artist_name, genre, mood, region,
                  album, description, tags, audio_url, cover_url))
             conn.commit()
-            cur.execute('SELECT * FROM tracks WHERE id=%s', (cur.lastrowid,))
+            new_track_id = cur.lastrowid
+            cur.execute('SELECT * FROM tracks WHERE id=%s', (new_track_id,))
             track = cur.fetchone()
+    except Exception as e:
+        app.logger.error('Track DB insert failed: %s', e)
+        return jsonify(error='Upload failed. Please try again.'), 500
     finally:
         conn.close()
+
+    # DB succeeded — now save the files to disk
+    try:
+        audio_file.save(os.path.join(UPLOAD_AUDIO, audio_name))
+        if cover_file and cover_name:
+            cover_file.save(os.path.join(UPLOAD_COVER, cover_name))
+    except Exception as e:
+        # File save failed — clean up the DB record to keep things consistent
+        app.logger.error('File save failed after DB insert (track %s): %s', new_track_id, e)
+        try:
+            conn2 = get_db()
+            with conn2.cursor() as cur:
+                cur.execute('DELETE FROM tracks WHERE id=%s', (new_track_id,))
+            conn2.commit()
+            conn2.close()
+        except Exception:
+            pass
+        return jsonify(error='File could not be saved. Please try again.'), 500
+
     return jsonify(message='Track uploaded successfully!', track=track_dict(track)), 201
 
 
@@ -1881,7 +1995,8 @@ def user_profile():
     finally:
         conn.close()
     profile = dict(user_dict(u))
-    profile.pop('email', None)
+    # Fix 9: Include email so the settings tab can display it (read-only)
+    profile['email'] = u.get('email', '')
     profile.update({
         'track_count':     stats['track_count'],
         'total_plays':     stats['total_plays'],
@@ -2038,22 +2153,80 @@ def user_playlist_add_track():
     return jsonify(message='Track added to playlist')
 
 
+@app.route('/api/user/update_avatar', methods=['POST'])
+@login_required
+def user_update_avatar():
+    """Upload and update the user's profile avatar."""
+    uid = session['user_id']
+    avatar_file = request.files.get('avatar')
+    if not avatar_file or not avatar_file.filename:
+        return jsonify(error='No image file provided'), 400
+    if not allowed_file(avatar_file.filename, ALLOWED_IMG):
+        return jsonify(error='Only JPG, PNG, WebP or GIF images are allowed'), 400
+    if not validate_image_mime(avatar_file):
+        return jsonify(error='Invalid image file. File content does not match a supported format.'), 400
+    # Check file size (max 10MB)
+    avatar_file.seek(0, 2)
+    size = avatar_file.tell()
+    avatar_file.seek(0)
+    if size > MAX_IMG_MB * 1024 * 1024:
+        return jsonify(error=f'Image must be under {MAX_IMG_MB}MB'), 400
+
+    ts          = int(time.time())
+    avatar_name = f'{uid}_{ts}_' + secure_filename(avatar_file.filename)
+    avatar_path = os.path.join(UPLOAD_AVATAR, avatar_name)
+    avatar_url  = '/uploads/avatars/' + avatar_name
+
+    conn = get_db()
+    try:
+        with conn.cursor() as cur:
+            cur.execute('SELECT avatar_url FROM users WHERE id=%s', (uid,))
+            old = cur.fetchone()
+            cur.execute('UPDATE users SET avatar_url=%s WHERE id=%s', (avatar_url, uid))
+        conn.commit()
+    except Exception as e:
+        app.logger.error('Avatar DB update failed: %s', e)
+        return jsonify(error='Could not update avatar. Please try again.'), 500
+    finally:
+        conn.close()
+
+    # Save file after DB succeeds
+    try:
+        avatar_file.save(avatar_path)
+    except Exception as e:
+        app.logger.error('Avatar file save failed: %s', e)
+        return jsonify(error='File could not be saved. Please try again.'), 500
+
+    # Delete old avatar file if it exists
+    if old and old.get('avatar_url'):
+        old_fname = os.path.basename(old['avatar_url'])
+        if old_fname and '..' not in old_fname:
+            old_path = os.path.join(UPLOAD_AVATAR, old_fname)
+            try:
+                if os.path.isfile(old_path):
+                    os.remove(old_path)
+            except Exception:
+                pass
+
+    return jsonify(avatar_url=avatar_url, message='Profile photo updated!')
+
+
 @app.route('/api/user/update', methods=['POST'])
 @login_required
-def user_update():
-    uid  = session['user_id']
+def user_update():    uid  = session['user_id']
     d    = request.form
     name = limit((d.get('display_name') or '').strip(), 'display_name')
     bio  = limit((d.get('bio') or '').strip(), 'bio')
     web  = limit((d.get('website') or '').strip(), 'website')
+    # Fix 8: Validate display_name explicitly — don't silently keep old value
+    if not name:
+        return jsonify(error='Display name cannot be empty'), 400
     conn = get_db()
     try:
         with conn.cursor() as cur:
             cur.execute(
-                'UPDATE users SET '
-                'display_name=IF(%s!="", %s, display_name), bio=%s, website=%s '
-                'WHERE id=%s',
-                (name, name, bio, web, uid))
+                'UPDATE users SET display_name=%s, bio=%s, website=%s WHERE id=%s',
+                (name, bio, web, uid))
             conn.commit()
             cur.execute('SELECT * FROM users WHERE id=%s', (uid,))
             user = cur.fetchone()
@@ -2075,6 +2248,10 @@ def user_follow():
     conn = get_db()
     try:
         with conn.cursor() as cur:
+            # Fix 8: Verify target user exists before following
+            cur.execute('SELECT id FROM users WHERE id=%s AND is_active=1', (target_id,))
+            if not cur.fetchone():
+                return jsonify(error='User not found'), 404
             cur.execute('SELECT 1 FROM follows WHERE follower_id=%s AND target_id=%s', (uid, target_id))
             if cur.fetchone():
                 cur.execute('DELETE FROM follows WHERE follower_id=%s AND target_id=%s', (uid, target_id))
@@ -2300,9 +2477,16 @@ def contact_send():
 
 
 # ── Admin API ─────────────────────────────────────────────────────────────────
+@app.route('/api/admin/ping')
+@admin_required
+def admin_ping():
+    """Fix 9: Lightweight endpoint to verify admin PIN status without a heavy DB query."""
+    return jsonify(ok=True)
+
+
 @app.route('/api/admin/stats')
 def admin_stats():
-    # Require at least a logged-in user for basic stats
+    # Fix 6: Require admin login for stats — non-admins get zeros only
     u = current_user()
     if not u:
         return jsonify(stats={
@@ -2612,10 +2796,19 @@ def admin_delete_track():
 @app.route('/api/admin/resolve_report', methods=['POST'])
 @admin_required
 def admin_resolve_report():
-    report_id = request.form.get('id')
+    # Fix 7: Validate report_id is a valid integer
+    try:
+        report_id = int(request.form.get('id') or 0)
+    except (ValueError, TypeError):
+        return jsonify(error='Invalid report ID'), 400
+    if not report_id:
+        return jsonify(error='Report ID required'), 400
     conn = get_db()
     try:
         with conn.cursor() as cur:
+            cur.execute("SELECT id FROM reports WHERE id=%s", (report_id,))
+            if not cur.fetchone():
+                return jsonify(error='Report not found'), 404
             cur.execute("UPDATE reports SET status='resolved' WHERE id=%s", (report_id,))
         conn.commit()
     finally:
@@ -2626,6 +2819,22 @@ def admin_resolve_report():
 @app.route('/api/admin/settings', methods=['POST'])
 @admin_required
 def admin_settings():
+    # Fix 7: Actually persist settings to admin_settings table
+    d = request.get_json(silent=True) or request.form
+    allowed_keys = {'site_name', 'price_single', 'price_monthly', 'price_annual',
+                    'allow_free_downloads', 'require_email_verification'}
+    conn = get_db()
+    try:
+        with conn.cursor() as cur:
+            for key, value in d.items():
+                if key in allowed_keys:
+                    cur.execute(
+                        "INSERT INTO admin_settings (key_name, value) VALUES (%s, %s) "
+                        "ON DUPLICATE KEY UPDATE value=%s",
+                        (key, str(value), str(value)))
+        conn.commit()
+    finally:
+        conn.close()
     return jsonify(message='Settings saved')
 
 
@@ -2823,4 +3032,7 @@ def admin_change_credentials():
 
 # ── Run ───────────────────────────────────────────────────────────────────────
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    # Fix 1: Never run with debug=True in production.
+    # Debug mode exposes the interactive debugger and full stack traces.
+    _debug = os.environ.get('FLASK_DEBUG', '0') == '1'
+    app.run(debug=_debug, host='0.0.0.0', port=5000)

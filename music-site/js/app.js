@@ -201,14 +201,20 @@ function updateNavForUser(user) {
         signInBtns.forEach(b => b.style.display = 'none');
         profileBtns.forEach(b => { b.style.display = ''; b.textContent = user.display_name; });
         logoutBtns.forEach(b => b.style.display = '');
-        // Show email verification banner for unverified artists
+        // Fix 7: Show verification banner for ANY unverified artist, including
+        // users who were upgraded from listener to artist mid-session
         if (!user.email_verified && user.role === 'artist' && !user.is_admin) {
             showVerificationBanner(user);
+        } else {
+            // Remove banner if user has since verified or is no longer an artist
+            document.getElementById('verify-banner')?.remove();
         }
     } else {
         signInBtns.forEach(b => b.style.display = '');
         profileBtns.forEach(b => b.style.display = 'none');
         logoutBtns.forEach(b => b.style.display = 'none');
+        // Remove verification banner on logout
+        document.getElementById('verify-banner')?.remove();
     }
 }
 
@@ -864,6 +870,13 @@ async function doLogout() {
     } catch { /* ignore — session is cleared server-side regardless */ }
     appState.currentUser = null;
     updateNavForUser(null);
+
+    // Fix 5: Clear login form fields so previous user's data isn't visible
+    const loginForm = document.getElementById('login-form');
+    if (loginForm) loginForm.reset();
+    const registerForm = document.getElementById('register-form');
+    if (registerForm) registerForm.reset();
+
     showToast('Logged out.');
     setTimeout(() => location.replace('/'), 800);
 }

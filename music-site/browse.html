@@ -60,15 +60,15 @@
     <p class="text-muted" style="margin-bottom:2rem">Discover millions of tracks across every genre</p>
     <div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:center">
       <div class="search-bar" style="max-width:500px">
-        <span class="search-icon">??</span>
+        <span class="search-icon">&#128269;</span>
         <input type="text" class="search-input" placeholder="Search tracks, artists, albums..." aria-label="Search music">
       </div>
       <select class="filter-select" id="sort-select" aria-label="Sort by">
-        <option value="trending">?? Trending</option>
-        <option value="newest">?? Newest</option>
-        <option value="popular">? Most Played</option>
-        <option value="downloads">? Most Downloaded</option>
-        <option value="az">A�Z</option>
+        <option value="trending">&#128293; Trending</option>
+        <option value="newest">&#127381; Newest</option>
+        <option value="popular">&#9654; Most Played</option>
+        <option value="downloads">&#11015; Most Downloaded</option>
+        <option value="az">A&ndash;Z</option>
       </select>
     </div>
   </div>
@@ -89,30 +89,30 @@
         </div>
         <div class="filter-section">
           <h4>Genre</h4>
-          <label class="filter-check"><input type="checkbox" checked> All Genres</label>
-          <label class="filter-check"><input type="checkbox"> Afrobeats</label>
-          <label class="filter-check"><input type="checkbox"> Amapiano</label>
-          <label class="filter-check"><input type="checkbox"> Highlife</label>
-          <label class="filter-check"><input type="checkbox"> Bongo Flava</label>
-          <label class="filter-check"><input type="checkbox"> Afro-Pop</label>
-          <label class="filter-check"><input type="checkbox"> Afro-Soul</label>
-          <label class="filter-check"><input type="checkbox"> Gqom</label>
-          <label class="filter-check"><input type="checkbox"> Kwaito</label>
-          <label class="filter-check"><input type="checkbox"> Afro-Hip-Hop</label>
-          <label class="filter-check"><input type="checkbox"> Gospel</label>
-          <label class="filter-check"><input type="checkbox"> Zambian Music</label>
+          <label class="filter-check"><input type="checkbox" value="all" checked> All Genres</label>
+          <label class="filter-check"><input type="checkbox" value="Afrobeats"> Afrobeats</label>
+          <label class="filter-check"><input type="checkbox" value="Amapiano"> Amapiano</label>
+          <label class="filter-check"><input type="checkbox" value="Highlife"> Highlife</label>
+          <label class="filter-check"><input type="checkbox" value="Bongo Flava"> Bongo Flava</label>
+          <label class="filter-check"><input type="checkbox" value="Afro-Pop"> Afro-Pop</label>
+          <label class="filter-check"><input type="checkbox" value="Afro-Soul"> Afro-Soul</label>
+          <label class="filter-check"><input type="checkbox" value="Gqom"> Gqom</label>
+          <label class="filter-check"><input type="checkbox" value="Kwaito"> Kwaito</label>
+          <label class="filter-check"><input type="checkbox" value="Afro-Hip-Hop"> Afro-Hip-Hop</label>
+          <label class="filter-check"><input type="checkbox" value="Gospel"> Gospel</label>
+          <label class="filter-check"><input type="checkbox" value="Zambian Music"> Zambian Music</label>
         </div>
         <div class="filter-section">
           <h4>Duration</h4>
-          <label class="filter-check"><input type="radio" name="dur" checked> Any</label>
-          <label class="filter-check"><input type="radio" name="dur"> Under 3 min</label>
-          <label class="filter-check"><input type="radio" name="dur"> 3�5 min</label>
-          <label class="filter-check"><input type="radio" name="dur"> Over 5 min</label>
+          <label class="filter-check"><input type="radio" name="dur" value="any" checked> Any</label>
+          <label class="filter-check"><input type="radio" name="dur" value="short"> Under 3 min</label>
+          <label class="filter-check"><input type="radio" name="dur" value="medium"> 3&ndash;5 min</label>
+          <label class="filter-check"><input type="radio" name="dur" value="long"> Over 5 min</label>
         </div>
         <div class="filter-section">
           <h4>Availability</h4>
-          <label class="filter-check"><input type="checkbox" checked> Free Download</label>
-          <label class="filter-check"><input type="checkbox"> Stream Only</label>
+          <label class="filter-check"><input type="checkbox" value="free_dl" id="filter-free-dl"> Free Download</label>
+          <label class="filter-check"><input type="checkbox" value="stream" id="filter-stream"> Stream Only</label>
         </div>
         <button class="btn btn-primary" style="width:100%">Apply Filters</button>
         <button class="btn btn-outline mt-2" style="width:100%">Clear All</button>
@@ -124,14 +124,14 @@
       <div class="browse-toolbar">
         <div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap">
           <button class="filter-toggle-btn" id="filter-toggle-btn" aria-expanded="false" aria-controls="sidebar-filters">
-            ?? Filters <span class="filter-count" id="filter-count" style="display:none">0</span>
+            &#9776; Filters <span class="filter-count" id="filter-count" style="display:none">0</span>
           </button>
           <span class="results-count" id="results-count">Showing 8 tracks</span>
         </div>
         <div style="display:flex;gap:0.75rem;align-items:center">
           <div class="view-toggle">
-            <button class="view-btn active" id="grid-view" title="Grid view">?</button>
-            <button class="view-btn" id="list-view" title="List view">?</button>
+            <button class="view-btn active" id="grid-view" title="Grid view">&#9638;</button>
+            <button class="view-btn" id="list-view" title="List view">&#9776;</button>
           </div>
         </div>
       </div>
@@ -156,9 +156,9 @@
 
       <!-- Pagination -->
       <div style="display:flex;justify-content:center;gap:0.5rem;margin-top:3rem" id="pagination-bar">
-        <button class="btn btn-outline btn-sm" id="prev-page">? Prev</button>
+        <button class="btn btn-outline btn-sm" id="prev-page">&#8592; Prev</button>
         <span id="page-info" style="display:flex;align-items:center;color:var(--text-secondary);font-size:0.85rem;padding:0 0.5rem">Page 1</span>
-        <button class="btn btn-primary btn-sm" id="next-page">Next ?</button>
+        <button class="btn btn-primary btn-sm" id="next-page">Next &#8594;</button>
       </div>
     </div>
   </div>
@@ -171,8 +171,8 @@
       <div class="nav-logo" style="font-size:1.3rem">SMADS African Hits</div>
       <p>The world's most open music platform.</p>
       <div class="footer-social">
-        <a href="#" class="social-btn" aria-label="Twitter">??</a><a href="#" class="social-btn" aria-label="Instagram">??</a>
-        <a href="#" class="social-btn" aria-label="YouTube">?</a><a href="#" class="social-btn" aria-label="Discord">??</a>
+        <a href="#" class="social-btn" aria-label="Twitter">&#120143;</a><a href="#" class="social-btn" aria-label="Instagram">&#128247;</a>
+        <a href="#" class="social-btn" aria-label="YouTube">&#9654;</a><a href="#" class="social-btn" aria-label="Discord">&#128172;</a>
       </div>
     </div>
     <div class="footer-col"><h4>Discover</h4><ul><li><a href="browse.html">Browse Music</a></li><li><a href="browse.html">Trending</a></li><li><a href="browse.html">New Releases</a></li></ul></div>
@@ -189,11 +189,11 @@
   </div>
   <div class="player-controls">
     <div class="player-btns">
-      <button class="ctrl-btn" aria-label="Shuffle">?</button>
-      <button class="ctrl-btn" aria-label="Previous track">?</button>
+      <button class="ctrl-btn" aria-label="Shuffle">&#8652;</button>
+      <button class="ctrl-btn" aria-label="Previous track">&#9664;</button>
       <button class="ctrl-btn play-pause" aria-label="Play or pause"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg></button>
-      <button class="ctrl-btn" aria-label="Next track">?</button>
-      <button class="ctrl-btn" aria-label="Repeat">?</button>
+      <button class="ctrl-btn" aria-label="Next track">&#9654;</button>
+      <button class="ctrl-btn" aria-label="Repeat">&#8635;</button>
     </div>
     <div class="progress-bar">
       <span class="progress-time">0:00</span>
@@ -202,8 +202,8 @@
     </div>
   </div>
   <div class="player-extras">
-    <a href="player.html" class="btn-icon" aria-label="Open full player">?</a>
-    <div class="volume-control"><span style="color:var(--text-secondary)" aria-hidden="true">??</span><input type="range" class="volume-slider" min="0" max="100" value="75" aria-label="Volume"></div>
+    <a href="player.html" class="btn-icon" aria-label="Open full player">&#9654;</a>
+    <div class="volume-control"><span style="color:var(--text-secondary)" aria-hidden="true">&#128266;</span><input type="range" class="volume-slider" min="0" max="100" value="75" aria-label="Volume"></div>
   </div>
 </div>
 <div class="toast" id="toast" role="alert" aria-live="polite" aria-atomic="true"><span class="toast-icon">✓</span><span class="toast-msg"></span></div>
@@ -272,7 +272,7 @@
       const from  = offset + 1;
       const to    = Math.min(offset + currentTracks.length, totalTracks);
       if (count) count.textContent = totalTracks
-        ? `Showing ${from}�${to} of ${totalTracks} tracks`
+        ? `Showing ${from}-${to} of ${totalTracks} tracks`
         : '0 tracks found';
     } catch (err) {
       showEmpty(browseGrid, 'Failed to load tracks. Make sure the server is running.');
@@ -348,21 +348,55 @@
     if (currentPage < totalPages) loadTracks(getActiveGenre(), getActiveSort(), currentPage + 1);
   });
 
-  // Sidebar filter checkboxes � Apply Filters button
+  // Sidebar filter checkboxes — Apply Filters button (Fix 2 & 3)
   document.querySelector('.sidebar-filters .btn-primary')?.addEventListener('click', () => {
-    const checked = [...document.querySelectorAll('.filter-section:first-child .filter-check input:checked')]
-      .map(cb => cb.closest('.filter-check').textContent.trim())
-      .filter(g => g !== 'All Genres');
-    if (checked.length === 0 || checked.length > 1) {
-      // Multiple or none � reset to all
-      document.querySelectorAll('.genre-pill').forEach(p => p.classList.remove('active'));
-      document.querySelector('.genre-pill[data-genre="all"]')?.classList.add('active');
-      loadTracks('all', getActiveSort(), 1);
-    } else {
-      const genre = checked[0];
-      document.querySelectorAll('.genre-pill').forEach(p => {
-        p.classList.toggle('active', p.dataset.genre === genre);
-      });
+    // Fix 2: Read genre by value attribute, not text content
+    const checkedGenres = [...document.querySelectorAll('.filter-section:first-child .filter-check input:checked')]
+      .map(cb => cb.value)
+      .filter(v => v && v !== 'all');
+
+    const genre = checkedGenres.length === 1 ? checkedGenres[0] : 'all';
+
+    // Sync genre pills to match sidebar selection
+    document.querySelectorAll('.genre-pill').forEach(p => {
+      p.classList.toggle('active', p.dataset.genre === genre);
+    });
+
+    // Fix 3: Read duration filter
+    const durVal = document.querySelector('input[name="dur"]:checked')?.value || 'any';
+
+    // Fix 3: Read availability filter
+    const freeDl = document.getElementById('filter-free-dl')?.checked;
+
+    // Build URL with all active filters
+    let url = `/api/tracks/list?sort=${getActiveSort()}&limit=${PAGE_SIZE}&offset=0`;
+    if (genre !== 'all') url += `&genre=${encodeURIComponent(genre)}`;
+    if (freeDl) url += `&free_dl=1`;
+
+    showLoading(browseGrid);
+    apiFetch(url).then(data => {
+      let tracks = data.tracks || [];
+      totalTracks = data.total || 0;
+      currentPage = 1;
+
+      // Apply duration filter client-side (API doesn't support it yet)
+      if (durVal === 'short')  tracks = tracks.filter(t => t.duration > 0 && t.duration < 180);
+      if (durVal === 'medium') tracks = tracks.filter(t => t.duration >= 180 && t.duration <= 300);
+      if (durVal === 'long')   tracks = tracks.filter(t => t.duration > 300);
+
+      currentTracks = tracks;
+      renderTracks();
+      updatePagination();
+      const count = document.getElementById('results-count');
+      if (count) count.textContent = tracks.length
+        ? `Showing ${tracks.length} tracks`
+        : '0 tracks found';
+      closeFilters();
+    }).catch(() => {
+      showEmpty(browseGrid, 'Failed to load tracks.');
+      closeFilters();
+    });
+  });
       loadTracks(genre, getActiveSort(), 1);
     }
   });

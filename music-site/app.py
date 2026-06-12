@@ -7,6 +7,7 @@ Currency: Zambian Kwacha (ZMW)
 Database: MySQL (XAMPP / phpMyAdmin)
 """
 import os, secrets, time, threading, smtplib
+from mutagen import File as MutagenFile
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from collections import defaultdict
@@ -1824,8 +1825,7 @@ def track_upload():
         audio_file.save(os.path.join(UPLOAD_AUDIO, audio_name))
         if cover_file and cover_name:
             cover_file.save(os.path.join(UPLOAD_COVER, cover_name))
-    except Exception as e:
-        # File save failed — clean up the DB record to keep things consistent
+    except Exception as e:        # File save failed — clean up the DB record to keep things consistent
         app.logger.error('File save failed after DB insert (track %s): %s', new_track_id, e)
         try:
             conn2 = get_db()
@@ -1836,6 +1836,25 @@ def track_upload():
         except Exception:
             pass
         return jsonify(error='File could not be saved. Please try again.'), 500
+
+    # Detect audio duration using mutagen and update the track record
+    try:
+        audio_path = os.path.join(UPLOAD_AUDIO, audio_name)
+        meta = MutagenFile(audio_path)
+        duration = int(meta.info.length) if meta and hasattr(meta, 'info') else 0
+        if duration > 0:
+            conn3 = get_db()
+            try:
+                with conn3.cursor() as cur:
+                    cur.execute('UPDATE tracks SET duration=%s WHERE id=%s', (duration, new_track_id))
+                    cur.execute('SELECT * FROM tracks WHERE id=%s', (new_track_id,))
+                    track = cur.fetchone()
+                conn3.commit()
+            finally:
+                conn3.close()
+    except Exception as e:
+        app.logger.warning('Could not detect duration for track %s: %s', new_track_id, e)
+        # Non-critical — upload still succeeds, duration stays 0
 
     return jsonify(message='Track uploaded successfully!', track=track_dict(track)), 201
 
@@ -2213,7 +2232,8 @@ def user_update_avatar():
 
 @app.route('/api/user/update', methods=['POST'])
 @login_required
-def user_update():    uid  = session['user_id']
+def user_update():
+    uid  = session['user_id']
     d    = request.form
     name = limit((d.get('display_name') or '').strip(), 'display_name')
     bio  = limit((d.get('bio') or '').strip(), 'bio')

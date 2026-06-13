@@ -703,10 +703,25 @@ function initGenreFilter(gridId) {
 function initSearch() {
     const input = document.querySelector('.search-input');
     if (!input) return;
+
+    // On the search page itself, don't redirect — let search.html handle it
+    const isSearchPage = location.pathname.includes('search.html');
+    if (isSearchPage) return;
+
+    // On all other pages: redirect to search.html with the query
+    input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            const q = input.value.trim();
+            if (q.length >= 2) {
+                location.href = `search.html?q=${encodeURIComponent(q)}`;
+            }
+        }
+    });
+    // Also redirect on input with debounce (for browse page live search, keep existing)
     input.addEventListener('input', debounce(async (e) => {
         const q    = e.target.value.trim();
         const grid = document.querySelector('.browse-grid');
-        if (!grid) return;
+        if (!grid) return;  // not on browse page — no grid to update
         if (q.length < 2) { loadBrowseGrid(grid); return; }
         showLoading(grid);
         try {

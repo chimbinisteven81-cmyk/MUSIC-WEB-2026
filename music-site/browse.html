@@ -61,7 +61,8 @@
     <div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:center">
       <div class="search-bar" style="max-width:500px">
         <span class="search-icon">&#128269;</span>
-        <input type="text" class="search-input" placeholder="Search tracks, artists, albums..." aria-label="Search music">
+        <input type="text" class="search-input" placeholder="Search tracks, artists, albums..." aria-label="Search music"
+               onkeydown="if(event.key==='Enter'&&this.value.trim().length>=2){location.href='search.html?q='+encodeURIComponent(this.value.trim())}">
       </div>
       <select class="filter-select" id="sort-select" aria-label="Sort by">
         <option value="trending">&#128293; Trending</option>

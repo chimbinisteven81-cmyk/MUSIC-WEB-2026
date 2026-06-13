@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search &ndash; SMADS African Hits</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .search-hero { padding:8rem 2rem 3rem; background:radial-gradient(ellipse at 50% 0%, rgba(108,99,255,0.15) 0%, transparent 60%), var(--bg-dark); }
+    .search-hero-bar { max-width:680px; margin:1.5rem auto 0; }
+    .search-hero-bar .search-bar { background:var(--bg-card2); border:1px solid var(--border); border-radius:50px; padding:0 1.5rem; height:56px; font-size:1rem; }
+    .search-hero-bar .search-input { font-size:1rem; }
+    .search-hero-bar .search-icon { font-size:1.1rem; }
+    .result-section { margin-bottom:3rem; }
+    .result-section-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:1.25rem; }
+    .result-section-header h3 { font-size:1.1rem; }
+    .result-count-badge { background:var(--bg-card); border:1px solid var(--border); border-radius:50px; font-size:0.75rem; color:var(--text-secondary); padding:0.2rem 0.75rem; }
+    .artist-result-card { display:flex; align-items:center; gap:1rem; padding:1rem; background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); transition:var(--transition); cursor:pointer; }
+    .artist-result-card:hover { border-color:var(--primary); transform:translateY(-2px); }
+    .artist-result-avatar { width:56px; height:56px; border-radius:50%; object-fit:cover; flex-shrink:0; border:2px solid var(--border); }
+    .artist-result-info { flex:1; }
+    .artist-result-name { font-weight:700; font-size:0.95rem; margin-bottom:0.2rem; }
+    .artist-result-meta { font-size:0.8rem; color:var(--text-secondary); }
+    .artist-results-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:1rem; }
+    .no-results { text-align:center; padding:4rem 2rem; }
+    .no-results-icon { font-size:3rem; margin-bottom:1rem; }
+    .search-suggestions { display:flex; flex-wrap:wrap; gap:0.5rem; justify-content:center; margin-top:1.5rem; }
+    .search-tag { background:var(--bg-card); border:1px solid var(--border); border-radius:50px; padding:0.35rem 1rem; font-size:0.85rem; color:var(--text-secondary); cursor:pointer; transition:var(--transition); }
+    .search-tag:hover { border-color:var(--primary); color:var(--primary); }
+    .result-tabs { display:flex; gap:0; border-bottom:2px solid var(--border); margin-bottom:2rem; }
+    .result-tab { padding:0.75rem 1.5rem; font-size:0.9rem; font-weight:600; color:var(--text-secondary); cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-2px; transition:var(--transition); background:none; border-top:none; border-left:none; border-right:none; }
+    .result-tab.active { color:var(--primary); border-bottom-color:var(--primary); }
+    .result-tab:hover { color:var(--text-primary); }
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<nav class="navbar" role="navigation" aria-label="Main navigation">
+  <a href="index.html" class="nav-logo">
+    <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="15" stroke="url(#g1)" stroke-width="2"/><path d="M10 20V12l12 4-12 4z" fill="url(#g1)"/><defs><linearGradient id="g1" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse"><stop stop-color="#6c63ff"/><stop offset="1" stop-color="#ff6584"/></linearGradient></defs></svg>
+    SMADS African Hits
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="browse.html">Browse</a>
+    <a href="player.html">Player</a>
+    <a href="upload.html">Upload</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  <div class="nav-actions">
+    <button type="button" class="btn btn-outline btn-sm nav-signin" data-modal="auth-modal">Sign In</button>
+    <a href="profile.html" class="btn btn-outline btn-sm nav-profile" style="display:none">My Profile</a>
+    <button class="btn btn-outline btn-sm" id="logout-btn" style="display:none">Logout</button>
+    <a href="upload.html" class="btn btn-primary btn-sm">Upload Music</a>
+  </div>
+  <button class="hamburger" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu">
+  <a href="index.html">Home</a><a href="browse.html">Browse</a><a href="player.html">Player</a>
+  <a href="upload.html">Upload</a><a href="profile.html">Profile</a><a href="about.html">About</a>
+  <a href="contact.html">Contact</a><a href="faq.html">FAQ</a>
+  <button id="logout-btn-mobile" style="display:none">&#128682; Logout</button>
+</div>
+
+<!-- Search Hero -->
+<div class="search-hero" id="main-content">
+  <div class="container" style="text-align:center">
+    <span class="section-label">Search</span>
+    <h1 style="font-size:2.2rem;margin:0.5rem 0">Find Your <span class="text-gradient">Music</span></h1>
+    <div class="search-hero-bar">
+      <div class="search-bar">
+        <span class="search-icon">&#128269;</span>
+        <input type="text" id="main-search" class="search-input"
+               placeholder="Search tracks, artists, genres..."
+               aria-label="Search music" autocomplete="off">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Results -->
+<section class="section" style="padding-top:2rem">
+  <div class="container">
+
+    <!-- Tabs -->
+    <div class="result-tabs" id="result-tabs" style="display:none">
+      <button class="result-tab active" data-tab="tracks">
+        Tracks <span class="result-count-badge" id="tracks-count">0</span>
+      </button>
+      <button class="result-tab" data-tab="artists">
+        Artists <span class="result-count-badge" id="artists-count">0</span>
+      </button>
+    </div>
+
+    <!-- Tracks results -->
+    <div id="tab-tracks">
+      <!-- Initial state — shown before any search -->
+      <div id="initial-state">
+        <div class="no-results">
+          <div class="no-results-icon">&#127925;</div>
+          <h3 style="margin-bottom:0.5rem">Search for music</h3>
+          <p class="text-muted">Find tracks, artists, and albums from across Africa</p>
+          <div class="search-suggestions">
+            <span class="search-tag" data-q="Afrobeats">Afrobeats</span>
+            <span class="search-tag" data-q="Amapiano">Amapiano</span>
+            <span class="search-tag" data-q="Bongo Flava">Bongo Flava</span>
+            <span class="search-tag" data-q="Zambian">Zambian</span>
+            <span class="search-tag" data-q="Gospel">Gospel</span>
+            <span class="search-tag" data-q="Highlife">Highlife</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tracks results grid -->
+      <div id="tracks-results" style="display:none">
+        <div class="result-section-header">
+          <h3>Tracks</h3>
+        </div>
+        <div class="music-grid" id="tracks-grid"></div>
+      </div>
+
+      <!-- No tracks found -->
+      <div id="no-tracks" style="display:none">
+        <div class="no-results">
+          <div class="no-results-icon">&#128269;</div>
+          <h3 style="margin-bottom:0.5rem">No tracks found</h3>
+          <p class="text-muted">Try different keywords or browse all music</p>
+          <a href="browse.html" class="btn btn-primary" style="margin-top:1rem">Browse All Music</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Artists results -->
+    <div id="tab-artists" style="display:none">
+      <div id="artists-results">
+        <div class="artist-results-grid" id="artists-grid"></div>
+      </div>
+      <div id="no-artists" style="display:none">
+        <div class="no-results">
+          <div class="no-results-icon">&#127908;</div>
+          <h3 style="margin-bottom:0.5rem">No artists found</h3>
+          <p class="text-muted">Try a different search term</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading state -->
+    <div id="search-loading" style="display:none;text-align:center;padding:4rem">
+      <p class="text-muted">Searching...</p>
+    </div>
+
+  </div>
+</section>
+
+<div class="player-bar" id="player-bar" role="region" aria-label="Music player">
+  <div class="player-track">
+    <img class="player-cover" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='8' fill='%231a1a2e'/%3E%3Cpath d='M16 32V16l20 8-20 8z' fill='%236c63ff' opacity='0.7'/%3E%3C/svg%3E" alt="Now Playing">
+    <div class="player-info"><div class="player-title">Select a track</div><div class="player-artist">&#9835;</div></div>
+  </div>
+  <div class="player-controls">
+    <div class="player-btns">
+      <button class="ctrl-btn" aria-label="Shuffle">&#8652;</button>
+      <button class="ctrl-btn" aria-label="Previous track">&#9664;</button>
+      <button class="ctrl-btn play-pause" aria-label="Play or pause"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg></button>
+      <button class="ctrl-btn" aria-label="Next track">&#9654;</button>
+      <button class="ctrl-btn" aria-label="Repeat">&#8635;</button>
+    </div>
+    <div class="progress-bar">
+      <span class="progress-time">0:00</span>
+      <div class="progress-track" role="progressbar" aria-label="Track progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><div class="progress-fill" style="width:0%"></div></div>
+      <span class="progress-time">0:00</span>
+    </div>
+  </div>
+  <div class="player-extras">
+    <a href="player.html" class="btn-icon" aria-label="Open full player">&#9654;</a>
+    <div class="volume-control"><span style="color:var(--text-secondary)" aria-hidden="true">&#128266;</span><input type="range" class="volume-slider" min="0" max="100" value="75" aria-label="Volume"></div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="nav-logo" style="font-size:1.3rem">SMADS African Hits</div><p>Africa's most open music platform.</p></div>
+    <div class="footer-col"><h4>Discover</h4><ul><li><a href="browse.html">Browse Music</a></li><li><a href="browse.html">Trending</a></li></ul></div>
+    <div class="footer-col"><h4>Artists</h4><ul><li><a href="upload.html">Upload Music</a></li><li><a href="payment.html">Pricing</a></li></ul></div>
+    <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li><li><a href="faq.html">FAQ</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><p>&copy; 2026 SMADS African Hits. All rights reserved.</p></div>
+</footer>
+
+<div class="toast" id="toast" role="alert" aria-live="polite" aria-atomic="true"><span class="toast-icon">&#10003;</span><span class="toast-msg"></span></div>
+
+<!-- AUTH MODAL -->
+<div class="modal-overlay" id="auth-modal">
+  <div class="modal">
+    <div class="modal-header"><h3>Sign In</h3><button class="modal-close" aria-label="Close">&times;</button></div>
+    <div class="tabs-wrapper">
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="login">Sign In</button>
+        <button class="tab-btn" data-tab="register">Create Account</button>
+      </div>
+      <div class="tab-content active" id="tab-login">
+        <form id="login-form">
+          <div class="form-group"><label class="form-label">Email or Username</label><input type="text" name="login" class="form-input" placeholder="your@email.com" required></div>
+          <div class="form-group"><label class="form-label">Password</label><input type="password" name="password" class="form-input" placeholder="Min 8 characters" required></div>
+          <div style="text-align:right;margin-top:-0.5rem;margin-bottom:1rem">
+            <a href="reset-password.html" style="font-size:0.82rem;color:var(--primary);text-decoration:none">Forgot password?</a>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%">Sign In</button>
+        </form>
+      </div>
+      <div class="tab-content" id="tab-register">
+        <form id="register-form">
+          <div class="grid-2">
+            <div class="form-group"><label class="form-label">Username</label><input type="text" name="username" class="form-input" placeholder="yourname" required></div>
+            <div class="form-group"><label class="form-label">Display Name</label><input type="text" name="display_name" class="form-input" placeholder="Your Name" required></div>
+          </div>
+          <div class="form-group"><label class="form-label">Email</label><input type="email" name="email" class="form-input" placeholder="your@email.com" required></div>
+          <div class="form-group"><label class="form-label">Password</label><input type="password" name="password" class="form-input" placeholder="Min 8 characters" required></div>
+          <div class="form-group"><label class="form-label">I am a...</label>
+            <select name="role" class="form-select"><option value="listener">Listener (Free)</option><option value="artist">Artist / Producer</option></select>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%">Create Account</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="js/app.js"></script>
+<script>
+(async () => {
+  await loadCurrentUser();
+
+  const searchInput   = document.getElementById('main-search');
+  const initialState  = document.getElementById('initial-state');
+  const loadingEl     = document.getElementById('search-loading');
+  const resultTabs    = document.getElementById('result-tabs');
+  const tracksResults = document.getElementById('tracks-results');
+  const noTracks      = document.getElementById('no-tracks');
+  const artistsGrid   = document.getElementById('artists-grid');
+  const noArtists     = document.getElementById('no-artists');
+  const tracksCount   = document.getElementById('tracks-count');
+  const artistsCount  = document.getElementById('artists-count');
+  const tracksGrid    = document.getElementById('tracks-grid');
+  let activeTab       = 'tracks';
+
+  // ── Read query from URL on page load ──────────────────────────────────────
+  const urlQ = new URLSearchParams(location.search).get('q') || '';
+  if (urlQ) {
+    searchInput.value = urlQ;
+    runSearch(urlQ);
+  }
+
+  // ── Tab switching ──────────────────────────────────────────────────────────
+  document.querySelectorAll('.result-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.result-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      activeTab = tab.dataset.tab;
+      document.getElementById('tab-tracks').style.display  = activeTab === 'tracks'  ? '' : 'none';
+      document.getElementById('tab-artists').style.display = activeTab === 'artists' ? '' : 'none';
+    });
+  });
+
+  // ── Suggestion tags ────────────────────────────────────────────────────────
+  document.querySelectorAll('.search-tag').forEach(tag => {
+    tag.addEventListener('click', () => {
+      const q = tag.dataset.q;
+      searchInput.value = q;
+      updateUrl(q);
+      runSearch(q);
+    });
+  });
+
+  // ── Live search with debounce ──────────────────────────────────────────────
+  searchInput.addEventListener('input', debounce((e) => {
+    const q = e.target.value.trim();
+    updateUrl(q);
+    if (q.length < 2) {
+      showInitial();
+      return;
+    }
+    runSearch(q);
+  }, 350));
+
+  // Submit on Enter
+  searchInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      const q = searchInput.value.trim();
+      if (q.length >= 2) { updateUrl(q); runSearch(q); }
+    }
+  });
+
+  function updateUrl(q) {
+    const url = q ? `search.html?q=${encodeURIComponent(q)}` : 'search.html';
+    history.replaceState(null, '', url);
+  }
+
+  function showInitial() {
+    initialState.style.display    = '';
+    loadingEl.style.display       = 'none';
+    resultTabs.style.display      = 'none';
+    tracksResults.style.display   = 'none';
+    noTracks.style.display        = 'none';
+    document.getElementById('tab-artists').style.display = 'none';
+  }
+
+  async function runSearch(q) {
+    if (!q || q.length < 2) { showInitial(); return; }
+
+    // Show loading
+    initialState.style.display    = 'none';
+    loadingEl.style.display       = '';
+    resultTabs.style.display      = 'none';
+    tracksResults.style.display   = 'none';
+    noTracks.style.display        = 'none';
+    document.getElementById('tab-artists').style.display = 'none';
+
+    try {
+      const data = await apiFetch(`/api/tracks/search?q=${encodeURIComponent(q)}&limit=24`);
+      const tracks  = data.tracks  || [];
+      const artists = data.artists || [];
+
+      loadingEl.style.display = 'none';
+      resultTabs.style.display = '';
+
+      // Update counts
+      tracksCount.textContent  = tracks.length;
+      artistsCount.textContent = artists.length;
+
+      // Render tracks
+      tracksGrid.innerHTML = '';
+      if (tracks.length) {
+        tracks.forEach(t => tracksGrid.appendChild(createMusicCard(t)));
+        tracksResults.style.display = '';
+        noTracks.style.display      = 'none';
+      } else {
+        tracksResults.style.display = 'none';
+        noTracks.style.display      = '';
+      }
+
+      // Render artists
+      artistsGrid.innerHTML = '';
+      if (artists.length) {
+        artists.forEach(a => {
+          const avatarSrc = a.avatar_url || 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'56\' height=\'56\' viewBox=\'0 0 56 56\'%3E%3Crect width=\'56\' height=\'56\' rx=\'28\' fill=\'%231a1a2e\'/%3E%3Ccircle cx=\'28\' cy=\'22\' r=\'10\' fill=\'%236c63ff\' opacity=\'0.6\'/%3E%3Cellipse cx=\'28\' cy=\'46\' rx=\'17\' ry=\'11\' fill=\'%236c63ff\' opacity=\'0.4\'/%3E%3C/svg%3E';
+          const card = document.createElement('div');
+          card.className = 'artist-result-card';
+          card.innerHTML = `
+            <img src="${escHtml(avatarSrc)}" alt="${escHtml(a.display_name)}" class="artist-result-avatar">
+            <div class="artist-result-info">
+              <div class="artist-result-name">${escHtml(a.display_name)}${a.is_verified ? ' <span style="color:var(--accent);font-size:0.8rem">&#10003;</span>' : ''}</div>
+              <div class="artist-result-meta">${formatNumber(a.track_count)} tracks &bull; ${formatNumber(a.total_plays)} plays</div>
+            </div>
+            <button class="btn btn-outline btn-sm follow-btn" data-id="${a.id}">Follow</button>`;
+          card.querySelector('.follow-btn').addEventListener('click', async (e) => {
+            e.stopPropagation();
+            if (!appState.currentUser) { showToast('Sign in to follow artists', 'error'); return; }
+            try {
+              const fd = new FormData(); fd.append('target_id', a.id);
+              const res = await apiFetch('/api/user/follow', { method: 'POST', body: fd });
+              e.currentTarget.textContent = res.following ? 'Following' : 'Follow';
+              showToast(res.following ? `Following ${a.display_name}` : `Unfollowed ${a.display_name}`);
+            } catch (err) { showToast(err.message, 'error'); }
+          });
+          card.addEventListener('click', (e) => {
+            if (e.target.closest('.follow-btn')) return;
+            // In future: navigate to artist profile page
+          });
+          artistsGrid.appendChild(card);
+        });
+        document.getElementById('artists-results').style.display = '';
+        noArtists.style.display = 'none';
+      } else {
+        document.getElementById('artists-results').style.display = 'none';
+        noArtists.style.display = '';
+      }
+
+      // Show the active tab
+      document.getElementById('tab-tracks').style.display  = activeTab === 'tracks'  ? '' : 'none';
+      document.getElementById('tab-artists').style.display = activeTab === 'artists' ? '' : 'none';
+
+      // Auto-switch to artists tab if no tracks but artists found
+      if (!tracks.length && artists.length) {
+        document.querySelectorAll('.result-tab').forEach(t => t.classList.remove('active'));
+        document.querySelector('.result-tab[data-tab="artists"]').classList.add('active');
+        activeTab = 'artists';
+        document.getElementById('tab-tracks').style.display  = 'none';
+        document.getElementById('tab-artists').style.display = '';
+      }
+
+      // Update page title
+      document.title = `"${q}" \u2014 SMADS African Hits`;
+
+    } catch (err) {
+      loadingEl.style.display = 'none';
+      showToast('Search failed. Please try again.', 'error');
+    }
+  }
+
+  // Focus search on load
+  setTimeout(() => searchInput.focus(), 200);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 &ndash; Page Not Found &ndash; SMADS African Hits</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .error-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      background: radial-gradient(ellipse at 50% 30%, rgba(108,99,255,0.12) 0%, transparent 60%), var(--bg-dark);
+    }
+    .error-content { max-width: 500px; }
+    .error-code {
+      font-size: clamp(6rem, 20vw, 12rem);
+      font-weight: 800;
+      line-height: 1;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0;
+      user-select: none;
+    }
+    .error-disc {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: var(--bg-card2);
+      border: 3px solid var(--border);
+      margin: 1.5rem auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      animation: spin 8s linear infinite;
+    }
+    .error-disc::before {
+      content: '';
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--bg-dark);
+      border: 3px solid var(--border);
+      position: absolute;
+    }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .error-title { font-size: 1.6rem; font-weight: 700; margin-bottom: 0.75rem; }
+    .error-message { color: var(--text-secondary); margin-bottom: 2rem; font-size: 1rem; line-height: 1.6; }
+    .error-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .back-link { color: var(--text-secondary); font-size: 0.85rem; margin-top: 1.5rem; display: block; }
+    .back-link:hover { color: var(--primary); }
+    .suggestions { margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+    .suggestions h4 { font-size: 0.85rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1rem; }
+    .suggestion-links { display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; }
+    .suggestion-links a { background: var(--bg-card); border: 1px solid var(--border); border-radius: 50px; padding: 0.4rem 1rem; font-size: 0.85rem; color: var(--text-secondary); text-decoration: none; transition: var(--transition); }
+    .suggestion-links a:hover { border-color: var(--primary); color: var(--primary); }
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<nav class="navbar" role="navigation" aria-label="Main navigation">
+  <a href="index.html" class="nav-logo">
+    <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="15" stroke="url(#g1)" stroke-width="2"/><path d="M10 20V12l12 4-12 4z" fill="url(#g1)"/><defs><linearGradient id="g1" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse"><stop stop-color="#6c63ff"/><stop offset="1" stop-color="#ff6584"/></linearGradient></defs></svg>
+    SMADS African Hits
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Home</a><a href="browse.html">Browse</a>
+    <a href="player.html">Player</a><a href="upload.html">Upload</a>
+    <a href="about.html">About</a><a href="contact.html">Contact</a>
+  </div>
+  <div class="nav-actions">
+    <button type="button" class="btn btn-outline btn-sm nav-signin" data-modal="auth-modal">Sign In</button>
+    <a href="profile.html" class="btn btn-outline btn-sm nav-profile" style="display:none">My Profile</a>
+    <button class="btn btn-outline btn-sm" id="logout-btn" style="display:none">Logout</button>
+    <a href="upload.html" class="btn btn-primary btn-sm">Upload Music</a>
+  </div>
+  <button class="hamburger" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu">
+  <a href="index.html">Home</a><a href="browse.html">Browse</a><a href="player.html">Player</a>
+  <a href="upload.html">Upload</a><a href="profile.html">Profile</a><a href="about.html">About</a>
+  <a href="contact.html">Contact</a><a href="faq.html">FAQ</a>
+  <button id="logout-btn-mobile" style="display:none">&#128682; Logout</button>
+</div>
+
+<div class="error-page" id="main-content">
+  <div class="error-content">
+
+    <div class="error-code" aria-hidden="true">404</div>
+
+    <!-- Spinning vinyl disc -->
+    <div class="error-disc" role="img" aria-label="Spinning vinyl record"></div>
+
+    <h1 class="error-title">Track Not Found</h1>
+    <p class="error-message">
+      Looks like this page skipped the queue.<br>
+      The link may be broken, or the page may have been removed.
+    </p>
+
+    <div class="error-actions">
+      <a href="index.html" class="btn btn-primary">&#8592; Go Home</a>
+      <a href="browse.html" class="btn btn-outline">Browse Music</a>
+    </div>
+
+    <a href="javascript:history.back()" class="back-link">&#8592; Go back to previous page</a>
+
+    <div class="suggestions">
+      <h4>You might be looking for</h4>
+      <div class="suggestion-links">
+        <a href="browse.html">Browse All Tracks</a>
+        <a href="search.html">Search</a>
+        <a href="upload.html">Upload Music</a>
+        <a href="player.html">Music Player</a>
+        <a href="faq.html">Help / FAQ</a>
+        <a href="contact.html">Contact Us</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="toast" id="toast" role="alert" aria-live="polite" aria-atomic="true"><span class="toast-icon">&#10003;</span><span class="toast-msg"></span></div>
+
+<script src="js/app.js"></script>
+<script>(async () => { await loadCurrentUser(); })();</script>
+</body>
+</html>

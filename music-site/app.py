@@ -247,7 +247,11 @@ def err_401(e): return jsonify(error='Authentication required.'), 401
 def err_403(e): return jsonify(error='Forbidden.'), 403
 
 @app.errorhandler(404)
-def err_404(e): return jsonify(error='Not found.'), 404
+def err_404(e):
+    # Serve the custom 404 page for browser requests, JSON for API calls
+    if request.path.startswith('/api/'):
+        return jsonify(error='Not found.'), 404
+    return send_from_directory('.', '404.html'), 404
 
 @app.errorhandler(405)
 def err_405(e): return jsonify(error='Method not allowed.'), 405
